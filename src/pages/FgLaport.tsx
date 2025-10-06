@@ -56,7 +56,7 @@ const FgLaport = () => {
                   <TabsTrigger value="fabio" className="group data-[state=active]:bg-transparent p-0 bg-transparent border-0 shadow-none">
                     <div className="flex flex-col items-center space-y-3 cursor-pointer">
                        <Avatar className="w-32 h-32 lg:w-40 lg:h-40 ring-4 ring-transparent group-data-[state=active]:ring-secondary transition-all duration-500 group-hover:ring-secondary/50 group-hover:scale-105">
-                        <AvatarImage src="/lovable-uploads/ed8ffbb5-6af4-499b-a766-f99cc03d586e.png" alt="Fabio Laport" className="object-cover" />
+                        <AvatarImage src="/assets/images/fabio-laport.png" alt="Fabio Laport" className="object-cover" />
                         <AvatarFallback className="bg-stone-200 text-stone-600 text-2xl font-heading">FL</AvatarFallback>
                       </Avatar>
                       <div className="text-center">
@@ -77,7 +77,7 @@ const FgLaport = () => {
                   <TabsTrigger value="giana" className="group data-[state=active]:bg-transparent p-0 bg-transparent border-0 shadow-none">
                     <div className="flex flex-col items-center space-y-3 cursor-pointer">
                       <Avatar className="w-32 h-32 lg:w-40 lg:h-40 ring-4 ring-transparent group-data-[state=active]:ring-secondary transition-all duration-500 group-hover:ring-secondary/50 group-hover:scale-105">
-                        <AvatarImage src="/lovable-uploads/9e416bec-3577-4fdb-97fa-68fe7202b619.png" alt="Giana Laport" className="object-cover" />
+                        <AvatarImage src="/assets/images/giana-laport.png" alt="Giana Laport" className="object-cover" />
                         <AvatarFallback className="bg-stone-200 text-stone-600 text-2xl font-heading">GL</AvatarFallback>
                       </Avatar>
                       <div className="text-center">

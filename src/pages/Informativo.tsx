@@ -135,7 +135,7 @@ const Informativo = () => {
                     {/* Image */}
                     <div className="aspect-video overflow-hidden relative">
                       <img 
-                        src={article.featured_image || "/lovable-uploads/7266d198-38ba-43fe-8f5d-aaae97487e7d.png"} 
+                        src={article.featured_image || "/assets/images/article-placeholder.png"} 
                         alt={article.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />

@@ -43,7 +43,7 @@ const InformativeSection = () => {
               <div key={article.id} className="flex gap-6 p-6 bg-white/5 hover:bg-white/10 transition-colors group">
                 <div className="w-32 h-24 flex-shrink-0 overflow-hidden">
                   <img 
-                    src={article.featured_image || "/lovable-uploads/7266d198-38ba-43fe-8f5d-aaae97487e7d.png"} 
+                    src={article.featured_image || "/assets/images/article-placeholder.png"} 
                     alt={article.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />

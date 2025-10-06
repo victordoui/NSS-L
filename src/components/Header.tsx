@@ -37,7 +37,7 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center gap-3">
             <img 
-              src="/lovable-uploads/7369b880-71b0-43f8-bf9e-6aa670edfbab.png" 
+              src="/assets/images/fg-laport-logo.png" 
               alt="Laport Engenharia Logo" 
               className="w-12 h-12 object-contain"
             />

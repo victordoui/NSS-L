@@ -72,7 +72,7 @@ const Auth = () => {
         {/* Logo FG Laport */}
         <div className="flex justify-center">
           <img
-            src="/lovable-uploads/7369b880-71b0-43f8-bf9e-6aa670edfbab.png"
+            src="/assets/images/fg-laport-logo.png"
             alt="FG Laport - Reserva Engenharia"
             className="w-20 h-20 md:w-24 md:h-24 object-contain transition-transform hover:scale-105 duration-300"
           />

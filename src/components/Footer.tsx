@@ -22,7 +22,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             {/* Logo - Left */}
             <div className="flex items-center gap-3">
-              <img src="/lovable-uploads/7369b880-71b0-43f8-bf9e-6aa670edfbab.png" alt="FG LAPORT Logo" className="w-12 h-12 object-contain" />
+              <img src="/assets/images/fg-laport-logo.png" alt="FG LAPORT Logo" className="w-12 h-12 object-contain" />
               <div className="flex flex-col">
                 <span className="font-heading font-normal text-xl leading-none" style={{
                 letterSpacing: '0.05em'

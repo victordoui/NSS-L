@@ -162,7 +162,7 @@ const ArticleDetail = () => {
                     >
                       <div className="aspect-video overflow-hidden">
                         <img
-                          src={related.featured_image || "/lovable-uploads/7266d198-38ba-43fe-8f5d-aaae97487e7d.png"}
+                          src={related.featured_image || "/assets/images/article-placeholder.png"}
                           alt={related.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />

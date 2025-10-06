@@ -95,7 +95,7 @@ const AdminSidebar = () => {
           <div className="px-6 pb-4 mb-2 border-b border-border/50">
             <div className="flex items-center gap-3 group">
               <img 
-                src="/lovable-uploads/7369b880-71b0-43f8-bf9e-6aa670edfbab.png" 
+                src="/assets/images/fg-laport-logo.png" 
                 alt="FG Laport Logo" 
                 className="w-12 h-12 object-contain"
               />
