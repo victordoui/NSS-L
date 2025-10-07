@@ -1,12 +1,24 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
-import { LogOut, Home } from 'lucide-react';
+import { LogOut, Home, Loader2 } from 'lucide-react';
+
 const AdminHeader = () => {
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const {
     signOut,
     profile
   } = useAuth();
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+    try {
+      await signOut();
+    } catch (error) {
+      setIsLoggingOut(false);
+    }
+  };
   return <header className="bg-card/80 backdrop-blur-lg border-b border-border/50 sticky top-0 z-10 shadow-sm">
       <div className="flex items-center justify-between px-4 md:px-6 py-3">
         <div className="flex items-center space-x-3">
@@ -36,9 +48,21 @@ const AdminHeader = () => {
             </Link>
           </Button>
           
-          <Button variant="ghost" size="sm" onClick={signOut} className="hover:bg-destructive/10 hover:text-destructive">
-            <LogOut className="w-4 h-4 sm:mr-2" />
-            <span className="hidden sm:inline">Sair</span>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={handleLogout} 
+            disabled={isLoggingOut}
+            className="hover:bg-destructive/10 hover:text-destructive disabled:opacity-50"
+          >
+            {isLoggingOut ? (
+              <Loader2 className="w-4 h-4 sm:mr-2 animate-spin" />
+            ) : (
+              <LogOut className="w-4 h-4 sm:mr-2" />
+            )}
+            <span className="hidden sm:inline">
+              {isLoggingOut ? 'Saindo...' : 'Sair'}
+            </span>
           </Button>
         </div>
       </div>

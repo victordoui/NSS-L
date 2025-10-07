@@ -162,10 +162,21 @@ export const useAuth = () => {
         return;
       }
 
+      // Clear local state immediately
+      setUser(null);
+      setSession(null);
+      setProfile(null);
+
       toast({
         title: "Logout realizado",
         description: "Você foi desconectado com sucesso.",
       });
+
+      // Redirect to home page after successful logout
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 1000);
+      
     } catch (error) {
       console.error('Sign out error:', error);
       toast({
