@@ -1,19 +1,19 @@
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  Settings, 
-  Share2, 
-  Wrench, 
-  FileText, 
-  Building2,
+import {
+  FileText,
+  Settings,
+  MessageSquare,
+  Wrench,
+  Image,
+  LayoutDashboard,
+  Share2,
   Phone,
-  Newspaper,
   HelpCircle,
+  ChevronDown,
   ChevronRight,
-  Mail
+  Sparkles,
 } from 'lucide-react';
-import { useContactMessages } from '@/hooks/useContactMessages';
-import { Badge } from '@/components/ui/badge';
 import {
   Sidebar,
   SidebarContent,
@@ -23,9 +23,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
   useSidebar,
 } from '@/components/ui/sidebar';
 import {
@@ -33,137 +30,146 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
+import { Badge } from '@/components/ui/badge';
+import { useContactMessages } from '@/hooks/useContactMessages';
 import { cn } from '@/lib/utils';
 
 const AdminSidebar = () => {
   const location = useLocation();
   const { state } = useSidebar();
-  const isCollapsed = state === 'collapsed';
+  const collapsed = state === 'collapsed';
   const { unreadCount } = useContactMessages();
+  const [contentOpen, setContentOpen] = useState(true);
+  const [configOpen, setConfigOpen] = useState(true);
 
   const contentItems = [
-    {
-      title: 'Mensagens',
-      icon: Mail,
-      href: '/admin/messages',
-      badge: unreadCount,
-    },
-    {
-      title: 'Serviços',
-      icon: Wrench,
-      href: '/admin/services',
-    },
-    {
-      title: 'Informativo',
-      icon: FileText,
-      href: '/admin/articles',
-    },
-    {
-      title: 'Obras Executadas',
-      icon: Building2,
-      href: '/admin/projects',
-    },
+    { title: 'Mensagens', icon: MessageSquare, href: '/admin/messages' },
+    { title: 'Serviços', icon: Wrench, href: '/admin/services' },
+    { title: 'Informativo', icon: FileText, href: '/admin/articles' },
+    { title: 'Obras Executadas', icon: Image, href: '/admin/projects' },
   ];
 
   const configItems = [
-    {
-      title: 'Redes Sociais',
-      icon: Share2,
-      href: '/admin/social-links',
-    },
-    {
-      title: 'Dados de Contato',
-      icon: Phone,
-      href: '/admin/contact-info',
-    },
-    {
-      title: 'Configurações',
-      icon: Settings,
-      href: '/admin/settings',
-    },
+    { title: 'Redes Sociais', icon: Share2, href: '/admin/social-links' },
+    { title: 'Dados de Contato', icon: Phone, href: '/admin/contact-info' },
+    { title: 'Configurações', icon: Settings, href: '/admin/settings' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
-  const isGroupActive = (items: typeof contentItems) => 
-    items.some(item => isActive(item.href));
 
   return (
-    <Sidebar collapsible="icon" className="border-r border-gray-800 bg-[#141414]">
-      <SidebarContent className="gap-0 py-3">
-        {/* Logo Section */}
-        {!isCollapsed && (
-          <div className="px-5 py-3 border-b border-gray-800 bg-gradient-to-b from-black to-[#141414]">
-            <div className="flex items-center gap-3 group">
-              <img 
-                src="/assets/images/fg-laport-logo.png" 
-                alt="FG Laport Logo" 
-                className="w-10 h-10 object-contain"
-              />
-              <div>
-                <h2 className="text-base font-bold leading-tight text-brand-gold font-heading">LAPORT</h2>
-                <p className="text-xs text-gray-400 font-medium font-body">Engenharia</p>
+    <Sidebar className="border-r border-gray-800/50 bg-gradient-to-b from-gray-900 via-gray-900 to-black admin-sidebar-pattern">
+      <SidebarContent>
+        {!collapsed && (
+          <div className="px-4 py-6 border-b border-brand-gold/20 bg-gradient-to-r from-brand-gold/5 to-transparent relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <Link to="/admin" className="flex items-center gap-3 group relative z-10">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-gold to-brand-gold-dark flex items-center justify-center shadow-xl icon-glow group-hover:scale-110 transition-all duration-300">
+                <LayoutDashboard className="w-6 h-6 text-white" />
               </div>
-            </div>
+              <div>
+                <span className="font-bold text-xl text-white group-hover:text-brand-gold transition-colors font-heading tracking-[0.15em] block">
+                  LAPORT
+                </span>
+                <span className="text-xs text-gray-400 font-body tracking-wider">
+                  Engenharia
+                </span>
+              </div>
+            </Link>
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-brand-gold to-transparent" />
           </div>
         )}
 
-        {/* Dashboard */}
-        <SidebarGroup className="pt-1">
+        <SidebarGroup className="px-2 py-3">
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton 
-                asChild 
-                isActive={isActive('/admin')} 
+              <SidebarMenuButton
+                asChild
                 className={cn(
-                  "h-9 text-sm px-4 transition-all duration-200 text-gray-200 hover:bg-white/8 hover:translate-x-1",
-                  isActive('/admin') && "bg-gradient-to-r from-brand-gold/20 to-transparent border-l-3 border-brand-gold font-semibold text-white"
+                  'h-11 hover:bg-white/10 transition-all duration-300 ripple rounded-xl',
+                  isActive('/admin') && 'bg-gradient-to-r from-brand-gold/20 to-brand-gold/5 border-l-4 border-brand-gold text-brand-gold font-semibold shadow-lg'
                 )}
               >
                 <Link to="/admin" className="flex items-center gap-3">
-                  <LayoutDashboard className={cn("h-4 w-4", isActive('/admin') && "text-brand-gold")} />
-                  <span className="font-body">Dashboard</span>
+                  <div className={cn(
+                    'w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-300',
+                    isActive('/admin') 
+                      ? 'bg-brand-gold/20 icon-glow' 
+                      : 'bg-white/5 hover:bg-white/10'
+                  )}>
+                    <LayoutDashboard className={cn('w-5 h-5', isActive('/admin') && 'text-brand-gold')} />
+                  </div>
+                  {!collapsed && <span className="font-body font-medium">Dashboard</span>}
+                  {isActive('/admin') && !collapsed && (
+                    <Sparkles className="w-4 h-4 ml-auto text-brand-gold animate-pulse" />
+                  )}
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroup>
 
-        {/* Conteúdo */}
-        <SidebarGroup className="mt-1">
-          <Collapsible defaultOpen={true} className="group/collapsible">
-            <SidebarGroupLabel asChild className="h-8 px-4 mb-0.5">
-              <CollapsibleTrigger className="w-full hover:bg-white/8 rounded-md transition-all duration-200">
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-md bg-brand-gold/10 flex items-center justify-center group-hover:bg-brand-gold/20 transition-colors">
-                    <Newspaper className="h-3.5 w-3.5 text-brand-gold" />
+        <Collapsible
+          open={contentOpen}
+          onOpenChange={setContentOpen}
+          className="group/collapsible"
+        >
+          <SidebarGroup className="px-2 py-2">
+            <CollapsibleTrigger asChild>
+              <SidebarGroupLabel className="group/label py-2 hover:bg-white/8 cursor-pointer rounded-xl transition-all duration-300">
+                <div className="flex items-center gap-3 w-full">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center group-hover/label:from-blue-500/30 group-hover/label:to-purple-500/30 transition-all duration-300 border border-blue-500/20">
+                    <FileText className="w-4 h-4 text-blue-400" />
                   </div>
-                  {!isCollapsed && <span className="font-bold text-xs uppercase tracking-wider text-gray-400 font-heading">Conteúdo</span>}
+                  {!collapsed && (
+                    <>
+                      <span className="flex-1 text-xs font-bold text-gray-300 uppercase tracking-[0.15em] group-hover/label:text-white transition-colors font-heading">
+                        Conteúdo
+                      </span>
+                      {contentOpen ? (
+                        <ChevronDown className="w-4 h-4 text-gray-400 transition-transform duration-300" />
+                      ) : (
+                        <ChevronRight className="w-4 h-4 text-gray-400 transition-transform duration-300" />
+                      )}
+                    </>
+                  )}
                 </div>
-                {!isCollapsed && (
-                  <ChevronRight className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-90 text-gray-400" />
-                )}
-              </CollapsibleTrigger>
-            </SidebarGroupLabel>
+              </SidebarGroupLabel>
+            </CollapsibleTrigger>
+
             <CollapsibleContent>
               <SidebarGroupContent>
                 <SidebarMenu>
                   {contentItems.map((item) => (
-                    <SidebarMenuItem key={item.href}>
-                      <SidebarMenuButton 
-                        asChild 
-                        isActive={isActive(item.href)} 
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton
+                        asChild
                         className={cn(
-                          "h-9 text-sm pl-10 transition-all duration-200 hover:translate-x-1 text-gray-300 hover:bg-white/8",
-                          isActive(item.href) && "bg-gradient-to-r from-brand-gold/20 to-transparent border-l-3 border-brand-gold font-semibold text-white"
+                          'h-10 hover:bg-white/10 transition-all duration-300 rounded-xl ripple',
+                          isActive(item.href) && 'bg-gradient-to-r from-brand-gold/20 to-brand-gold/5 text-brand-gold border-l-4 border-brand-gold font-semibold'
                         )}
                       >
                         <Link to={item.href} className="flex items-center gap-3">
-                          <item.icon className={cn("h-4 w-4", isActive(item.href) && "text-brand-gold")} />
-                          <span className="font-body">{item.title}</span>
-                          {item.badge !== undefined && item.badge > 0 && (
-                            <Badge variant="destructive" className="ml-auto">
-                              {item.badge}
-                            </Badge>
+                          <div className={cn(
+                            'w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300',
+                            isActive(item.href)
+                              ? 'bg-brand-gold/20 icon-glow scale-110'
+                              : 'bg-white/5 hover:bg-white/10 hover:scale-105'
+                          )}>
+                            <item.icon className={cn('w-4 h-4', isActive(item.href) && 'text-brand-gold')} />
+                          </div>
+                          {!collapsed && (
+                            <>
+                              <span className="flex-1 font-body">{item.title}</span>
+                              {item.href === '/admin/messages' && unreadCount > 0 && (
+                                <Badge
+                                  variant="default"
+                                  className="ml-auto h-5 min-w-[20px] px-1.5 text-xs bg-red-500 hover:bg-red-600 text-white animate-pulse"
+                                >
+                                  {unreadCount}
+                                </Badge>
+                              )}
+                            </>
                           )}
                         </Link>
                       </SidebarMenuButton>
@@ -172,41 +178,59 @@ const AdminSidebar = () => {
                 </SidebarMenu>
               </SidebarGroupContent>
             </CollapsibleContent>
-          </Collapsible>
-        </SidebarGroup>
+          </SidebarGroup>
+        </Collapsible>
 
-        {/* Configurações */}
-        <SidebarGroup className="mt-2 pt-3 border-t border-gray-800/50">
-          <Collapsible defaultOpen={true} className="group/collapsible">
-            <SidebarGroupLabel asChild className="h-8 px-4 mb-0.5">
-              <CollapsibleTrigger className="w-full hover:bg-white/8 rounded-md transition-all duration-200">
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-md bg-brand-gold-light/10 flex items-center justify-center group-hover:bg-brand-gold-light/20 transition-colors">
-                    <Settings className="h-3.5 w-3.5 text-brand-gold-light" />
+        <Collapsible
+          open={configOpen}
+          onOpenChange={setConfigOpen}
+          className="group/collapsible"
+        >
+          <SidebarGroup className="px-2 py-2 mt-2 pt-4 border-t border-gray-800/50">
+            <CollapsibleTrigger asChild>
+              <SidebarGroupLabel className="group/label py-2 hover:bg-white/8 cursor-pointer rounded-xl transition-all duration-300">
+                <div className="flex items-center gap-3 w-full">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center group-hover/label:from-amber-500/30 group-hover/label:to-orange-500/30 transition-all duration-300 border border-amber-500/20">
+                    <Settings className="w-4 h-4 text-amber-400" />
                   </div>
-                  {!isCollapsed && <span className="font-bold text-xs uppercase tracking-wider text-gray-400 font-heading">Configurações</span>}
+                  {!collapsed && (
+                    <>
+                      <span className="flex-1 text-xs font-bold text-gray-300 uppercase tracking-[0.15em] group-hover/label:text-white transition-colors font-heading">
+                        Configurações
+                      </span>
+                      {configOpen ? (
+                        <ChevronDown className="w-4 h-4 text-gray-400 transition-transform duration-300" />
+                      ) : (
+                        <ChevronRight className="w-4 h-4 text-gray-400 transition-transform duration-300" />
+                      )}
+                    </>
+                  )}
                 </div>
-                {!isCollapsed && (
-                  <ChevronRight className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-90 text-gray-400" />
-                )}
-              </CollapsibleTrigger>
-            </SidebarGroupLabel>
+              </SidebarGroupLabel>
+            </CollapsibleTrigger>
+
             <CollapsibleContent>
               <SidebarGroupContent>
                 <SidebarMenu>
                   {configItems.map((item) => (
-                    <SidebarMenuItem key={item.href}>
-                      <SidebarMenuButton 
-                        asChild 
-                        isActive={isActive(item.href)} 
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton
+                        asChild
                         className={cn(
-                          "h-9 text-sm pl-10 transition-all duration-200 hover:translate-x-1 text-gray-300 hover:bg-white/8",
-                          isActive(item.href) && "bg-gradient-to-r from-brand-gold/20 to-transparent border-l-3 border-brand-gold font-semibold text-white"
+                          'h-10 hover:bg-white/10 transition-all duration-300 rounded-xl ripple',
+                          isActive(item.href) && 'bg-gradient-to-r from-brand-gold/20 to-brand-gold/5 text-brand-gold border-l-4 border-brand-gold font-semibold'
                         )}
                       >
                         <Link to={item.href} className="flex items-center gap-3">
-                          <item.icon className={cn("h-4 w-4", isActive(item.href) && "text-brand-gold")} />
-                          <span className="font-body">{item.title}</span>
+                          <div className={cn(
+                            'w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300',
+                            isActive(item.href)
+                              ? 'bg-brand-gold/20 icon-glow scale-110'
+                              : 'bg-white/5 hover:bg-white/10 hover:scale-105'
+                          )}>
+                            <item.icon className={cn('w-4 h-4', isActive(item.href) && 'text-brand-gold')} />
+                          </div>
+                          {!collapsed && <span className="font-body">{item.title}</span>}
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
@@ -214,28 +238,38 @@ const AdminSidebar = () => {
                 </SidebarMenu>
               </SidebarGroupContent>
             </CollapsibleContent>
-          </Collapsible>
-        </SidebarGroup>
+          </SidebarGroup>
+        </Collapsible>
 
-        {/* Ajuda */}
-        <SidebarGroup className="mt-auto border-t border-gray-800/50 pt-3">
+        <SidebarGroup className="mt-auto px-2 py-3 border-t border-gray-800/50">
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton 
-                asChild 
-                isActive={isActive('/admin/help')} 
+              <SidebarMenuButton
+                asChild
                 className={cn(
-                  "h-9 text-sm px-4 transition-all duration-200 text-gray-300 hover:bg-white/8 hover:translate-x-1",
-                  isActive('/admin/help') && "bg-gradient-to-r from-brand-gold/20 to-transparent border-l-3 border-brand-gold font-semibold text-white"
+                  'h-10 hover:bg-white/10 transition-all duration-300 rounded-xl ripple',
+                  isActive('/admin/help') && 'bg-gradient-to-r from-brand-gold/20 to-brand-gold/5 text-brand-gold border-l-4 border-brand-gold font-semibold'
                 )}
               >
                 <Link to="/admin/help" className="flex items-center gap-3">
-                  <HelpCircle className={cn("h-4 w-4", isActive('/admin/help') && "text-brand-gold")} />
-                  <span className="font-body">Ajuda</span>
+                  <div className={cn(
+                    'w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300',
+                    isActive('/admin/help')
+                      ? 'bg-brand-gold/20 icon-glow scale-110'
+                      : 'bg-white/5 hover:bg-white/10 hover:scale-105'
+                  )}>
+                    <HelpCircle className={cn('w-4 h-4', isActive('/admin/help') && 'text-brand-gold')} />
+                  </div>
+                  {!collapsed && <span className="font-body">Ajuda</span>}
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
+          {!collapsed && (
+            <div className="mt-4 px-3 py-2 text-center">
+              <p className="text-xs text-gray-500 font-body">v2.1.0</p>
+            </div>
+          )}
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>

@@ -19,7 +19,7 @@ const AdminHeader = () => {
       setIsLoggingOut(false);
     }
   };
-  return <header className="bg-white/95 backdrop-blur-lg border-b border-gray-200 sticky top-0 z-40 h-14 shadow-sm">
+  return <header className="bg-white/80 backdrop-blur-2xl border-b border-gray-200/50 sticky top-0 z-50 h-16 shadow-sm">
       <div className="flex items-center justify-between px-6 h-full">
         <div className="flex items-center space-x-3">
           <Link to="/admin" className="flex items-center space-x-3 group">
