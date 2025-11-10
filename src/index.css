@@ -496,6 +496,25 @@
     }
   }
 
+  /* Recharts Styling - Light and Dark Mode Support */
+  .recharts-text {
+    @apply text-gray-600 dark:text-gray-400;
+    font-size: 12px;
+  }
+
+  .recharts-cartesian-grid-horizontal line,
+  .recharts-cartesian-grid-vertical line {
+    @apply stroke-gray-200 dark:stroke-gray-700;
+  }
+
+  .recharts-tooltip-wrapper {
+    @apply rounded-lg shadow-lg;
+  }
+
+  .recharts-legend-wrapper {
+    @apply text-gray-700 dark:text-gray-300;
+  }
+
   /* Desktop optimizations */
   @media (min-width: 1025px) {
     .simple-button:hover {

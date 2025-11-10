@@ -108,7 +108,10 @@ const AdminSidebar = () => {
   const renderMenuItem = (item: { title: string; url: string; icon: any; badge?: number }) => {
     const active = isActive(item.url);
     const menuButton = (
-      <SidebarMenuButton asChild className={cn("h-10 text-sm", active && "bg-gray-100 dark:bg-gray-800 text-primary font-medium")}>
+      <SidebarMenuButton asChild className={cn(
+        "h-10 text-sm relative transition-all",
+        active && "bg-gray-100 dark:bg-gray-800 text-primary font-semibold before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-primary before:rounded-r"
+      )}>
         <Link to={item.url} className="flex items-center gap-3 pl-11">
           <item.icon className="w-5 h-5 flex-shrink-0" />
           {!isCollapsed && (
