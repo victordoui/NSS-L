@@ -8,6 +8,7 @@ import {
   Share2,
   Phone,
   Settings,
+  ChevronLeft,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -18,188 +19,218 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from '@/components/ui/sidebar';
+import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Badge } from '@/components/ui/badge';
 import { useContactMessages } from '@/hooks/useContactMessages';
 import { cn } from '@/lib/utils';
 
 const AdminSidebar = () => {
   const location = useLocation();
-  const { unreadCount } = useContactMessages();
-  const currentPath = location.pathname;
+  const { state, toggleSidebar } = useSidebar();
+  const isCollapsed = state === 'collapsed';
+  const { messages } = useContactMessages();
+  const unreadCount = messages?.filter((m) => !m.is_read).length || 0;
 
-  const isActive = (path: string) => currentPath === path;
+  const dashboardItems = [
+    {
+      title: 'Visão Geral',
+      url: '/admin',
+      icon: LayoutDashboard,
+    },
+  ];
+
+  const contentItems = [
+    {
+      title: 'Mensagens',
+      url: '/admin/messages',
+      icon: MessageSquare,
+      badge: unreadCount > 0 ? unreadCount : undefined,
+    },
+    {
+      title: 'Serviços',
+      url: '/admin/services',
+      icon: Wrench,
+    },
+    {
+      title: 'Informativo',
+      url: '/admin/articles',
+      icon: FileText,
+    },
+    {
+      title: 'Obras Executadas',
+      url: '/admin/projects',
+      icon: Image,
+    },
+  ];
+
+  const configItems = [
+    {
+      title: 'Redes Sociais',
+      url: '/admin/social-links',
+      icon: Share2,
+    },
+    {
+      title: 'Dados de Contato',
+      url: '/admin/contact-info',
+      icon: Phone,
+    },
+    {
+      title: 'Configurações',
+      url: '/admin/settings',
+      icon: Settings,
+    },
+  ];
+
+  const isActive = (path: string) => {
+    if (path === '/admin') {
+      return location.pathname === '/admin';
+    }
+    return location.pathname.startsWith(path);
+  };
+
+  const renderMenuItem = (item: { title: string; url: string; icon: any; badge?: number }) => {
+    const active = isActive(item.url);
+    const menuButton = (
+      <SidebarMenuButton asChild className={cn("h-11 text-base", active && "bg-gray-100 dark:bg-gray-800 text-primary font-medium")}>
+        <Link to={item.url} className="flex items-center gap-3">
+          <item.icon className="w-5 h-5 flex-shrink-0" />
+          {!isCollapsed && (
+            <>
+              <span className="flex-1">{item.title}</span>
+              {item.badge && (
+                <Badge variant="destructive" className="ml-auto">
+                  {item.badge}
+                </Badge>
+              )}
+            </>
+          )}
+        </Link>
+      </SidebarMenuButton>
+    );
+
+    if (isCollapsed) {
+      return (
+        <Tooltip>
+          <TooltipTrigger asChild>{menuButton}</TooltipTrigger>
+          <TooltipContent side="right" className="flex items-center gap-2">
+            <span>{item.title}</span>
+            {item.badge && (
+              <Badge variant="destructive">{item.badge}</Badge>
+            )}
+          </TooltipContent>
+        </Tooltip>
+      );
+    }
+
+    return menuButton;
+  };
 
   return (
-    <Sidebar className="bg-white border-r border-gray-200">
-      <SidebarContent>
+    <TooltipProvider delayDuration={0}>
+      <Sidebar className="bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800">
         {/* Logo Section */}
-        <div className="px-6 py-4 border-b border-gray-200">
-          <Link to="/admin" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center">
-              <span className="text-white font-bold text-lg">FG</span>
+        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
+          {!isCollapsed ? (
+            <div className="flex items-center gap-3">
+              <img 
+                src="/public/assets/images/fg-laport-logo.png" 
+                alt="FG Laport Logo" 
+                className="w-12 h-12 object-contain"
+              />
+              <div className="flex flex-col">
+                <span className="font-heading text-xl text-gray-900 dark:text-white leading-none" style={{letterSpacing: '0.05em'}}>
+                  LAPORT
+                </span>
+                <span className="font-heading text-sm text-gray-600 dark:text-gray-400 leading-none" style={{letterSpacing: '0.05em'}}>
+                  ENGENHARIA
+                </span>
+              </div>
             </div>
-            <span className="font-bold text-xl text-gray-900">LAPORT</span>
-          </Link>
+          ) : (
+            <img 
+              src="/public/assets/images/fg-laport-logo.png" 
+              alt="FG Laport Logo" 
+              className="w-10 h-10 object-contain mx-auto"
+            />
+          )}
         </div>
 
-        {/* Dashboard */}
-        <SidebarGroup className="px-3 py-4">
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <Link
-                  to="/admin"
-                  className={cn(
-                    'flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors',
-                    isActive('/admin') && 'bg-blue-50 text-blue-700 border-l-4 border-blue-700 font-medium'
-                  )}
-                >
-                  <LayoutDashboard className="w-5 h-5" />
-                  <span>Visão Geral</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarGroup>
-
-        {/* Conteúdo */}
-        <SidebarGroup className="px-3 py-2">
-          <SidebarGroupLabel className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-            <FileText className="w-4 h-4" />
-            <span>Conteúdo</span>
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link
-                    to="/admin/messages"
-                    className={cn(
-                      'flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors',
-                      isActive('/admin/messages') && 'bg-blue-50 text-blue-700 border-l-4 border-blue-700 font-medium'
-                    )}
-                  >
-                    <MessageSquare className="w-5 h-5" />
-                    <span>Mensagens</span>
-                    {unreadCount > 0 && (
-                      <span className="ml-auto bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                        {unreadCount}
-                      </span>
-                    )}
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link
-                    to="/admin/services"
-                    className={cn(
-                      'flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors',
-                      isActive('/admin/services') && 'bg-blue-50 text-blue-700 border-l-4 border-blue-700 font-medium'
-                    )}
-                  >
-                    <Wrench className="w-5 h-5" />
-                    <span>Serviços</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link
-                    to="/admin/articles"
-                    className={cn(
-                      'flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors',
-                      isActive('/admin/articles') && 'bg-blue-50 text-blue-700 border-l-4 border-blue-700 font-medium'
-                    )}
-                  >
-                    <FileText className="w-5 h-5" />
-                    <span>Informativo</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link
-                    to="/admin/projects"
-                    className={cn(
-                      'flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors',
-                      isActive('/admin/projects') && 'bg-blue-50 text-blue-700 border-l-4 border-blue-700 font-medium'
-                    )}
-                  >
-                    <Image className="w-5 h-5" />
-                    <span>Obras Executadas</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        {/* Configuração */}
-        <SidebarGroup className="px-3 py-2">
-          <SidebarGroupLabel className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-            <Settings className="w-4 h-4" />
-            <span>Configuração</span>
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link
-                    to="/admin/social-links"
-                    className={cn(
-                      'flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors',
-                      isActive('/admin/social-links') && 'bg-blue-50 text-blue-700 border-l-4 border-blue-700 font-medium'
-                    )}
-                  >
-                    <Share2 className="w-5 h-5" />
-                    <span>Rede Sociais</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link
-                    to="/admin/contact-info"
-                    className={cn(
-                      'flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors',
-                      isActive('/admin/contact-info') && 'bg-blue-50 text-blue-700 border-l-4 border-blue-700 font-medium'
-                    )}
-                  >
-                    <Phone className="w-5 h-5" />
-                    <span>Dados de Contato</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link
-                    to="/admin/settings"
-                    className={cn(
-                      'flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors',
-                      isActive('/admin/settings') && 'bg-blue-50 text-blue-700 border-l-4 border-blue-700 font-medium'
-                    )}
-                  >
-                    <Settings className="w-5 h-5" />
-                    <span>Configurações</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        {/* Version */}
-        <div className="mt-auto px-6 py-4 border-t border-gray-200">
-          <p className="text-xs text-gray-500">Versão 2.0.0</p>
+        {/* Toggle Button */}
+        <div className="px-3 py-2 border-b border-gray-200 dark:border-gray-800">
+          <Button 
+            onClick={toggleSidebar} 
+            variant="ghost" 
+            size="icon"
+            className="w-full h-10 hover:bg-gray-100 dark:hover:bg-gray-800"
+          >
+            <ChevronLeft className={cn("w-5 h-5 transition-transform", isCollapsed && "rotate-180")} />
+          </Button>
         </div>
-      </SidebarContent>
-    </Sidebar>
+
+        <SidebarContent className="px-3 py-4">
+          {/* Dashboard Group */}
+          <SidebarGroup>
+            <SidebarGroupLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300 px-3 mb-2 flex items-center gap-2">
+              <LayoutDashboard className="w-4 h-4" />
+              {!isCollapsed && <span>Dashboard</span>}
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {dashboardItems.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    {renderMenuItem(item)}
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+
+          {/* Content Group */}
+          <SidebarGroup>
+            <SidebarGroupLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300 px-3 mb-2 flex items-center gap-2">
+              <FileText className="w-4 h-4" />
+              {!isCollapsed && <span>Conteúdo</span>}
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {contentItems.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    {renderMenuItem(item)}
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+
+          {/* Configuration Group */}
+          <SidebarGroup>
+            <SidebarGroupLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300 px-3 mb-2 flex items-center gap-2">
+              <Settings className="w-4 h-4" />
+              {!isCollapsed && <span>Configuração</span>}
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {configItems.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    {renderMenuItem(item)}
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+
+        {/* Footer Version */}
+        {!isCollapsed && (
+          <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-800">
+            <p className="text-xs text-gray-500 dark:text-gray-400">Versão 2.0.0</p>
+          </div>
+        )}
+      </Sidebar>
+    </TooltipProvider>
   );
 };
 

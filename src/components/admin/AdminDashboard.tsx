@@ -60,7 +60,10 @@ const AdminDashboard = () => {
       const projectsRes = await supabase.from('projects').select('id', { count: 'exact', head: true });
       const socialLinksRes = await supabase.from('social_links').select('id', { count: 'exact', head: true });
       const messagesRes = await supabase.from('contact_messages').select('id', { count: 'exact', head: true });
-      const unreadMessages = await supabase.from('contact_messages').select('read').eq('read', false);
+      
+      // Fetch messages to count unread ones
+      const allMessagesRes = await supabase.from('contact_messages').select('is_read');
+      const unreadCount = allMessagesRes.data?.filter(m => !m.is_read).length || 0;
 
       setStats({
         services: servicesRes.count || 0,
@@ -68,7 +71,7 @@ const AdminDashboard = () => {
         projects: projectsRes.count || 0,
         socialLinks: socialLinksRes.count || 0,
         messages: messagesRes.count || 0,
-        unreadMessages: unreadMessages.data?.length || 0,
+        unreadMessages: unreadCount,
       });
 
       const [recentServices, recentArticles, recentProjects] = await Promise.all([
@@ -151,14 +154,14 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
             Bem-vindo ao Dashboard
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-400">
             Gerencie todo o conteúdo do seu site em um só lugar
           </p>
         </div>
@@ -174,23 +177,23 @@ const AdminDashboard = () => {
       </div>
 
       {/* Hero Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
         {/* Services Card */}
         <Link to="/admin/services">
-          <Card className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
+          <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all cursor-pointer">
+            <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 sm:p-6">
+              <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 Serviços
               </CardTitle>
-              <div className="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center">
-                <Wrench className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-blue-600 flex items-center justify-center">
+                <Wrench className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-gray-900">
+            <CardContent className="p-4 sm:p-6 pt-0">
+              <div className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
                 {stats.services}
               </div>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 Serviços cadastrados
               </p>
             </CardContent>
@@ -199,20 +202,20 @@ const AdminDashboard = () => {
 
         {/* Articles Card */}
         <Link to="/admin/articles">
-          <Card className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
+          <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all cursor-pointer">
+            <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 sm:p-6">
+              <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 Artigos
               </CardTitle>
-              <div className="w-12 h-12 rounded-lg bg-green-600 flex items-center justify-center">
-                <FileText className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-green-600 flex items-center justify-center">
+                <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-gray-900">
+            <CardContent className="p-4 sm:p-6 pt-0">
+              <div className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
                 {stats.articles}
               </div>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 Artigos publicados
               </p>
             </CardContent>
@@ -221,20 +224,20 @@ const AdminDashboard = () => {
 
         {/* Projects Card */}
         <Link to="/admin/projects">
-          <Card className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
+          <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all cursor-pointer">
+            <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 sm:p-6">
+              <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 Projetos
               </CardTitle>
-              <div className="w-12 h-12 rounded-lg bg-purple-600 flex items-center justify-center">
-                <Image className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-purple-600 flex items-center justify-center">
+                <Image className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-gray-900">
+            <CardContent className="p-4 sm:p-6 pt-0">
+              <div className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
                 {stats.projects}
               </div>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 Obras executadas
               </p>
             </CardContent>
@@ -243,20 +246,20 @@ const AdminDashboard = () => {
 
         {/* Social Links Card */}
         <Link to="/admin/social-links">
-          <Card className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
+          <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all cursor-pointer">
+            <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 sm:p-6">
+              <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 Redes Sociais
               </CardTitle>
-              <div className="w-12 h-12 rounded-lg bg-orange-600 flex items-center justify-center">
-                <Share2 className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-orange-600 flex items-center justify-center">
+                <Share2 className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-gray-900">
+            <CardContent className="p-4 sm:p-6 pt-0">
+              <div className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
                 {stats.socialLinks}
               </div>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 Links ativos
               </p>
             </CardContent>
@@ -265,20 +268,20 @@ const AdminDashboard = () => {
 
         {/* Messages Card */}
         <Link to="/admin/messages">
-          <Card className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
+          <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all cursor-pointer">
+            <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 sm:p-6">
+              <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 Mensagens
               </CardTitle>
-              <div className="w-12 h-12 rounded-lg bg-red-600 flex items-center justify-center">
-                <MessageSquare className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-red-600 flex items-center justify-center">
+                <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-gray-900">
+            <CardContent className="p-4 sm:p-6 pt-0">
+              <div className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
                 {stats.messages}
               </div>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 {stats.unreadMessages > 0 ? `${stats.unreadMessages} não lidas` : 'Todas lidas'}
               </p>
             </CardContent>
@@ -287,46 +290,46 @@ const AdminDashboard = () => {
       </div>
 
       {/* Quick Stats Mini Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="bg-white border border-gray-200 rounded-lg shadow-sm">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all">
+          <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 sm:p-6">
+            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
               Visualizações Hoje
             </CardTitle>
             <TrendingUp className="w-4 h-4 text-green-600" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-gray-900">1,234</div>
+          <CardContent className="p-4 sm:p-6 pt-0">
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">1,234</div>
             <p className="text-xs text-green-600 mt-1">
               +12% desde ontem
             </p>
           </CardContent>
         </Card>
 
-        <Card className="bg-white border border-gray-200 rounded-lg shadow-sm">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">
+        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all">
+          <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 sm:p-6">
+            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
               Taxa de Engajamento
             </CardTitle>
             <Activity className="w-4 h-4 text-blue-600" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-gray-900">68%</div>
+          <CardContent className="p-4 sm:p-6 pt-0">
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">68%</div>
             <p className="text-xs text-blue-600 mt-1">
               +5% este mês
             </p>
           </CardContent>
         </Card>
 
-        <Card className="bg-white border border-gray-200 rounded-lg shadow-sm">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">
+        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all">
+          <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 sm:p-6">
+            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
               Tempo Médio
             </CardTitle>
             <Clock className="w-4 h-4 text-purple-600" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-gray-900">3m 24s</div>
+          <CardContent className="p-4 sm:p-6 pt-0">
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">3m 24s</div>
             <p className="text-xs text-purple-600 mt-1">
               +18s este mês
             </p>
@@ -335,20 +338,20 @@ const AdminDashboard = () => {
       </div>
 
       {/* Recent Updates */}
-      <Card className="bg-white border border-gray-200 rounded-lg shadow-sm">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-gray-900">
-            <Clock className="w-5 h-5 text-gray-600" />
+      <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all">
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
+            <Clock className="w-5 h-5 text-gray-600 dark:text-gray-400" />
             Atualizações Recentes
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="dark:text-gray-400">
             Últimas modificações no sistema
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-4 sm:p-6 pt-0">
           <div className="space-y-4">
             {recentItems.length === 0 ? (
-              <p className="text-sm text-gray-500 text-center py-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-4">
                 Nenhuma atualização recente
               </p>
             ) : (
@@ -357,16 +360,16 @@ const AdminDashboard = () => {
                 return (
                   <div 
                     key={`${item.type}-${item.id}`}
-                    className="flex items-start gap-4 p-3 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="flex items-start gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                   >
                     <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center flex-shrink-0">
                       <Icon className="w-5 h-5 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
                         {item.title}
                       </p>
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                         {getTypeLabel(item.type)} • {formatDate(item.updated_at)}
                       </p>
                     </div>
@@ -379,58 +382,58 @@ const AdminDashboard = () => {
       </Card>
 
       {/* Bottom Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {/* Activity Chart Placeholder */}
-        <Card className="bg-white border border-gray-200 rounded-lg shadow-sm">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-gray-900">
-              <Activity className="w-5 h-5 text-gray-600" />
+        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all">
+          <CardHeader className="p-4 sm:p-6">
+            <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
+              <Activity className="w-5 h-5 text-gray-600 dark:text-gray-400" />
               Atividade
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="dark:text-gray-400">
               Visão geral dos últimos 7 dias
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
-              <p className="text-sm text-gray-500">Gráfico em desenvolvimento</p>
+          <CardContent className="p-4 sm:p-6 pt-0">
+            <div className="h-64 flex items-center justify-center bg-gray-50 dark:bg-gray-900 rounded-lg">
+              <p className="text-sm text-gray-500 dark:text-gray-400">Gráfico em desenvolvimento</p>
             </div>
           </CardContent>
         </Card>
 
         {/* Quick Actions */}
-        <Card className="bg-white border border-gray-200 rounded-lg shadow-sm">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-gray-900">
-              <Zap className="w-5 h-5 text-gray-600" />
+        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all">
+          <CardHeader className="p-4 sm:p-6">
+            <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
+              <Zap className="w-5 h-5 text-gray-600 dark:text-gray-400" />
               Ações Rápidas
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="dark:text-gray-400">
               Acesso rápido às principais funcionalidades
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-4 sm:p-6 pt-0">
             <div className="grid grid-cols-2 gap-3">
               <Link to="/admin/services">
-                <Button variant="outline" className="w-full justify-start gap-2 h-auto py-3">
+                <Button variant="outline" className="w-full justify-start gap-2 h-auto py-3 dark:border-gray-600 dark:hover:bg-gray-700">
                   <Wrench className="w-4 h-4" />
                   <span className="text-sm">Novo Serviço</span>
                 </Button>
               </Link>
               <Link to="/admin/articles">
-                <Button variant="outline" className="w-full justify-start gap-2 h-auto py-3">
+                <Button variant="outline" className="w-full justify-start gap-2 h-auto py-3 dark:border-gray-600 dark:hover:bg-gray-700">
                   <FileText className="w-4 h-4" />
                   <span className="text-sm">Novo Artigo</span>
                 </Button>
               </Link>
               <Link to="/admin/projects">
-                <Button variant="outline" className="w-full justify-start gap-2 h-auto py-3">
+                <Button variant="outline" className="w-full justify-start gap-2 h-auto py-3 dark:border-gray-600 dark:hover:bg-gray-700">
                   <Image className="w-4 h-4" />
                   <span className="text-sm">Nova Obra</span>
                 </Button>
               </Link>
               <Link to="/admin/messages">
-                <Button variant="outline" className="w-full justify-start gap-2 h-auto py-3">
+                <Button variant="outline" className="w-full justify-start gap-2 h-auto py-3 dark:border-gray-600 dark:hover:bg-gray-700">
                   <MessageSquare className="w-4 h-4" />
                   <span className="text-sm">Ver Mensagens</span>
                 </Button>
@@ -441,29 +444,29 @@ const AdminDashboard = () => {
       </div>
 
       {/* System Info */}
-      <Card className="bg-white border border-gray-200 rounded-lg shadow-sm">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-gray-900">
-            <Info className="w-5 h-5 text-gray-600" />
+      <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all">
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
+            <Info className="w-5 h-5 text-gray-600 dark:text-gray-400" />
             Informações do Sistema
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-4 sm:p-6 pt-0">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div>
-              <p className="text-gray-500 mb-1">Status</p>
+              <p className="text-gray-500 dark:text-gray-400 mb-1">Status</p>
               <p className="font-medium text-green-600 flex items-center gap-1">
                 <span className="w-2 h-2 bg-green-600 rounded-full"></span>
                 Online
               </p>
             </div>
             <div>
-              <p className="text-gray-500 mb-1">Última Sincronização</p>
-              <p className="font-medium text-gray-900">Há 2 minutos</p>
+              <p className="text-gray-500 dark:text-gray-400 mb-1">Última Sincronização</p>
+              <p className="font-medium text-gray-900 dark:text-white">Há 2 minutos</p>
             </div>
             <div>
-              <p className="text-gray-500 mb-1">Versão</p>
-              <p className="font-medium text-gray-900">2.0.0</p>
+              <p className="text-gray-500 dark:text-gray-400 mb-1">Versão</p>
+              <p className="font-medium text-gray-900 dark:text-white">2.0.0</p>
             </div>
           </div>
         </CardContent>
