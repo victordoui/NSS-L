@@ -18,7 +18,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
           <AdminHeader />
           
           <main className="flex-1 p-6 overflow-x-hidden bg-gray-50">
-            <div className="max-w-7xl mx-auto space-y-4 animate-fade-in">
+            <div className="max-w-7xl mx-auto space-y-4">
               <div className="flex items-center justify-between gap-4">
                 <Breadcrumbs />
                 <SidebarTrigger className="lg:hidden" />
