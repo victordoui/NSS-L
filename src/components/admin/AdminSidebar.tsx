@@ -143,7 +143,7 @@ const AdminSidebar = () => {
 
   return (
     <TooltipProvider delayDuration={0}>
-      <Sidebar className="bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800">
+      <Sidebar collapsible="icon" className="bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800">
         {/* Logo Section */}
         <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
           {!isCollapsed ? (
