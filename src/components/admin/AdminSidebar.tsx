@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -9,6 +10,7 @@ import {
   Phone,
   Settings,
   ChevronLeft,
+  ChevronDown,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -21,6 +23,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Badge } from '@/components/ui/badge';
@@ -33,6 +36,11 @@ const AdminSidebar = () => {
   const isCollapsed = state === 'collapsed';
   const { messages } = useContactMessages();
   const unreadCount = messages?.filter((m) => !m.is_read).length || 0;
+
+  // Estados para controlar expansão dos grupos
+  const [dashboardOpen, setDashboardOpen] = useState(true);
+  const [contentOpen, setContentOpen] = useState(true);
+  const [configOpen, setConfigOpen] = useState(true);
 
   const dashboardItems = [
     {
@@ -91,11 +99,16 @@ const AdminSidebar = () => {
     return location.pathname.startsWith(path);
   };
 
+  // Verificar se há rotas ativas em cada grupo
+  const hasDashboardActive = dashboardItems.some(item => isActive(item.url));
+  const hasContentActive = contentItems.some(item => isActive(item.url));
+  const hasConfigActive = configItems.some(item => isActive(item.url));
+
   const renderMenuItem = (item: { title: string; url: string; icon: any; badge?: number }) => {
     const active = isActive(item.url);
     const menuButton = (
-      <SidebarMenuButton asChild className={cn("h-11 text-base", active && "bg-gray-100 dark:bg-gray-800 text-primary font-medium")}>
-        <Link to={item.url} className="flex items-center gap-3">
+      <SidebarMenuButton asChild className={cn("h-11 text-[15px]", active && "bg-gray-100 dark:bg-gray-800 text-primary font-medium")}>
+        <Link to={item.url} className="flex items-center gap-3 pl-11">
           <item.icon className="w-5 h-5 flex-shrink-0" />
           {!isCollapsed && (
             <>
@@ -172,55 +185,142 @@ const AdminSidebar = () => {
 
         <SidebarContent className="px-3 py-4">
           {/* Dashboard Group */}
-          <SidebarGroup>
-            <SidebarGroupLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300 px-3 mb-2 flex items-center gap-2">
-              <LayoutDashboard className="w-4 h-4" />
-              {!isCollapsed && <span>Dashboard</span>}
-            </SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {dashboardItems.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    {renderMenuItem(item)}
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+          {!isCollapsed ? (
+            <Collapsible 
+              open={dashboardOpen || hasDashboardActive} 
+              onOpenChange={setDashboardOpen}
+              className="space-y-1"
+            >
+              <CollapsibleTrigger asChild>
+                <SidebarGroupLabel className="text-lg font-semibold text-gray-900 dark:text-white px-3 mb-2 flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md py-2 transition-colors">
+                  <LayoutDashboard className="w-5 h-5" />
+                  <span className="flex-1">Dashboard</span>
+                  <ChevronDown className={cn(
+                    "w-4 h-4 transition-transform",
+                    !(dashboardOpen || hasDashboardActive) && "-rotate-90"
+                  )} />
+                </SidebarGroupLabel>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="overflow-hidden transition-all">
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {dashboardItems.map((item) => (
+                      <SidebarMenuItem key={item.title}>
+                        {renderMenuItem(item)}
+                      </SidebarMenuItem>
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </Collapsible>
+          ) : (
+            <SidebarGroup>
+              <SidebarGroupLabel className="text-lg font-semibold text-gray-900 dark:text-white px-3 mb-2 flex items-center gap-2">
+                <LayoutDashboard className="w-5 h-5" />
+              </SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {dashboardItems.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      {renderMenuItem(item)}
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          )}
 
           {/* Content Group */}
-          <SidebarGroup>
-            <SidebarGroupLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300 px-3 mb-2 flex items-center gap-2">
-              <FileText className="w-4 h-4" />
-              {!isCollapsed && <span>Conteúdo</span>}
-            </SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {contentItems.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    {renderMenuItem(item)}
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+          {!isCollapsed ? (
+            <Collapsible 
+              open={contentOpen || hasContentActive} 
+              onOpenChange={setContentOpen}
+              className="space-y-1"
+            >
+              <CollapsibleTrigger asChild>
+                <SidebarGroupLabel className="text-lg font-semibold text-gray-900 dark:text-white px-3 mb-2 flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md py-2 transition-colors">
+                  <FileText className="w-5 h-5" />
+                  <span className="flex-1">Conteúdo</span>
+                  <ChevronDown className={cn(
+                    "w-4 h-4 transition-transform",
+                    !(contentOpen || hasContentActive) && "-rotate-90"
+                  )} />
+                </SidebarGroupLabel>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="overflow-hidden transition-all">
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {contentItems.map((item) => (
+                      <SidebarMenuItem key={item.title}>
+                        {renderMenuItem(item)}
+                      </SidebarMenuItem>
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </Collapsible>
+          ) : (
+            <SidebarGroup>
+              <SidebarGroupLabel className="text-lg font-semibold text-gray-900 dark:text-white px-3 mb-2 flex items-center gap-2">
+                <FileText className="w-5 h-5" />
+              </SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {contentItems.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      {renderMenuItem(item)}
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          )}
 
           {/* Configuration Group */}
-          <SidebarGroup>
-            <SidebarGroupLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300 px-3 mb-2 flex items-center gap-2">
-              <Settings className="w-4 h-4" />
-              {!isCollapsed && <span>Configuração</span>}
-            </SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {configItems.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    {renderMenuItem(item)}
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+          {!isCollapsed ? (
+            <Collapsible 
+              open={configOpen || hasConfigActive} 
+              onOpenChange={setConfigOpen}
+              className="space-y-1"
+            >
+              <CollapsibleTrigger asChild>
+                <SidebarGroupLabel className="text-lg font-semibold text-gray-900 dark:text-white px-3 mb-2 flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md py-2 transition-colors">
+                  <Settings className="w-5 h-5" />
+                  <span className="flex-1">Configuração</span>
+                  <ChevronDown className={cn(
+                    "w-4 h-4 transition-transform",
+                    !(configOpen || hasConfigActive) && "-rotate-90"
+                  )} />
+                </SidebarGroupLabel>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="overflow-hidden transition-all">
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {configItems.map((item) => (
+                      <SidebarMenuItem key={item.title}>
+                        {renderMenuItem(item)}
+                      </SidebarMenuItem>
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </Collapsible>
+          ) : (
+            <SidebarGroup>
+              <SidebarGroupLabel className="text-lg font-semibold text-gray-900 dark:text-white px-3 mb-2 flex items-center gap-2">
+                <Settings className="w-5 h-5" />
+              </SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {configItems.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      {renderMenuItem(item)}
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          )}
         </SidebarContent>
 
         {/* Footer Version */}
