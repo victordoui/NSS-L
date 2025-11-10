@@ -107,7 +107,7 @@ const AdminSidebar = () => {
   const renderMenuItem = (item: { title: string; url: string; icon: any; badge?: number }) => {
     const active = isActive(item.url);
     const menuButton = (
-      <SidebarMenuButton asChild className={cn("h-11 text-[15px]", active && "bg-gray-100 dark:bg-gray-800 text-primary font-medium")}>
+      <SidebarMenuButton asChild className={cn("h-10 text-sm", active && "bg-gray-100 dark:bg-gray-800 text-primary font-medium")}>
         <Link to={item.url} className="flex items-center gap-3 pl-11">
           <item.icon className="w-5 h-5 flex-shrink-0" />
           {!isCollapsed && (
@@ -171,17 +171,6 @@ const AdminSidebar = () => {
           )}
         </div>
 
-        {/* Toggle Button */}
-        <div className="px-3 py-2 border-b border-gray-200 dark:border-gray-800">
-          <Button 
-            onClick={toggleSidebar} 
-            variant="ghost" 
-            size="icon"
-            className="w-full h-10 hover:bg-gray-100 dark:hover:bg-gray-800"
-          >
-            <ChevronLeft className={cn("w-5 h-5 transition-transform", isCollapsed && "rotate-180")} />
-          </Button>
-        </div>
 
         <SidebarContent className="px-3 py-4">
           {/* Dashboard Group */}
@@ -192,7 +181,7 @@ const AdminSidebar = () => {
               className="space-y-1"
             >
               <CollapsibleTrigger asChild>
-                <SidebarGroupLabel className="text-lg font-semibold text-gray-900 dark:text-white px-3 mb-2 flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md py-2 transition-colors">
+                <SidebarGroupLabel className="text-base font-semibold text-gray-900 dark:text-white px-3 mb-2 flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md py-2 transition-colors">
                   <LayoutDashboard className="w-5 h-5" />
                   <span className="flex-1">Dashboard</span>
                   <ChevronDown className={cn(
@@ -215,7 +204,7 @@ const AdminSidebar = () => {
             </Collapsible>
           ) : (
             <SidebarGroup>
-              <SidebarGroupLabel className="text-lg font-semibold text-gray-900 dark:text-white px-3 mb-2 flex items-center gap-2">
+              <SidebarGroupLabel className="text-base font-semibold text-gray-900 dark:text-white px-3 mb-2 flex items-center gap-2">
                 <LayoutDashboard className="w-5 h-5" />
               </SidebarGroupLabel>
               <SidebarGroupContent>
@@ -238,7 +227,7 @@ const AdminSidebar = () => {
               className="space-y-1"
             >
               <CollapsibleTrigger asChild>
-                <SidebarGroupLabel className="text-lg font-semibold text-gray-900 dark:text-white px-3 mb-2 flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md py-2 transition-colors">
+                <SidebarGroupLabel className="text-base font-semibold text-gray-900 dark:text-white px-3 mb-2 flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md py-2 transition-colors">
                   <FileText className="w-5 h-5" />
                   <span className="flex-1">Conteúdo</span>
                   <ChevronDown className={cn(
@@ -261,7 +250,7 @@ const AdminSidebar = () => {
             </Collapsible>
           ) : (
             <SidebarGroup>
-              <SidebarGroupLabel className="text-lg font-semibold text-gray-900 dark:text-white px-3 mb-2 flex items-center gap-2">
+              <SidebarGroupLabel className="text-base font-semibold text-gray-900 dark:text-white px-3 mb-2 flex items-center gap-2">
                 <FileText className="w-5 h-5" />
               </SidebarGroupLabel>
               <SidebarGroupContent>
@@ -284,7 +273,7 @@ const AdminSidebar = () => {
               className="space-y-1"
             >
               <CollapsibleTrigger asChild>
-                <SidebarGroupLabel className="text-lg font-semibold text-gray-900 dark:text-white px-3 mb-2 flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md py-2 transition-colors">
+                <SidebarGroupLabel className="text-base font-semibold text-gray-900 dark:text-white px-3 mb-2 flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md py-2 transition-colors">
                   <Settings className="w-5 h-5" />
                   <span className="flex-1">Configuração</span>
                   <ChevronDown className={cn(
@@ -307,7 +296,7 @@ const AdminSidebar = () => {
             </Collapsible>
           ) : (
             <SidebarGroup>
-              <SidebarGroupLabel className="text-lg font-semibold text-gray-900 dark:text-white px-3 mb-2 flex items-center gap-2">
+              <SidebarGroupLabel className="text-base font-semibold text-gray-900 dark:text-white px-3 mb-2 flex items-center gap-2">
                 <Settings className="w-5 h-5" />
               </SidebarGroupLabel>
               <SidebarGroupContent>
