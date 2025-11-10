@@ -3,18 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { 
-  Activity, 
   Wrench, 
   FileText, 
   Building2, 
   Share2, 
-  Settings, 
-  Phone, 
-  ChevronRight, 
-  Users,
   MessageSquare,
-  Menu,
-  X
+  ChevronRight,
+  RefreshCw
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -26,12 +21,11 @@ interface DashboardStats {
   contactMessages?: number;
 }
 
-interface RecentActivity {
+interface RecentItem {
   id: string;
-  type: 'service' | 'article' | 'project' | 'contact';
   title: string;
-  time: string;
-  status: 'success' | 'pending' | 'error';
+  type: 'service' | 'article' | 'project';
+  updated_at: string;
 }
 
 const AdminDashboard = () => {
@@ -43,30 +37,7 @@ const AdminDashboard = () => {
     contactMessages: 0
   });
   const [loading, setLoading] = useState(true);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [recentActivities] = useState<RecentActivity[]>([
-    {
-      id: '1',
-      type: 'service',
-      title: 'Novo serviço adicionado',
-      time: '2 horas atrás',
-      status: 'success'
-    },
-    {
-      id: '2',
-      type: 'contact',
-      title: 'Nova mensagem de contato',
-      time: '4 horas atrás',
-      status: 'pending'
-    },
-    {
-      id: '3',
-      type: 'article',
-      title: 'Artigo publicado',
-      time: '1 dia atrás',
-      status: 'success'
-    }
-  ]);
+  const [recentItems, setRecentItems] = useState<RecentItem[]>([]);
 
   useEffect(() => {
     fetchStats();
@@ -89,6 +60,21 @@ const AdminDashboard = () => {
         socialLinks: socialLinksRes.count || 0,
         contactMessages: contactRes.count || 0
       });
+
+      // Fetch recent items
+      const [recentServices, recentArticles, recentProjects] = await Promise.all([
+        supabase.from('services').select('id, title, updated_at').order('updated_at', { ascending: false }).limit(2),
+        supabase.from('articles').select('id, title, updated_at').order('updated_at', { ascending: false }).limit(2),
+        supabase.from('projects').select('id, title, updated_at').order('updated_at', { ascending: false }).limit(2)
+      ]);
+
+      const items: RecentItem[] = [
+        ...(recentServices.data?.map(item => ({ ...item, type: 'service' as const })) || []),
+        ...(recentArticles.data?.map(item => ({ ...item, type: 'article' as const })) || []),
+        ...(recentProjects.data?.map(item => ({ ...item, type: 'project' as const })) || [])
+      ].sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()).slice(0, 5);
+
+      setRecentItems(items);
     } catch (error) {
       console.error('Erro ao buscar estatísticas:', error);
     } finally {
@@ -96,271 +82,252 @@ const AdminDashboard = () => {
     }
   };
 
-  const getActivityIcon = (type: string) => {
+  const getTypeLabel = (type: string) => {
     switch (type) {
-      case 'service': return <Wrench className="h-4 w-4" />;
-      case 'article': return <FileText className="h-4 w-4" />;
-      case 'project': return <Building2 className="h-4 w-4" />;
-      case 'contact': return <MessageSquare className="h-4 w-4" />;
-      default: return <Activity className="h-4 w-4" />;
+      case 'service': return 'Serviço';
+      case 'article': return 'Artigo';
+      case 'project': return 'Projeto';
+      default: return type;
     }
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'success': return 'text-green-600';
-      case 'pending': return 'text-yellow-600';
-      case 'error': return 'text-red-600';
-      default: return 'text-gray-600';
+  const getTypeIcon = (type: string) => {
+    switch (type) {
+      case 'service': return <Wrench className="h-4 w-4 text-brand-gold" />;
+      case 'article': return <FileText className="h-4 w-4 text-brand-gold-light" />;
+      case 'project': return <Building2 className="h-4 w-4 text-gray-700" />;
+      default: return null;
     }
+  };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 60) return `${diffMins} min atrás`;
+    if (diffHours < 24) return `${diffHours}h atrás`;
+    if (diffDays < 7) return `${diffDays}d atrás`;
+    return date.toLocaleDateString('pt-BR');
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="flex items-center justify-center py-12">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <p className="text-gray-600">Carregando dashboard...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-gold mx-auto mb-4"></div>
+          <p className="text-gray-600 font-body">Carregando dashboard...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Mobile-Optimized Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex-1 min-w-0">
-              <h1 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 truncate">
-                Dashboard Admin
-              </h1>
-              <p className="hidden sm:block mt-1 text-sm text-gray-600">
-                Gerencie o conteúdo do seu site
-              </p>
-            </div>
-            
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2"
-              >
-                {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </Button>
-            </div>
-          </div>
+    <div className="space-y-6">
+      {/* Header Section */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900 font-heading">
+            Visão Geral
+          </h1>
+          <p className="text-sm text-gray-600 mt-1 font-body">
+            Bem-vindo ao painel administrativo FG Laport
+          </p>
         </div>
+        <Button 
+          variant="outline" 
+          size="sm"
+          onClick={fetchStats}
+          className="hover:bg-gray-50"
+        >
+          <RefreshCw className="h-4 w-4 mr-2" />
+          <span className="font-body">Atualizar</span>
+        </Button>
       </div>
 
-      {/* Mobile Menu Overlay */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-40 bg-black bg-opacity-50" onClick={() => setMobileMenuOpen(false)}>
-          <div className="fixed right-0 top-16 h-full w-64 bg-white shadow-lg p-4">
-            <div className="space-y-4">
-              <h3 className="font-semibold text-gray-900 mb-4">Ações Rápidas</h3>
-              <Link to="/admin/services" className="mobile-action-button" onClick={() => setMobileMenuOpen(false)}>
-                <Wrench className="h-5 w-5" />
-                <span>Gerenciar Serviços</span>
-                <ChevronRight className="h-4 w-4 ml-auto" />
-              </Link>
-              <Link to="/admin/articles" className="mobile-action-button" onClick={() => setMobileMenuOpen(false)}>
-                <FileText className="h-5 w-5" />
-                <span>Gerenciar Artigos</span>
-                <ChevronRight className="h-4 w-4 ml-auto" />
-              </Link>
-              <Link to="/admin/projects" className="mobile-action-button" onClick={() => setMobileMenuOpen(false)}>
-                <Building2 className="h-5 w-5" />
-                <span>Gerenciar Projetos</span>
-                <ChevronRight className="h-4 w-4 ml-auto" />
-              </Link>
-              <Link to="/admin/social-links" className="mobile-action-button" onClick={() => setMobileMenuOpen(false)}>
-                <Share2 className="h-5 w-5" />
-                <span>Links Sociais</span>
-                <ChevronRight className="h-4 w-4 ml-auto" />
-              </Link>
-              <Link to="/admin/contact-messages" className="mobile-action-button" onClick={() => setMobileMenuOpen(false)}>
-                <Phone className="h-5 w-5" />
-                <span>Mensagens</span>
-                <ChevronRight className="h-4 w-4 ml-auto" />
+      {/* Stats Cards - Compact Design */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4">
+        <Card className="admin-card-dashboard">
+          <CardContent className="p-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-gold to-brand-gold-dark flex items-center justify-center">
+                  <Wrench className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wide font-body">
+                    Serviços
+                  </p>
+                  <p className="text-2xl font-bold text-gray-900 mt-0.5 font-heading">
+                    {stats.services}
+                  </p>
+                </div>
+              </div>
+              <Link to="/admin/services">
+                <Button variant="ghost" size="sm" className="hover:bg-gray-50">
+                  <ChevronRight className="h-4 w-4 text-brand-gold" />
+                </Button>
               </Link>
             </div>
-          </div>
-        </div>
-      )}
+          </CardContent>
+        </Card>
 
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
-        <div className="max-w-7xl mx-auto">
-          {/* Premium Dashboard Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 mb-8">
-            <Card className="admin-card-dashboard">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-brand-gold to-brand-gold-dark flex items-center justify-center shadow-md">
-                    <Wrench className="h-6 w-6 text-white" />
-                  </div>
+        <Card className="admin-card-dashboard">
+          <CardContent className="p-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-gold-light to-brand-gold flex items-center justify-center">
+                  <FileText className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-600 mb-1 font-body">Serviços</p>
-                  <p className="text-3xl font-bold text-gray-900 font-heading">{stats.services}</p>
+                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wide font-body">
+                    Artigos
+                  </p>
+                  <p className="text-2xl font-bold text-gray-900 mt-0.5 font-heading">
+                    {stats.articles}
+                  </p>
                 </div>
-                <div className="mt-4 pt-4 border-t border-gray-100">
-                  <Link to="/admin/services" className="text-sm text-brand-gold hover:text-brand-gold-dark font-medium font-body transition-colors">
-                    Ver todos →
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="admin-card-dashboard">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-brand-gold-light to-brand-gold flex items-center justify-center shadow-md">
-                    <FileText className="h-6 w-6 text-white" />
-                  </div>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-600 mb-1 font-body">Artigos</p>
-                  <p className="text-3xl font-bold text-gray-900 font-heading">{stats.articles}</p>
-                </div>
-                <div className="mt-4 pt-4 border-t border-gray-100">
-                  <Link to="/admin/articles" className="text-sm text-brand-gold hover:text-brand-gold-dark font-medium font-body transition-colors">
-                    Ver todos →
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="admin-card-dashboard">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-gray-800 to-black flex items-center justify-center shadow-md">
-                    <Building2 className="h-6 w-6 text-brand-gold" />
-                  </div>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-600 mb-1 font-body">Projetos</p>
-                  <p className="text-3xl font-bold text-gray-900 font-heading">{stats.projects}</p>
-                </div>
-                <div className="mt-4 pt-4 border-t border-gray-100">
-                  <Link to="/admin/projects" className="text-sm text-brand-gold hover:text-brand-gold-dark font-medium font-body transition-colors">
-                    Ver todos →
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="admin-card-dashboard">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-brand-gold-dark to-gray-700 flex items-center justify-center shadow-md">
-                    <Share2 className="h-6 w-6 text-white" />
-                  </div>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-600 mb-1 font-body">Links Sociais</p>
-                  <p className="text-3xl font-bold text-gray-900 font-heading">{stats.socialLinks}</p>
-                </div>
-                <div className="mt-4 pt-4 border-t border-gray-100">
-                  <Link to="/admin/social-links" className="text-sm text-brand-gold hover:text-brand-gold-dark font-medium font-body transition-colors">
-                    Ver todos →
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="admin-card-dashboard sm:col-span-2 lg:col-span-1">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-brand-gold to-yellow-400 flex items-center justify-center shadow-md">
-                    <MessageSquare className="h-6 w-6 text-white" />
-                  </div>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-600 mb-1 font-body">Mensagens</p>
-                  <p className="text-3xl font-bold text-gray-900 font-heading">{stats.contactMessages}</p>
-                </div>
-                <div className="mt-4 pt-4 border-t border-gray-100">
-                  <Link to="/admin/contact-messages" className="text-sm text-brand-gold hover:text-brand-gold-dark font-medium font-body transition-colors">
-                    Ver todas →
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Mobile-Responsive Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-            {/* Recent Activities - Full width on mobile */}
-            <div className="lg:col-span-2">
-              <Card className="simple-card">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-lg sm:text-xl text-gray-900">Atividades Recentes</CardTitle>
-                </CardHeader>
-                <CardContent className="p-4 sm:p-6 pt-0">
-                  <div className="space-y-3 sm:space-y-4">
-                    {recentActivities.map((activity) => (
-                      <div key={activity.id} className="flex items-center p-3 sm:p-4 bg-gray-50 rounded-lg">
-                        <div className={`flex-shrink-0 ${getStatusColor(activity.status)}`}>
-                          {getActivityIcon(activity.type)}
-                        </div>
-                        <div className="ml-3 sm:ml-4 flex-1 min-w-0">
-                          <p className="text-sm sm:text-base font-medium text-gray-900 truncate">
-                            {activity.title}
-                          </p>
-                          <p className="text-xs sm:text-sm text-gray-500">{activity.time}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+              </div>
+              <Link to="/admin/articles">
+                <Button variant="ghost" size="sm" className="hover:bg-gray-50">
+                  <ChevronRight className="h-4 w-4 text-brand-gold" />
+                </Button>
+              </Link>
             </div>
+          </CardContent>
+        </Card>
 
-            {/* Quick Actions - Hidden on mobile, shown in mobile menu */}
-            <div className="hidden md:block">
-              <Card className="simple-card">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-lg sm:text-xl text-gray-900">Ações Rápidas</CardTitle>
-                </CardHeader>
-                <CardContent className="p-4 sm:p-6 pt-0">
-                  <div className="space-y-4">
-                    <Link to="/admin/services" className="simple-button w-full">
-                      <Wrench className="h-4 w-4 sm:h-5 sm:w-5" />
-                      <span className="text-sm sm:text-base">Gerenciar Serviços</span>
-                      <ChevronRight className="h-4 w-4 ml-auto" />
-                    </Link>
-                    <Link to="/admin/articles" className="simple-button w-full">
-                      <FileText className="h-4 w-4 sm:h-5 sm:w-5" />
-                      <span className="text-sm sm:text-base">Gerenciar Artigos</span>
-                      <ChevronRight className="h-4 w-4 ml-auto" />
-                    </Link>
-                    <Link to="/admin/projects" className="simple-button w-full">
-                      <Building2 className="h-4 w-4 sm:h-5 sm:w-5" />
-                      <span className="text-sm sm:text-base">Gerenciar Projetos</span>
-                      <ChevronRight className="h-4 w-4 ml-auto" />
-                    </Link>
-                    <Link to="/admin/social-links" className="simple-button w-full">
-                      <Share2 className="h-4 w-4 sm:h-5 sm:w-5" />
-                      <span className="text-sm sm:text-base">Links Sociais</span>
-                      <ChevronRight className="h-4 w-4 ml-auto" />
-                    </Link>
-                    <Link to="/admin/contact-messages" className="simple-button w-full">
-                      <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
-                      <span className="text-sm sm:text-base">Mensagens de Contato</span>
-                      <ChevronRight className="h-4 w-4 ml-auto" />
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
+        <Card className="admin-card-dashboard">
+          <CardContent className="p-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">
+                  <Building2 className="h-5 w-5 text-brand-gold" />
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wide font-body">
+                    Projetos
+                  </p>
+                  <p className="text-2xl font-bold text-gray-900 mt-0.5 font-heading">
+                    {stats.projects}
+                  </p>
+                </div>
+              </div>
+              <Link to="/admin/projects">
+                <Button variant="ghost" size="sm" className="hover:bg-gray-50">
+                  <ChevronRight className="h-4 w-4 text-brand-gold" />
+                </Button>
+              </Link>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
+
+        <Card className="admin-card-dashboard">
+          <CardContent className="p-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-gold-dark to-gray-700 flex items-center justify-center">
+                  <Share2 className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wide font-body">
+                    Redes
+                  </p>
+                  <p className="text-2xl font-bold text-gray-900 mt-0.5 font-heading">
+                    {stats.socialLinks}
+                  </p>
+                </div>
+              </div>
+              <Link to="/admin/social-links">
+                <Button variant="ghost" size="sm" className="hover:bg-gray-50">
+                  <ChevronRight className="h-4 w-4 text-brand-gold" />
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="admin-card-dashboard">
+          <CardContent className="p-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-gold to-yellow-400 flex items-center justify-center">
+                  <MessageSquare className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wide font-body">
+                    Mensagens
+                  </p>
+                  <p className="text-2xl font-bold text-gray-900 mt-0.5 font-heading">
+                    {stats.contactMessages}
+                  </p>
+                </div>
+              </div>
+              <Link to="/admin/contact-messages">
+                <Button variant="ghost" size="sm" className="hover:bg-gray-50">
+                  <ChevronRight className="h-4 w-4 text-brand-gold" />
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
       </div>
+
+      {/* Recent Updates Table */}
+      <Card className="admin-card-compact">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg font-semibold text-gray-900 font-heading">
+            Últimas Atualizações
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-0">
+          {recentItems.length === 0 ? (
+            <div className="p-8 text-center">
+              <p className="text-gray-500 font-body">Nenhuma atualização recente</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th className="pl-6">Tipo</th>
+                    <th>Título</th>
+                    <th>Atualizado</th>
+                    <th className="pr-6"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {recentItems.map((item) => (
+                    <tr key={`${item.type}-${item.id}`}>
+                      <td className="pl-6">
+                        <div className="flex items-center gap-2">
+                          {getTypeIcon(item.type)}
+                          <span className="text-xs font-medium text-gray-600 uppercase font-body">
+                            {getTypeLabel(item.type)}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="font-medium text-gray-900 font-body">{item.title}</td>
+                      <td className="text-gray-500 font-body">{formatDate(item.updated_at)}</td>
+                      <td className="pr-6">
+                        <Link 
+                          to={`/admin/${item.type === 'service' ? 'services' : item.type === 'article' ? 'articles' : 'projects'}`}
+                          className="text-brand-gold hover:text-brand-gold-dark font-medium text-sm font-body"
+                        >
+                          Ver →
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 };

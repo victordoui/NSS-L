@@ -31,11 +31,11 @@ export const Breadcrumbs = () => {
 
   return (
     <Breadcrumb>
-      <BreadcrumbList>
+      <BreadcrumbList className="text-sm">
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link to="/admin" className="flex items-center gap-2">
-              <Home className="h-4 w-4" />
+            <Link to="/admin" className="flex items-center gap-2 text-gray-500 hover:text-brand-gold transition-colors font-body">
+              <Home className="h-3.5 w-3.5" />
               Dashboard
             </Link>
           </BreadcrumbLink>
@@ -43,9 +43,9 @@ export const Breadcrumbs = () => {
         
         {pathSegments.length > 1 && (
           <>
-            <BreadcrumbSeparator />
+            <BreadcrumbSeparator className="text-gray-400" />
             <BreadcrumbItem>
-              <BreadcrumbPage>
+              <BreadcrumbPage className="text-gray-700 font-medium font-body">
                 {routeLabels[location.pathname] || pathSegments[pathSegments.length - 1]}
               </BreadcrumbPage>
             </BreadcrumbItem>
