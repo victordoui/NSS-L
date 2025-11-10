@@ -180,13 +180,13 @@ const AdminDashboard = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
         {/* Services Card */}
         <Link to="/admin/services">
-          <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all cursor-pointer">
+          <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-blue-500/20 dark:hover:shadow-blue-500/40 hover:scale-[1.02] transition-all duration-300 cursor-pointer group">
             <CardHeader className="flex flex-row items-center justify-between pb-2 p-3">
               <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 Serviços
               </CardTitle>
-              <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center">
-                <Wrench className="w-5 h-5 text-white" />
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shadow-lg group-hover:shadow-blue-500/50 transition-all">
+                <Wrench className="w-6 h-6 text-white" />
               </div>
             </CardHeader>
             <CardContent className="p-3 pt-0">
@@ -202,13 +202,13 @@ const AdminDashboard = () => {
 
         {/* Articles Card */}
         <Link to="/admin/articles">
-          <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all cursor-pointer">
+          <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-green-500/20 dark:hover:shadow-green-500/40 hover:scale-[1.02] transition-all duration-300 cursor-pointer group">
             <CardHeader className="flex flex-row items-center justify-between pb-2 p-3">
               <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 Artigos
               </CardTitle>
-              <div className="w-10 h-10 rounded-lg bg-green-600 flex items-center justify-center">
-                <FileText className="w-5 h-5 text-white" />
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center shadow-lg group-hover:shadow-green-500/50 transition-all">
+                <FileText className="w-6 h-6 text-white" />
               </div>
             </CardHeader>
             <CardContent className="p-3 pt-0">
@@ -224,13 +224,13 @@ const AdminDashboard = () => {
 
         {/* Projects Card */}
         <Link to="/admin/projects">
-          <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all cursor-pointer">
+          <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-purple-500/20 dark:hover:shadow-purple-500/40 hover:scale-[1.02] transition-all duration-300 cursor-pointer group">
             <CardHeader className="flex flex-row items-center justify-between pb-2 p-3">
               <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 Projetos
               </CardTitle>
-              <div className="w-10 h-10 rounded-lg bg-purple-600 flex items-center justify-center">
-                <Image className="w-5 h-5 text-white" />
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center shadow-lg group-hover:shadow-purple-500/50 transition-all">
+                <Image className="w-6 h-6 text-white" />
               </div>
             </CardHeader>
             <CardContent className="p-3 pt-0">
@@ -246,13 +246,13 @@ const AdminDashboard = () => {
 
         {/* Social Links Card */}
         <Link to="/admin/social-links">
-          <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all cursor-pointer">
+          <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-orange-500/20 dark:hover:shadow-orange-500/40 hover:scale-[1.02] transition-all duration-300 cursor-pointer group">
             <CardHeader className="flex flex-row items-center justify-between pb-2 p-3">
               <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 Redes Sociais
               </CardTitle>
-              <div className="w-10 h-10 rounded-lg bg-orange-600 flex items-center justify-center">
-                <Share2 className="w-5 h-5 text-white" />
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-orange-700 flex items-center justify-center shadow-lg group-hover:shadow-orange-500/50 transition-all">
+                <Share2 className="w-6 h-6 text-white" />
               </div>
             </CardHeader>
             <CardContent className="p-3 pt-0">
@@ -268,13 +268,13 @@ const AdminDashboard = () => {
 
         {/* Messages Card */}
         <Link to="/admin/messages">
-          <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all cursor-pointer">
+          <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-red-500/20 dark:hover:shadow-red-500/40 hover:scale-[1.02] transition-all duration-300 cursor-pointer group">
             <CardHeader className="flex flex-row items-center justify-between pb-2 p-3">
               <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 Mensagens
               </CardTitle>
-              <div className="w-10 h-10 rounded-lg bg-red-600 flex items-center justify-center">
-                <MessageSquare className="w-5 h-5 text-white" />
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center shadow-lg group-hover:shadow-red-500/50 transition-all">
+                <MessageSquare className="w-6 h-6 text-white" />
               </div>
             </CardHeader>
             <CardContent className="p-3 pt-0">
@@ -291,7 +291,7 @@ const AdminDashboard = () => {
 
       {/* Quick Stats Mini Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all">
+        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-green-500/10 dark:hover:shadow-green-500/20 hover:scale-[1.02] transition-all duration-300">
           <CardHeader className="flex flex-row items-center justify-between pb-2 p-3">
             <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
               Visualizações Hoje
@@ -306,7 +306,7 @@ const AdminDashboard = () => {
           </CardContent>
         </Card>
 
-        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all">
+        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-blue-500/10 dark:hover:shadow-blue-500/20 hover:scale-[1.02] transition-all duration-300">
           <CardHeader className="flex flex-row items-center justify-between pb-2 p-3">
             <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
               Taxa de Engajamento
@@ -321,7 +321,7 @@ const AdminDashboard = () => {
           </CardContent>
         </Card>
 
-        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all">
+        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-purple-500/10 dark:hover:shadow-purple-500/20 hover:scale-[1.02] transition-all duration-300">
           <CardHeader className="flex flex-row items-center justify-between pb-2 p-3">
             <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
               Tempo Médio
@@ -338,7 +338,7 @@ const AdminDashboard = () => {
       </div>
 
       {/* Recent Updates */}
-      <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all">
+      <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-blue-500/10 dark:hover:shadow-blue-500/20 transition-all duration-300">
         <CardHeader className="p-4">
           <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
             <Clock className="w-5 h-5 text-gray-600 dark:text-gray-400" />
@@ -362,7 +362,7 @@ const AdminDashboard = () => {
                     key={`${item.type}-${item.id}`}
                     className="flex items-start gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center flex-shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center flex-shrink-0 shadow-md">
                       <Icon className="w-5 h-5 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -384,7 +384,7 @@ const AdminDashboard = () => {
       {/* Bottom Row */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {/* Activity Chart Placeholder */}
-        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all">
+        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-blue-500/10 dark:hover:shadow-blue-500/20 transition-all duration-300">
           <CardHeader className="p-4">
             <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
               <Activity className="w-5 h-5 text-gray-600 dark:text-gray-400" />
@@ -402,7 +402,7 @@ const AdminDashboard = () => {
         </Card>
 
         {/* Quick Actions */}
-        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all">
+        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-purple-500/10 dark:hover:shadow-purple-500/20 transition-all duration-300">
           <CardHeader className="p-4">
             <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
               <Zap className="w-5 h-5 text-gray-600 dark:text-gray-400" />
