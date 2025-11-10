@@ -8,7 +8,7 @@ import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { useArticles, useCreateArticle, useUpdateArticle, useDeleteArticle } from '@/hooks/useArticles';
-import { Loader2, Plus, FileText, Newspaper, TrendingUp, Upload, Edit, Trash2, Eye, BookOpen, FilePlus, Image as ImageIcon } from 'lucide-react';
+import { Loader2, Plus, FileText, Newspaper, TrendingUp, Upload, Edit, Trash2, Eye, BookOpen, FilePlus, Image as ImageIcon, CheckCircle2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -529,44 +529,56 @@ const AdminArticles = () => {
       </div>
 
       {/* Stats Section */}
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card className="admin-stat-card hover:shadow-lg transition-all duration-300">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-muted-foreground font-medium">Total de Artigos</p>
-                <p className="text-3xl font-bold mt-2">{articles?.length || 0}</p>
+      <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-blue-200 dark:border-blue-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-xl bg-blue-500 flex items-center justify-center shadow-lg">
+                <BookOpen className="h-7 w-7 text-white" />
               </div>
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <BookOpen className="h-6 w-6 text-primary" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card className="admin-stat-card hover:shadow-lg transition-all duration-300">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-muted-foreground font-medium">Publicados</p>
-                <p className="text-3xl font-bold text-green-600 dark:text-green-400 mt-2">{publishedCount}</p>
-              </div>
-              <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center">
-                <Newspaper className="h-6 w-6 text-green-600 dark:text-green-400" />
+              <div className="flex-1">
+                <p className="text-xs font-semibold text-blue-700 dark:text-blue-300 uppercase tracking-wide">
+                  Total de Artigos
+                </p>
+                <p className="text-3xl font-bold text-gray-900 dark:text-white mt-0.5">
+                  {articles?.length || 0}
+                </p>
               </div>
             </div>
           </CardContent>
         </Card>
-        
-        <Card className="admin-stat-card hover:shadow-lg transition-all duration-300">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-muted-foreground font-medium">Rascunhos</p>
-                <p className="text-3xl font-bold text-orange-600 dark:text-orange-400 mt-2">{draftCount}</p>
+
+        <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900 border-green-200 dark:border-green-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-xl bg-green-500 flex items-center justify-center shadow-lg">
+                <CheckCircle2 className="h-7 w-7 text-white" />
               </div>
-              <div className="w-12 h-12 rounded-full bg-orange-500/10 flex items-center justify-center">
-                <FilePlus className="h-6 w-6 text-orange-600 dark:text-orange-400" />
+              <div className="flex-1">
+                <p className="text-xs font-semibold text-green-700 dark:text-green-300 uppercase tracking-wide">
+                  Publicados
+                </p>
+                <p className="text-3xl font-bold text-gray-900 dark:text-white mt-0.5">
+                  {publishedCount}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900 border-orange-200 dark:border-orange-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-xl bg-orange-500 flex items-center justify-center shadow-lg">
+                <FileText className="h-7 w-7 text-white" />
+              </div>
+              <div className="flex-1">
+                <p className="text-xs font-semibold text-orange-700 dark:text-orange-300 uppercase tracking-wide">
+                  Rascunhos
+                </p>
+                <p className="text-3xl font-bold text-gray-900 dark:text-white mt-0.5">
+                  {draftCount}
+                </p>
               </div>
             </div>
           </CardContent>

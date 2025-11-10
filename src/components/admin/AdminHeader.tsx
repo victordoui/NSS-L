@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { LogOut, Home, Loader2, Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { SidebarTrigger } from '@/components/ui/sidebar';
 
 const AdminHeader = () => {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -24,7 +25,8 @@ const AdminHeader = () => {
   return (
     <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 h-16 shadow-sm">
       <div className="flex items-center justify-between px-6 h-full">
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center gap-3">
+          <SidebarTrigger className="-ml-2" />
           <Link to="/admin" className="flex items-center space-x-3">
             <span className="font-bold text-lg text-gray-900 dark:text-white">
               Painel Administrativo
