@@ -15,6 +15,7 @@ import {
 import {
   Sidebar,
   SidebarContent,
+  SidebarHeader,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -144,22 +145,19 @@ const AdminSidebar = () => {
   return (
     <TooltipProvider delayDuration={0}>
       <Sidebar collapsible="icon" className="bg-white dark:bg-gray-900 border-r border-gray-100/30 dark:border-gray-800/30">
-      {/* Logo Section */}
-      <div className="px-6 py-6 border-b border-gray-100/50 dark:border-gray-800/50 flex items-center justify-center">
-        {!isCollapsed ? (
-          <img 
-            src="/assets/images/fg-laport-logo.png" 
-            alt="FG Laport Logo" 
-            className="w-20 h-20 object-contain"
-          />
-        ) : (
-          <img 
-            src="/assets/images/fg-laport-logo.png" 
-            alt="FG Laport Logo" 
-            className="w-12 h-12 object-contain"
-          />
-        )}
-      </div>
+        {/* Logo Section */}
+        <SidebarHeader className="border-b border-gray-100/50 dark:border-gray-800/50">
+          <div className="flex items-center justify-center py-6">
+            <img 
+              src="/assets/images/fg-laport-logo.png" 
+              alt="FG Laport Logo" 
+              className={cn(
+                "object-contain transition-all duration-300",
+                isCollapsed ? "w-10 h-10" : "w-20 h-20"
+              )}
+            />
+          </div>
+        </SidebarHeader>
 
 
         <SidebarContent className="px-3 py-4">
