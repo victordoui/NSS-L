@@ -143,33 +143,23 @@ const AdminSidebar = () => {
 
   return (
     <TooltipProvider delayDuration={0}>
-      <Sidebar collapsible="icon" className="bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800">
-        {/* Logo Section */}
-        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
-          {!isCollapsed ? (
-            <div className="flex items-center gap-3">
-              <img 
-                src="/public/assets/images/fg-laport-logo.png" 
-                alt="FG Laport Logo" 
-                className="w-12 h-12 object-contain"
-              />
-              <div className="flex flex-col">
-                <span className="font-heading text-xl text-gray-900 dark:text-white leading-none" style={{letterSpacing: '0.05em'}}>
-                  LAPORT
-                </span>
-                <span className="font-heading text-sm text-gray-600 dark:text-gray-400 leading-none" style={{letterSpacing: '0.05em'}}>
-                  ENGENHARIA
-                </span>
-              </div>
-            </div>
-          ) : (
-            <img 
-              src="/public/assets/images/fg-laport-logo.png" 
-              alt="FG Laport Logo" 
-              className="w-10 h-10 object-contain mx-auto"
-            />
-          )}
-        </div>
+      <Sidebar collapsible="icon" className="bg-white dark:bg-gray-900 border-r border-gray-100/30 dark:border-gray-800/30">
+      {/* Logo Section */}
+      <div className="px-6 py-6 border-b border-gray-100/50 dark:border-gray-800/50 flex items-center justify-center">
+        {!isCollapsed ? (
+          <img 
+            src="/assets/images/fg-laport-logo.png" 
+            alt="FG Laport Logo" 
+            className="w-20 h-20 object-contain"
+          />
+        ) : (
+          <img 
+            src="/assets/images/fg-laport-logo.png" 
+            alt="FG Laport Logo" 
+            className="w-12 h-12 object-contain"
+          />
+        )}
+      </div>
 
 
         <SidebarContent className="px-3 py-4">
