@@ -195,97 +195,97 @@ const AdminDashboard = () => {
       {/* Main Content */}
       <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
         <div className="max-w-7xl mx-auto">
-          {/* Mobile-First Statistics Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 mb-6 sm:mb-8">
-            <Card className="simple-card">
-              <CardContent className="p-4 sm:p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <Wrench className="h-6 w-6 sm:h-8 sm:w-8 text-blue-500" />
-                  </div>
-                  <div className="ml-3 sm:ml-4 min-w-0 flex-1">
-                    <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Serviços</p>
-                    <p className="text-xl sm:text-2xl font-semibold text-gray-900">{stats.services}</p>
+          {/* Premium Dashboard Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 mb-8">
+            <Card className="admin-card-dashboard">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-brand-gold to-brand-gold-dark flex items-center justify-center shadow-md">
+                    <Wrench className="h-6 w-6 text-white" />
                   </div>
                 </div>
-                <div className="mt-3 sm:mt-4">
-                  <Link to="/admin/services" className="text-xs sm:text-sm text-blue-600 hover:text-blue-800 font-medium">
+                <div>
+                  <p className="text-sm font-medium text-gray-600 mb-1 font-body">Serviços</p>
+                  <p className="text-3xl font-bold text-gray-900 font-heading">{stats.services}</p>
+                </div>
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <Link to="/admin/services" className="text-sm text-brand-gold hover:text-brand-gold-dark font-medium font-body transition-colors">
                     Ver todos →
                   </Link>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="simple-card">
-              <CardContent className="p-4 sm:p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <FileText className="h-6 w-6 sm:h-8 sm:w-8 text-green-500" />
-                  </div>
-                  <div className="ml-3 sm:ml-4 min-w-0 flex-1">
-                    <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Artigos</p>
-                    <p className="text-xl sm:text-2xl font-semibold text-gray-900">{stats.articles}</p>
+            <Card className="admin-card-dashboard">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-brand-gold-light to-brand-gold flex items-center justify-center shadow-md">
+                    <FileText className="h-6 w-6 text-white" />
                   </div>
                 </div>
-                <div className="mt-3 sm:mt-4">
-                  <Link to="/admin/articles" className="text-xs sm:text-sm text-green-600 hover:text-green-800 font-medium">
+                <div>
+                  <p className="text-sm font-medium text-gray-600 mb-1 font-body">Artigos</p>
+                  <p className="text-3xl font-bold text-gray-900 font-heading">{stats.articles}</p>
+                </div>
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <Link to="/admin/articles" className="text-sm text-brand-gold hover:text-brand-gold-dark font-medium font-body transition-colors">
                     Ver todos →
                   </Link>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="simple-card">
-              <CardContent className="p-4 sm:p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <Building2 className="h-6 w-6 sm:h-8 sm:w-8 text-purple-500" />
-                  </div>
-                  <div className="ml-3 sm:ml-4 min-w-0 flex-1">
-                    <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Projetos</p>
-                    <p className="text-xl sm:text-2xl font-semibold text-gray-900">{stats.projects}</p>
+            <Card className="admin-card-dashboard">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-gray-800 to-black flex items-center justify-center shadow-md">
+                    <Building2 className="h-6 w-6 text-brand-gold" />
                   </div>
                 </div>
-                <div className="mt-3 sm:mt-4">
-                  <Link to="/admin/projects" className="text-xs sm:text-sm text-purple-600 hover:text-purple-800 font-medium">
+                <div>
+                  <p className="text-sm font-medium text-gray-600 mb-1 font-body">Projetos</p>
+                  <p className="text-3xl font-bold text-gray-900 font-heading">{stats.projects}</p>
+                </div>
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <Link to="/admin/projects" className="text-sm text-brand-gold hover:text-brand-gold-dark font-medium font-body transition-colors">
                     Ver todos →
                   </Link>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="simple-card">
-              <CardContent className="p-4 sm:p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <Share2 className="h-6 w-6 sm:h-8 sm:w-8 text-orange-500" />
-                  </div>
-                  <div className="ml-3 sm:ml-4 min-w-0 flex-1">
-                    <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Links Sociais</p>
-                    <p className="text-xl sm:text-2xl font-semibold text-gray-900">{stats.socialLinks}</p>
+            <Card className="admin-card-dashboard">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-brand-gold-dark to-gray-700 flex items-center justify-center shadow-md">
+                    <Share2 className="h-6 w-6 text-white" />
                   </div>
                 </div>
-                <div className="mt-3 sm:mt-4">
-                  <Link to="/admin/social-links" className="text-xs sm:text-sm text-orange-600 hover:text-orange-800 font-medium">
+                <div>
+                  <p className="text-sm font-medium text-gray-600 mb-1 font-body">Links Sociais</p>
+                  <p className="text-3xl font-bold text-gray-900 font-heading">{stats.socialLinks}</p>
+                </div>
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <Link to="/admin/social-links" className="text-sm text-brand-gold hover:text-brand-gold-dark font-medium font-body transition-colors">
                     Ver todos →
                   </Link>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="simple-card sm:col-span-2 lg:col-span-1">
-              <CardContent className="p-4 sm:p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <MessageSquare className="h-6 w-6 sm:h-8 sm:w-8 text-red-500" />
-                  </div>
-                  <div className="ml-3 sm:ml-4 min-w-0 flex-1">
-                    <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Mensagens</p>
-                    <p className="text-xl sm:text-2xl font-semibold text-gray-900">{stats.contactMessages}</p>
+            <Card className="admin-card-dashboard sm:col-span-2 lg:col-span-1">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-brand-gold to-yellow-400 flex items-center justify-center shadow-md">
+                    <MessageSquare className="h-6 w-6 text-white" />
                   </div>
                 </div>
-                <div className="mt-3 sm:mt-4">
-                  <Link to="/admin/contact-messages" className="text-xs sm:text-sm text-red-600 hover:text-red-800 font-medium">
+                <div>
+                  <p className="text-sm font-medium text-gray-600 mb-1 font-body">Mensagens</p>
+                  <p className="text-3xl font-bold text-gray-900 font-heading">{stats.contactMessages}</p>
+                </div>
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <Link to="/admin/contact-messages" className="text-sm text-brand-gold hover:text-brand-gold-dark font-medium font-body transition-colors">
                     Ver todas →
                   </Link>
                 </div>

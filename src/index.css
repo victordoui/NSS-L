@@ -589,4 +589,52 @@
       radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
       radial-gradient(circle at 40% 40%, rgba(212, 175, 55, 0.02) 0%, transparent 50%);
   }
+
+  /* Admin Panel Styles */
+  .admin-panel {
+    --admin-bg: #fafafa;
+    --admin-sidebar-bg: #141414;
+    --admin-sidebar-text: #e5e5e5;
+    --admin-card-bg: #ffffff;
+    --admin-gold: hsl(var(--brand-gold));
+    --admin-gold-light: hsl(var(--brand-gold-light));
+    --admin-gold-dark: hsl(var(--brand-gold-dark));
+    
+    font-family: var(--font-body);
+    background: var(--admin-bg);
+  }
+
+  .admin-panel h1, 
+  .admin-panel h2, 
+  .admin-panel h3, 
+  .admin-panel h4, 
+  .admin-panel h5, 
+  .admin-panel h6 {
+    font-family: var(--font-heading);
+  }
+
+  /* Premium Dashboard Cards */
+  .admin-card-dashboard {
+    @apply bg-white border border-gray-200 rounded-lg shadow-sm;
+    @apply transition-all duration-300;
+    @apply hover:shadow-lg hover:-translate-y-1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .admin-card-dashboard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #D4AF37, #E5C158);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .admin-card-dashboard:hover::before {
+    opacity: 1;
+  }
 }
