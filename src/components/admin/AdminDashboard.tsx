@@ -264,7 +264,7 @@ const AdminDashboard = () => {
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
       {/* ===== SEÇÃO PRINCIPAL: Header + Cards ===== */}
-      <div className="bg-gradient-to-br from-background to-muted/20 dark:from-background dark:to-muted/10 rounded-3xl p-6 shadow-lg border-2 border-border/50 space-y-6">
+      <div className="bg-gradient-to-br from-background to-muted/20 dark:from-background dark:to-muted/10 rounded-3xl p-6 shadow-lg space-y-6">
         {/* Header with Period Selector */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <h1 className="text-3xl font-bold text-foreground tracking-tight">Dashboard</h1>
