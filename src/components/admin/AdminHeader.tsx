@@ -24,7 +24,7 @@ const AdminHeader = () => {
     }
   };
   return (
-    <header className="bg-gray-50 dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 h-16 shadow-sm">
+    <header className="bg-gray-50 dark:bg-gray-950 sticky top-0 z-50 h-16 shadow-sm">
       <div className="flex items-center justify-between px-6 h-full">
         <div className="flex items-center gap-3">
           <SidebarTrigger className="-ml-2" />
