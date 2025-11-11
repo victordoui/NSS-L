@@ -264,24 +264,24 @@ const AdminDashboard = () => {
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
       {/* Header with Period Selector */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Dashboard</h1>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
             Visão geral do sistema
           </p>
         </div>
         
         <div className="flex items-center gap-3">
           <Select value={period} onValueChange={(value: any) => setPeriod(value)}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[160px] h-9 rounded-xl">
               <SelectValue placeholder="Período" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="24h">Últimas 24 horas</SelectItem>
+            <SelectContent className="rounded-xl">
+              <SelectItem value="24h">Últimas 24h</SelectItem>
               <SelectItem value="7d">Últimos 7 dias</SelectItem>
               <SelectItem value="30d">Últimos 30 dias</SelectItem>
-              <SelectItem value="all">Todo o período</SelectItem>
+              <SelectItem value="all">Todo período</SelectItem>
             </SelectContent>
           </Select>
           
@@ -293,6 +293,7 @@ const AdminDashboard = () => {
             }} 
             variant="outline" 
             size="sm"
+            className="h-9 rounded-xl"
           >
             <RefreshCw className="w-4 h-4 mr-2" />
             Atualizar
@@ -301,39 +302,39 @@ const AdminDashboard = () => {
       </div>
 
       {/* Hero Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {heroCards.map((card) => (
           <Link key={card.title} to={card.link}>
             <Card className={cn(
-              "group relative overflow-hidden cursor-pointer transition-all duration-300",
-              "hover:shadow-lg hover:scale-[1.02]",
-              card.color === 'blue' && "hover:shadow-blue-500/20 dark:hover:shadow-blue-500/40",
-              card.color === 'green' && "hover:shadow-green-500/20 dark:hover:shadow-green-500/40",
-              card.color === 'purple' && "hover:shadow-purple-500/20 dark:hover:shadow-purple-500/40",
-              card.color === 'orange' && "hover:shadow-orange-500/20 dark:hover:shadow-orange-500/40"
+              "group relative overflow-hidden cursor-pointer transition-all duration-300 rounded-2xl border-2",
+              "hover:shadow-2xl hover:scale-[1.03]",
+              card.color === 'blue' && "hover:shadow-blue-500/30 dark:hover:shadow-blue-500/50 dark:border-blue-500/20",
+              card.color === 'green' && "hover:shadow-green-500/30 dark:hover:shadow-green-500/50 dark:border-green-500/20",
+              card.color === 'purple' && "hover:shadow-purple-500/30 dark:hover:shadow-purple-500/50 dark:border-purple-500/20",
+              card.color === 'orange' && "hover:shadow-orange-500/30 dark:hover:shadow-orange-500/50 dark:border-orange-500/20"
             )}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                   {card.title}
                 </CardTitle>
                 <div className={cn(
-                  "w-12 h-12 rounded-full bg-gradient-to-br flex items-center justify-center",
-                  "transition-all duration-300 group-hover:scale-110",
+                  "w-14 h-14 rounded-full bg-gradient-to-br flex items-center justify-center shadow-lg",
+                  "transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl",
                   `${card.gradient}`
                 )}>
-                  <card.icon className="w-6 h-6 text-white" />
+                  <card.icon className="w-7 h-7 text-white drop-shadow-sm" />
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-gray-900 dark:text-white">
+                <div className="text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight">
                   {card.value}
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">
                   {card.description}
                 </p>
                 {card.badge && (
-                  <div className="flex items-center gap-2 mt-2">
-                    <span className="text-xs font-medium text-destructive bg-destructive/10 px-2 py-1 rounded">
+                  <div className="flex items-center gap-2 mt-3">
+                    <span className="text-xs font-semibold text-white bg-gradient-to-r from-red-500 to-red-600 px-3 py-1.5 rounded-full shadow-lg animate-pulse">
                       {card.badge}
                     </span>
                   </div>
