@@ -265,7 +265,10 @@ const AdminDashboard = () => {
     <div className="space-y-6 animate-in fade-in duration-500">
       {/* Header with Period Selector */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Dashboard</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent tracking-tight">Dashboard</h1>
+          <span className="px-3 py-1 bg-green-500 text-white text-xs font-bold rounded-full animate-pulse">ATUALIZADO ✓</span>
+        </div>
         
         <div className="flex items-center gap-3">
           <Select value={period} onValueChange={(value: any) => setPeriod(value)}>
