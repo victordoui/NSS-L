@@ -25,7 +25,7 @@ export const DistributionBarChart = ({ data, loading }: DistributionBarChartProp
   }
 
   return (
-    <Card className="bg-gradient-to-br from-background to-muted/20 dark:from-background dark:to-muted/10 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300">
+    <Card className="border-0 bg-gradient-to-br from-background to-muted/20 dark:from-background dark:to-muted/10 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300">
       <CardHeader>
         <CardTitle className="text-lg font-semibold">Distribuição de Conteúdo</CardTitle>
         <CardDescription>Quantidade de cada tipo de conteúdo no sistema</CardDescription>

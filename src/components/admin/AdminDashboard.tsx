@@ -303,12 +303,12 @@ const AdminDashboard = () => {
           {heroCards.map((card) => (
             <Link key={card.title} to={card.link}>
               <Card className={cn(
-                "group relative overflow-hidden cursor-pointer transition-all duration-300 rounded-2xl border-2",
+                "border-0 group relative overflow-hidden cursor-pointer transition-all duration-300 rounded-2xl",
                 "hover:shadow-2xl hover:scale-[1.03]",
-                card.color === 'blue' && "hover:shadow-blue-500/30 dark:hover:shadow-blue-500/50 dark:border-blue-500/20",
-                card.color === 'green' && "hover:shadow-green-500/30 dark:hover:shadow-green-500/50 dark:border-green-500/20",
-                card.color === 'purple' && "hover:shadow-purple-500/30 dark:hover:shadow-purple-500/50 dark:border-purple-500/20",
-                card.color === 'orange' && "hover:shadow-orange-500/30 dark:hover:shadow-orange-500/50 dark:border-orange-500/20"
+                card.color === 'blue' && "hover:shadow-blue-500/30 dark:hover:shadow-blue-500/50",
+                card.color === 'green' && "hover:shadow-green-500/30 dark:hover:shadow-green-500/50",
+                card.color === 'purple' && "hover:shadow-purple-500/30 dark:hover:shadow-purple-500/50",
+                card.color === 'orange' && "hover:shadow-orange-500/30 dark:hover:shadow-orange-500/50"
               )}>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium text-muted-foreground">
