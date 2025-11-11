@@ -11,6 +11,7 @@ import AdminProjects from '@/components/admin/AdminProjects';
 import AdminContactInfo from '@/components/admin/AdminContactInfo';
 import AdminHelp from '@/components/admin/AdminHelp';
 import { AdminMessages } from '@/components/admin/AdminMessages';
+import AdminBackup from '@/components/admin/AdminBackup';
 
 const Admin = () => {
   const { user, loading, isAdmin } = useAuth();
@@ -63,6 +64,7 @@ const Admin = () => {
         <Route path="articles" element={<AdminArticles />} />
         <Route path="projects" element={<AdminProjects />} />
         <Route path="contact-info" element={<AdminContactInfo />} />
+        <Route path="backup" element={<AdminBackup />} />
       </Routes>
     </AdminLayout>
   );

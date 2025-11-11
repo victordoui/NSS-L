@@ -11,6 +11,7 @@ import {
   Settings,
   ChevronLeft,
   ChevronDown,
+  Database,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -85,6 +86,11 @@ const AdminSidebar = () => {
       title: 'Dados de Contato',
       url: '/admin/contact-info',
       icon: Phone,
+    },
+    {
+      title: 'Backup',
+      url: '/admin/backup',
+      icon: Database,
     },
     {
       title: 'Configurações',
