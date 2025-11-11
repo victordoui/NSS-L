@@ -41,11 +41,11 @@ const Footer = () => {
                     <span className="font-heading font-normal text-sm opacity-70" style={{
                   letterSpacing: '0.05em'
                 }}>TELEFONE</span>
-                    <span className="font-heading font-normal text-lg" style={{
-                  letterSpacing: '0.05em'
-                }}>
-                      {phoneContact.value}
-                    </span>
+                  <span className="font-heading font-normal text-lg whitespace-nowrap" style={{
+                    letterSpacing: '0.05em'
+                  }}>
+                    {phoneContact.value}
+                  </span>
                   </div>
                 </a>}
               
@@ -57,11 +57,11 @@ const Footer = () => {
                     <span className="font-heading font-normal text-sm opacity-70" style={{
                   letterSpacing: '0.05em'
                 }}>WHATSAPP</span>
-                    <span className="font-heading font-normal text-lg" style={{
-                  letterSpacing: '0.05em'
-                }}>
-                      {whatsappContact.value}
-                    </span>
+                  <span className="font-heading font-normal text-lg whitespace-nowrap" style={{
+                    letterSpacing: '0.05em'
+                  }}>
+                    {whatsappContact.value}
+                  </span>
                   </div>
                 </a>}
               
@@ -71,11 +71,11 @@ const Footer = () => {
                     <span className="font-heading font-normal text-sm opacity-70" style={{
                   letterSpacing: '0.05em'
                 }}>E-MAIL</span>
-                    <span className="font-heading font-normal text-lg" style={{
-                  letterSpacing: '0.05em'
-                }}>
-                      {emailContact.value}
-                    </span>
+                  <span className="font-heading font-normal text-lg whitespace-nowrap" style={{
+                    letterSpacing: '0.05em'
+                  }}>
+                    {emailContact.value}
+                  </span>
                   </div>
                 </a>}
             </div>
