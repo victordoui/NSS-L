@@ -147,9 +147,9 @@ const AdminSidebar = () => {
 
   return (
     <TooltipProvider delayDuration={0}>
-      <Sidebar collapsible="icon" className="border-0 bg-gray-50 dark:bg-gray-950 shadow-lg">
+      <Sidebar collapsible="icon" className="border-0 !border-r-0 !border-l-0 bg-gray-50 dark:bg-gray-950 shadow-lg">
         {/* Logo Section */}
-        <SidebarHeader className="border-b border-gray-100/50 dark:border-gray-800/50">
+        <SidebarHeader className="border-b-0">
           <div className="flex items-center justify-center py-6">
             <img 
               src="/assets/images/fg-laport-logo.png" 
@@ -305,7 +305,7 @@ const AdminSidebar = () => {
 
         {/* Footer Version */}
         {!isCollapsed && (
-          <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-800">
+          <div className="px-6 py-4 border-t-0">
             <p className="text-xs text-gray-500 dark:text-gray-400">Versão 2.0.0</p>
           </div>
         )}
