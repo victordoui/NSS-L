@@ -23,7 +23,7 @@ export const ActivityLineChart = ({ data, loading }: ActivityLineChartProps) => 
   }
 
   return (
-    <Card className="hover:shadow-lg transition-shadow duration-300">
+    <Card className="bg-gradient-to-br from-background to-muted/20 dark:from-background dark:to-muted/10 rounded-3xl shadow-lg border-2 border-border/50 hover:shadow-2xl transition-all duration-300">
       <CardHeader>
         <CardTitle className="text-lg font-semibold">Atividade dos Últimos 7 Dias</CardTitle>
         <CardDescription>Atualizações em serviços, artigos e projetos</CardDescription>
