@@ -11,7 +11,8 @@ const AdminHeader = () => {
   const { theme, setTheme } = useTheme();
   const {
     signOut,
-    profile
+    profile,
+    user
   } = useAuth();
 
   const handleLogout = async () => {
@@ -27,24 +28,24 @@ const AdminHeader = () => {
       <div className="flex items-center justify-between px-6 h-full">
         <div className="flex items-center gap-3">
           <SidebarTrigger className="-ml-2" />
-          <Link to="/admin" className="flex items-center space-x-3">
-            <span className="font-bold text-lg text-gray-900 dark:text-white">
-              Painel Administrativo
-            </span>
-          </Link>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary via-purple-500 to-pink-500 flex items-center justify-center shadow-md">
+              <span className="text-sm font-bold text-white">
+                {user?.email?.charAt(0).toUpperCase() || profile?.full_name?.charAt(0).toUpperCase() || 'U'}
+              </span>
+            </div>
+            <div className="hidden sm:flex flex-col">
+              <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                Bem-vindo! @{user?.email?.split('@')[0] || 'usuário'}
+              </span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                {profile?.role === 'admin' ? 'Administrador do Sistema' : 'Usuário'}
+              </span>
+            </div>
+          </div>
         </div>
 
         <div className="flex items-center space-x-2 sm:space-x-3">
-          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-800">
-            <div className="w-7 h-7 rounded-full bg-gray-800 dark:bg-gray-600 flex items-center justify-center">
-              <span className="text-xs font-semibold text-white">
-                {profile?.full_name?.charAt(0) || 'A'}
-              </span>
-            </div>
-            <span className="text-sm font-medium text-gray-900 dark:text-white">
-              {profile?.full_name || 'Admin'}
-            </span>
-          </div>
           
           <Button 
             variant="ghost" 
