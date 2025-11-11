@@ -10,7 +10,7 @@ interface AdminLayoutProps {
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
       <SidebarProvider defaultOpen={true}>
         <div className="admin-panel min-h-screen flex w-full">
           <AdminSidebar />
