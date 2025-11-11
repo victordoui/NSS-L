@@ -263,85 +263,87 @@ const AdminDashboard = () => {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
-      {/* Header with Period Selector */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-        <div className="flex items-center gap-3">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent tracking-tight">Dashboard</h1>
-          <span className="px-3 py-1 bg-green-500 text-white text-xs font-bold rounded-full animate-pulse">ATUALIZADO ✓</span>
-        </div>
-        
-        <div className="flex items-center gap-3">
-          <Select value={period} onValueChange={(value: any) => setPeriod(value)}>
-            <SelectTrigger className="w-[160px] h-9 rounded-xl">
-              <SelectValue placeholder="Período" />
-            </SelectTrigger>
-            <SelectContent className="rounded-xl">
-              <SelectItem value="24h">Últimas 24h</SelectItem>
-              <SelectItem value="7d">Últimos 7 dias</SelectItem>
-              <SelectItem value="30d">Últimos 30 dias</SelectItem>
-              <SelectItem value="all">Todo período</SelectItem>
-            </SelectContent>
-          </Select>
+      {/* ===== SEÇÃO PRINCIPAL: Header + Cards ===== */}
+      <div className="bg-gradient-to-br from-background to-muted/20 dark:from-background dark:to-muted/10 rounded-3xl p-6 shadow-lg border-2 border-border/50 space-y-6">
+        {/* Header with Period Selector */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <h1 className="text-3xl font-bold text-foreground tracking-tight">Dashboard</h1>
           
-          <Button 
-            onClick={() => {
-              fetchStats();
-              fetchActivityData(period);
-              fetchRecentMessages();
-            }} 
-            variant="outline" 
-            size="sm"
-            className="h-9 rounded-xl"
-          >
-            <RefreshCw className="w-4 h-4 mr-2" />
-            Atualizar
-          </Button>
+          <div className="flex items-center gap-3">
+            <Select value={period} onValueChange={(value: any) => setPeriod(value)}>
+              <SelectTrigger className="w-[160px] h-9 rounded-xl">
+                <SelectValue placeholder="Período" />
+              </SelectTrigger>
+              <SelectContent className="rounded-xl">
+                <SelectItem value="24h">Últimas 24h</SelectItem>
+                <SelectItem value="7d">Últimos 7 dias</SelectItem>
+                <SelectItem value="30d">Últimos 30 dias</SelectItem>
+                <SelectItem value="all">Todo período</SelectItem>
+              </SelectContent>
+            </Select>
+            
+            <Button 
+              onClick={() => {
+                fetchStats();
+                fetchActivityData(period);
+                fetchRecentMessages();
+              }} 
+              variant="outline" 
+              size="sm"
+              className="h-9 rounded-xl"
+            >
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Atualizar
+            </Button>
+          </div>
+        </div>
+
+        {/* Hero Stats Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {heroCards.map((card) => (
+            <Link key={card.title} to={card.link}>
+              <Card className={cn(
+                "group relative overflow-hidden cursor-pointer transition-all duration-300 rounded-2xl border-2",
+                "hover:shadow-2xl hover:scale-[1.03]",
+                card.color === 'blue' && "hover:shadow-blue-500/30 dark:hover:shadow-blue-500/50 dark:border-blue-500/20",
+                card.color === 'green' && "hover:shadow-green-500/30 dark:hover:shadow-green-500/50 dark:border-green-500/20",
+                card.color === 'purple' && "hover:shadow-purple-500/30 dark:hover:shadow-purple-500/50 dark:border-purple-500/20",
+                card.color === 'orange' && "hover:shadow-orange-500/30 dark:hover:shadow-orange-500/50 dark:border-orange-500/20"
+              )}>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    {card.title}
+                  </CardTitle>
+                  <div className={cn(
+                    "w-14 h-14 rounded-full bg-gradient-to-br flex items-center justify-center shadow-lg",
+                    "transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl",
+                    `${card.gradient}`
+                  )}>
+                    <card.icon className="w-7 h-7 text-white drop-shadow-sm" />
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+                    {card.value}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {card.description}
+                  </p>
+                  {card.badge && (
+                    <div className="flex items-center gap-2 mt-3">
+                      <span className="text-xs font-semibold text-white bg-gradient-to-r from-red-500 to-red-600 px-3 py-1.5 rounded-full shadow-lg animate-pulse">
+                        {card.badge}
+                      </span>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
         </div>
       </div>
 
-      {/* Hero Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {heroCards.map((card) => (
-          <Link key={card.title} to={card.link}>
-            <Card className={cn(
-              "group relative overflow-hidden cursor-pointer transition-all duration-300 rounded-2xl border-2",
-              "hover:shadow-2xl hover:scale-[1.03]",
-              card.color === 'blue' && "hover:shadow-blue-500/30 dark:hover:shadow-blue-500/50 dark:border-blue-500/20",
-              card.color === 'green' && "hover:shadow-green-500/30 dark:hover:shadow-green-500/50 dark:border-green-500/20",
-              card.color === 'purple' && "hover:shadow-purple-500/30 dark:hover:shadow-purple-500/50 dark:border-purple-500/20",
-              card.color === 'orange' && "hover:shadow-orange-500/30 dark:hover:shadow-orange-500/50 dark:border-orange-500/20"
-            )}>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  {card.title}
-                </CardTitle>
-                <div className={cn(
-                  "w-14 h-14 rounded-full bg-gradient-to-br flex items-center justify-center shadow-lg",
-                  "transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl",
-                  `${card.gradient}`
-                )}>
-                  <card.icon className="w-7 h-7 text-white drop-shadow-sm" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-                  {card.value}
-                </div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  {card.description}
-                </p>
-                {card.badge && (
-                  <div className="flex items-center gap-2 mt-3">
-                    <span className="text-xs font-semibold text-white bg-gradient-to-r from-red-500 to-red-600 px-3 py-1.5 rounded-full shadow-lg animate-pulse">
-                      {card.badge}
-                    </span>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
-      </div>
+      {/* ===== ANÁLISES DETALHADAS ===== */}
 
       {/* Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
