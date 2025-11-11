@@ -34,7 +34,7 @@ const Footer = () => {
             </div>
 
             {/* Contact Info - Center */}
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
               {phoneContact && <a href={`tel:${phoneContact.value}`} className="flex items-center gap-4 text-white/90 hover:text-secondary transition-colors">
                   <Phone size={36} />
                   <div className="flex flex-col">
