@@ -35,17 +35,13 @@ const Header = () => {
       <div className="container max-w-7xl">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <div className="flex items-center gap-3">
-            <img 
-              src="/assets/images/nss-engenharia-logo.png" 
-              alt="NSS Engenharia Logo" 
-              className="w-12 h-12 object-contain"
-            />
-            <div className="flex flex-col">
-              <span className="font-heading font-normal text-xl text-primary leading-none" style={{letterSpacing: '0.05em'}}>NSS</span>
-              <span className="font-heading font-normal text-sm text-muted-foreground leading-none" style={{letterSpacing: '0.05em'}}>ENGENHARIA</span>
-            </div>
-          </div>
+        <div className="flex items-center">
+          <img 
+            src="/assets/images/nss-engenharia-logo.png" 
+            alt="NSS Engenharia Logo" 
+            className="w-24 h-24 object-contain"
+          />
+        </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-10">
