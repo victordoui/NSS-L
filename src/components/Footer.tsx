@@ -21,16 +21,8 @@ const Footer = () => {
         <div className="mb-12 pb-8 border-b border-white/20">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             {/* Logo - Left */}
-            <div className="flex items-center gap-3">
-              <img src="/assets/images/nss-engenharia-logo-white.png" alt="NSS ENGENHARIA Logo" className="w-12 h-12 object-contain" />
-              <div className="flex flex-col">
-                <span className="font-heading font-normal text-xl leading-none" style={{
-                letterSpacing: '0.05em'
-              }}>NSS</span>
-                <span className="font-heading font-normal text-sm opacity-80 leading-none" style={{
-                letterSpacing: '0.05em'
-              }}>ENGENHARIA</span>
-              </div>
+            <div className="flex items-center">
+              <img src="/assets/images/nss-engenharia-logo-white.png" alt="NSS ENGENHARIA Logo" className="w-24 h-24 object-contain" />
             </div>
 
             {/* Contact Info - Center */}
