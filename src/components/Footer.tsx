@@ -22,11 +22,11 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             {/* Logo - Left */}
             <div className="flex items-center gap-3">
-              <img src="/assets/images/fg-laport-logo.png" alt="FG LAPORT Logo" className="w-12 h-12 object-contain" />
+              <img src="/assets/images/nss-engenharia-logo.png" alt="NSS ENGENHARIA Logo" className="w-12 h-12 object-contain" />
               <div className="flex flex-col">
                 <span className="font-heading font-normal text-xl leading-none" style={{
                 letterSpacing: '0.05em'
-              }}>LAPORT</span>
+              }}>NSS</span>
                 <span className="font-heading font-normal text-sm opacity-80 leading-none" style={{
                 letterSpacing: '0.05em'
               }}>ENGENHARIA</span>
@@ -96,9 +96,9 @@ const Footer = () => {
               <li><a href="/" className="text-white/80 hover:text-secondary transition-colors font-heading font-normal" style={{
                 letterSpacing: '0.05em'
               }}>HOME</a></li>
-              <li><a href="/fg-laport" className="text-white/80 hover:text-secondary transition-colors font-heading font-normal" style={{
+              <li><a href="/nss-engenharia" className="text-white/80 hover:text-secondary transition-colors font-heading font-normal" style={{
                 letterSpacing: '0.05em'
-              }}>FG LAPORT</a></li>
+              }}>NSS ENGENHARIA</a></li>
               <li><a href="/servicos" className="text-white/80 hover:text-secondary transition-colors font-heading font-normal" style={{
                 letterSpacing: '0.05em'
               }}>SERVIÇOS</a></li>
@@ -155,7 +155,7 @@ const Footer = () => {
           <p className="text-white/60 text-sm font-heading font-normal" style={{
           letterSpacing: '0.05em'
         }}>
-            © {new Date().getFullYear()} FG LAPORT. Todos os direitos reservados.
+            © {new Date().getFullYear()} NSS ENGENHARIA. Todos os direitos reservados.
           </p>
         </div>
       </div>

@@ -129,7 +129,7 @@ const AdminSettings = () => {
                 id="company_name"
                 value={formData.company_name}
                 onChange={(e) => handleInputChange('company_name', e.target.value)}
-                placeholder="FG Laport Engenharia"
+                placeholder="NSS Engenharia"
               />
             </div>
 

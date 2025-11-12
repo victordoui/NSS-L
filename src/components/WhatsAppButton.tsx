@@ -31,7 +31,7 @@ const WhatsAppButton = () => {
   };
   
   const whatsappNumber = sanitizePhoneNumber(whatsappContact.value);
-  const message = "Olá! Gostaria de saber mais sobre os serviços da FG LAPORT.";
+  const message = "Olá! Gostaria de saber mais sobre os serviços da NSS ENGENHARIA.";
   
   const handleWhatsAppClick = () => {
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;

@@ -6,7 +6,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import heroBackgroundImage from "@/assets/fg-laport-hero-background.png";
 
-const FgLaport = () => {
+const NssEngenharia = () => {
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -29,7 +29,7 @@ const FgLaport = () => {
                 letterSpacing: '0.05em'
               }}
             >
-              FG LAPORT
+              NSS ENGENHARIA
             </h1>
           </div>
         </section>
@@ -178,10 +178,10 @@ const FgLaport = () => {
                       {/* Função Atual */}
                       <div className="space-y-4">
                          <h4 className="font-heading text-black text-lg tracking-wide border-l-4 border-secondary pl-4">
-                          DIREÇÃO DA FG LAPORT
+                          DIREÇÃO DA NSS ENGENHARIA
                         </h4>
                         <p className="font-body text-black text-base leading-relaxed">
-                          Atualmente, exerce a função de <strong>Diretor da FG Laport</strong>, liderando projetos voltados à geotecnia e execução de obras como muros de gabião, cortinas atirantadas e solo grampeado, além de sondagens SPT.
+                          Atualmente, exerce a função de <strong>Diretor da NSS Engenharia</strong>, liderando projetos voltados à geotecnia e execução de obras como muros de gabião, cortinas atirantadas e solo grampeado, além de sondagens SPT.
                         </p>
                       </div>
 
@@ -211,7 +211,7 @@ const FgLaport = () => {
                       {/* Conclusão */}
                        <div className="bg-stone-50 p-6 rounded-lg border-l-4 border-secondary">
                         <p className="font-body text-black text-base leading-relaxed italic">
-                          "A experiência técnica, aliada à capacidade de compreender e traduzir as demandas dos clientes em soluções eficazes, torna Fábio uma liderança estratégica na condução dos projetos mais desafiadores da FG Laport."
+                          "A experiência técnica, aliada à capacidade de compreender e traduzir as demandas dos clientes em soluções eficazes, torna Fábio uma liderança estratégica na condução dos projetos mais desafiadores da NSS Engenharia."
                         </p>
                       </div>
                     </div>
@@ -234,10 +234,10 @@ const FgLaport = () => {
                       {/* Fundação da FG Laport */}
                       <div className="space-y-4">
                          <h4 className="font-heading text-black text-lg tracking-wide border-l-4 border-secondary pl-4">
-                          FUNDAÇÃO DA FG LAPORT
+                          FUNDAÇÃO DA NSS ENGENHARIA
                         </h4>
                         <p className="font-body text-black text-base leading-relaxed">
-                          Fundadora da FG Laport Engenharia, liderou importantes projetos estratégicos da empresa:
+                          Fundadora da NSS Engenharia, liderou importantes projetos estratégicos da empresa:
                         </p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 ml-4">
                           <div className="flex items-start space-x-2">
@@ -389,4 +389,4 @@ const FgLaport = () => {
   );
 };
 
-export default FgLaport;
+export default NssEngenharia;

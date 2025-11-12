@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const AboutSection = () => {
   return (
-    <section id="fg-laport" className="py-24 bg-background">
+    <section id="nss-engenharia" className="py-24 bg-background">
       <div className="container">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-start">
@@ -18,7 +18,7 @@ const AboutSection = () => {
                     letterSpacing: '0.05em'
                   }}
                 >
-                  FG LAPORT
+                  NSS ENGENHARIA
                 </h3>
                 <p 
                   className="font-heading font-normal text-foreground mb-8"
@@ -32,12 +32,12 @@ const AboutSection = () => {
                 </p>
               </div>
               
-              <Link to="/fg-laport">
+              <Link to="/nss-engenharia">
                 <Button 
                   className="bg-foreground text-background hover:bg-foreground/90 px-6 py-3 font-heading font-normal rounded-none h-auto"
                   style={{letterSpacing: '0.05em'}}
                 >
-                  CONHEÇA A FG LAPORT
+                  CONHEÇA A NSS ENGENHARIA
                 </Button>
               </Link>
             </div>
@@ -53,7 +53,7 @@ const AboutSection = () => {
                   letterSpacing: '0.05em'
                 }}
               >
-                Com mais de uma década de atuação, a FG LAPORT consolida-se como referência em soluções de engenharia. Nossa trajetória é marcada por entregas que aliam precisão técnica, cumprimento rigoroso de prazos e compromisso com a excelência.
+                Com mais de uma década de atuação, a NSS ENGENHARIA consolida-se como referência em soluções de engenharia. Nossa trajetória é marcada por entregas que aliam precisão técnica, cumprimento rigoroso de prazos e compromisso com a excelência.
               </p>
               
               <p 

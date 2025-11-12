@@ -158,8 +158,8 @@ const AdminSidebar = () => {
         <SidebarHeader className="border-b-0">
           <div className="flex items-center justify-center py-6">
             <img 
-              src="/assets/images/fg-laport-logo.png" 
-              alt="FG Laport Logo" 
+              src="/assets/images/nss-engenharia-logo.png" 
+              alt="NSS Engenharia Logo" 
               className={cn(
                 "object-contain transition-all duration-300",
                 isCollapsed ? "w-10 h-10" : "w-20 h-20"

@@ -69,11 +69,11 @@ const Auth = () => {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-8">
-        {/* Logo FG Laport */}
+        {/* Logo NSS Engenharia */}
         <div className="flex justify-center">
           <img
-            src="/assets/images/fg-laport-logo.png"
-            alt="FG Laport - Reserva Engenharia"
+            src="/assets/images/nss-engenharia-logo.png"
+            alt="NSS Engenharia"
             className="w-20 h-20 md:w-24 md:h-24 object-contain transition-transform hover:scale-105 duration-300"
           />
         </div>

@@ -8,7 +8,7 @@ import ScrollToTop from "./components/ScrollToTop";
 
 // Lazy load pages for better performance
 const Index = lazy(() => import("./pages/Index"));
-const FgLaport = lazy(() => import("./pages/FgLaport"));
+const NssEngenharia = lazy(() => import("./pages/NssEngenharia"));
 const Servicos = lazy(() => import("./pages/Servicos"));
 const ServiceDetail = lazy(() => import("./pages/ServiceDetail"));
 const ObrasExecutadas = lazy(() => import("./pages/ObrasExecutadas"));
@@ -38,7 +38,7 @@ const App = () => (
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/fg-laport" element={<FgLaport />} />
+            <Route path="/nss-engenharia" element={<NssEngenharia />} />
             <Route path="/servicos" element={<Servicos />} />
             <Route path="/servicos/:slug" element={<ServiceDetail />} />
             <Route path="/obras-executadas" element={<ObrasExecutadas />} />
