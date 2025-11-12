@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTheme } from 'next-themes';
 import {
   LayoutDashboard,
   FileText,
@@ -35,6 +36,7 @@ import { cn } from '@/lib/utils';
 const AdminSidebar = () => {
   const location = useLocation();
   const { state, toggleSidebar } = useSidebar();
+  const { theme } = useTheme();
   const isCollapsed = state === 'collapsed';
   const { messages } = useContactMessages();
   const unreadCount = messages?.filter((m) => !m.is_read).length || 0;
@@ -158,7 +160,10 @@ const AdminSidebar = () => {
         <SidebarHeader className="border-b-0">
           <div className="flex items-center justify-center py-6">
             <img 
-              src="/assets/images/nss-engenharia-logo.png" 
+              src={theme === 'dark' 
+                ? "/assets/images/nss-engenharia-logo-white.png" 
+                : "/assets/images/nss-engenharia-logo.png"
+              } 
               alt="NSS Engenharia Logo" 
               className={cn(
                 "object-contain transition-all duration-300",
