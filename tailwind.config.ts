@@ -54,9 +54,9 @@ export default {
 				},
 				// Cores customizadas da marca
 				brand: {
-					gold: 'hsl(var(--brand-gold))',
-					'gold-light': 'hsl(var(--brand-gold-light))',
-					'gold-dark': 'hsl(var(--brand-gold-dark))',
+					lilac: 'hsl(var(--brand-lilac))',
+					'lilac-light': 'hsl(var(--brand-lilac-light))',
+					'lilac-dark': 'hsl(var(--brand-lilac-dark))',
 					black: 'hsl(var(--brand-black))',
 					gray: 'hsl(var(--brand-gray))',
 					'gray-light': 'hsl(var(--brand-gray-light))'

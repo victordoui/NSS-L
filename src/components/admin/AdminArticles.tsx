@@ -454,7 +454,7 @@ const AdminArticles = () => {
                           )}
                           <div className="space-y-3">
                             <div className="flex items-center justify-between">
-                              <span className="px-3 py-1 bg-brand-gold/10 text-brand-gold rounded-full text-sm font-medium">
+                              <span className="px-3 py-1 bg-brand-lilac/10 text-brand-lilac rounded-full text-sm font-medium">
                                 {formData.category}
                               </span>
                               <span className="text-sm text-muted-foreground">

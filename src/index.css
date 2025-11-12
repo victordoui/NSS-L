@@ -10,10 +10,10 @@
     --background: 0 0% 100%;
     --foreground: 0 0% 5%;
     
-    /* Dourado característico da marca */
-    --brand-gold: 41 89% 50%;
-    --brand-gold-light: 41 89% 60%;
-    --brand-gold-dark: 41 89% 40%;
+    /* Lilás característico da marca */
+    --brand-lilac: 300 53% 74%;
+    --brand-lilac-light: 300 53% 84%;
+    --brand-lilac-dark: 300 53% 64%;
     
     /* Preto para contraste */
     --brand-black: 0 0% 8%;
@@ -24,10 +24,10 @@
     --primary: 0 0% 8%;
     --primary-foreground: 0 0% 98%;
     
-    --secondary: 41 89% 50%;
+    --secondary: 300 53% 74%;
     --secondary-foreground: 0 0% 5%;
     
-    --accent: 41 89% 50%;
+    --accent: 300 53% 74%;
     --accent-foreground: 0 0% 5%;
     
     --muted: 0 0% 96%;
@@ -38,7 +38,7 @@
     
     --border: 0 0% 90%;
     --input: 0 0% 95%;
-    --ring: 41 89% 50%;
+    --ring: 300 53% 74%;
     
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
@@ -99,10 +99,10 @@
     --primary: 0 0% 98%;
     --primary-foreground: 0 0% 8%;
     
-    --secondary: 41 89% 40%;
+    --secondary: 300 53% 64%;
     --secondary-foreground: 0 0% 95%;
     
-    --accent: 41 89% 40%;
+    --accent: 300 53% 64%;
     --accent-foreground: 0 0% 95%;
     
     --muted: 0 0% 15%;
@@ -113,7 +113,7 @@
     
     --border: 0 0% 20%;
     --input: 0 0% 15%;
-    --ring: 41 89% 50%;
+    --ring: 300 53% 74%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -328,7 +328,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, hsl(var(--brand-gold)) 0%, hsl(var(--brand-gold-light)) 50%, hsl(var(--brand-gold-dark)) 100%);
+    background: linear-gradient(90deg, hsl(var(--brand-lilac)) 0%, hsl(var(--brand-lilac-light)) 50%, hsl(var(--brand-lilac-dark)) 100%);
     opacity: 0;
     transition: all 0.4s ease;
   }
@@ -341,7 +341,7 @@
   .admin-card-premium:hover {
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     transform: translateY(-3px);
-    border-color: hsl(var(--brand-gold) / 0.3);
+    border-color: hsl(var(--brand-lilac) / 0.3);
   }
 
   .dark .admin-card-premium:hover {
@@ -360,13 +360,13 @@
     right: -50%;
     width: 150px;
     height: 150px;
-    background: radial-gradient(circle, hsl(var(--brand-gold) / 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, hsl(var(--brand-lilac) / 0.05) 0%, transparent 70%);
     pointer-events: none;
     transition: all 0.3s ease;
   }
 
   .admin-stat-card:hover::after {
-    background: radial-gradient(circle, hsl(var(--brand-gold) / 0.12) 0%, transparent 70%);
+    background: radial-gradient(circle, hsl(var(--brand-lilac) / 0.12) 0%, transparent 70%);
     transform: scale(1.2);
   }
 
@@ -391,9 +391,9 @@
     right: 0;
     bottom: 0;
     background: linear-gradient(135deg, 
-      hsl(var(--brand-gold)) 0%, 
-      hsl(var(--brand-gold-light)) 50%, 
-      hsl(var(--brand-gold-dark)) 100%);
+      hsl(var(--brand-lilac)) 0%, 
+      hsl(var(--brand-lilac-light)) 50%, 
+      hsl(var(--brand-lilac-dark)) 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: -1;
@@ -408,8 +408,8 @@
     transform: translateY(-2px);
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 
                 0 10px 10px -5px rgba(0, 0, 0, 0.04),
-                0 0 0 1px hsl(var(--brand-gold) / 0.2);
-    border-color: hsl(var(--brand-gold) / 0.3);
+                0 0 0 1px hsl(var(--brand-lilac) / 0.2);
+    border-color: hsl(var(--brand-lilac) / 0.3);
   }
 
   .admin-stat-card::after {
@@ -419,14 +419,14 @@
     right: -20px;
     width: 60px;
     height: 60px;
-    background: radial-gradient(circle, hsl(var(--brand-gold) / 0.15) 0%, transparent 70%);
+    background: radial-gradient(circle, hsl(var(--brand-lilac) / 0.15) 0%, transparent 70%);
     border-radius: 50%;
     transform: translateY(-50%);
     transition: all 0.3s ease;
   }
 
   .admin-stat-card:hover::after {
-    background: radial-gradient(circle, hsl(var(--brand-gold) / 0.25) 0%, transparent 70%);
+    background: radial-gradient(circle, hsl(var(--brand-lilac) / 0.25) 0%, transparent 70%);
     transform: translateY(-50%) scale(1.2);
   }
 
