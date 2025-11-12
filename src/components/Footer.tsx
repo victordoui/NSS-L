@@ -22,7 +22,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             {/* Logo - Left */}
             <div className="flex items-center">
-              <img src="/assets/images/nss-engenharia-logo-white.png" alt="NSS ENGENHARIA Logo" className="w-24 h-24 object-contain" />
+              <img src="/assets/images/nss-engenharia-logo-white.png" alt="NSS ENGENHARIA Logo" className="w-32 h-32 object-contain" />
             </div>
 
             {/* Contact Info - Center */}
