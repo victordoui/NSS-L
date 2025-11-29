@@ -361,18 +361,9 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      inserir_3x_e_parar: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      is_admin: {
-        Args: { user_uuid?: string }
-        Returns: boolean
-      }
-      promote_user_to_admin: {
-        Args: { user_email: string }
-        Returns: string
-      }
+      inserir_3x_e_parar: { Args: never; Returns: undefined }
+      is_admin: { Args: { user_uuid?: string }; Returns: boolean }
+      promote_user_to_admin: { Args: { user_email: string }; Returns: string }
     }
     Enums: {
       [_ in never]: never

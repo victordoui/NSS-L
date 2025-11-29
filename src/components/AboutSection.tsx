@@ -53,7 +53,7 @@ const AboutSection = () => {
                   letterSpacing: '0.05em'
                 }}
               >
-                Com mais de uma década de atuação, a NSS ENGENHARIA consolida-se como referência em soluções de engenharia. Nossa trajetória é marcada por entregas que aliam precisão técnica, cumprimento rigoroso de prazos e compromisso com a excelência.
+                Com mais de dois anos de experiência, a NSS Engenharia é referência em Patologia das Construções, oferecendo diagnóstico técnico e soluções completas para problemas que comprometem a segurança e o desempenho das edificações.
               </p>
               
               <p 
@@ -65,7 +65,7 @@ const AboutSection = () => {
                   letterSpacing: '0.05em'
                 }}
               >
-                Contamos com equipe própria altamente qualificada, parque de máquinas moderno e gestão financeira estruturada, o que nos permite executar projetos complexos com autonomia e eficiência.
+                Atuamos com inspeções, laudos, perícias, identificação de causas, avaliação de riscos e propostas de intervenção, sempre com base em métodos confiáveis e atualizados.
               </p>
               
               <p 
@@ -77,7 +77,7 @@ const AboutSection = () => {
                   letterSpacing: '0.05em'
                 }}
               >
-                Nosso diferencial está na capacidade de antecipar prazos, superando expectativas e garantindo resultados que se destacam pela qualidade e confiabilidade.
+                Nossa equipe é formada por profissionais especializados e contamos com equipamentos modernos para realizar medições e ensaios com precisão. Isso nos permite entender exatamente o que está acontecendo na estrutura e indicar a melhor solução para cada caso.
               </p>
               
               <p 
@@ -89,7 +89,7 @@ const AboutSection = () => {
                   letterSpacing: '0.05em'
                 }}
               >
-                Mantemos índices de liquidez consistentes, assegurando estabilidade para contratos de grande porte e segurança para nossos clientes.
+                Nosso diferencial está na clareza dos diagnósticos, na agilidade dos atendimentos e na qualidade das recomendações técnicas, garantindo segurança, economia e tranquilidade para nossos clientes.
               </p>
               
               <p 
@@ -101,7 +101,19 @@ const AboutSection = () => {
                   letterSpacing: '0.05em'
                 }}
               >
-                O que realizamos até aqui demonstra nossa competência. O que vem a seguir, vamos construir juntos, com ainda mais solidez e inovação.
+                Também possuímos gestão financeira sólida, o que assegura estabilidade e confiança em contratos de pequeno, médio e grande porte.
+              </p>
+              
+              <p 
+                className="font-heading font-normal text-foreground"
+                style={{ 
+                  fontSize: '16px', 
+                  lineHeight: '1.5em',
+                  textAlign: 'justify',
+                  letterSpacing: '0.05em'
+                }}
+              >
+                A NSS Engenharia é construída com experiência, responsabilidade e dedicação. Estamos prontos para ajudar você a preservar e recuperar a sua edificação com eficiência e segurança.
               </p>
             </div>
           </div>
