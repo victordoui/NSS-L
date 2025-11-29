@@ -2,33 +2,33 @@ const DirectivesSection = () => {
   const directives = [
     {
       number: "01",
-      title: "COMPROMISSO COM PRAZOS",
-      description: "Cumprimento rigoroso de cronogramas com antecipação sempre que possível, garantindo a confiabilidade em todos os projetos."
+      title: "RIGOR NO DIAGNÓSTICO",
+      description: "Análises técnicas detalhadas e fundamentadas, garantindo identificação precisa das causas das patologias e orientações confiáveis para cada caso."
     },
     {
       number: "02",
-      title: "EFICIÊNCIA COM CUSTO INTELIGENTE",
-      description: "Otimização de recursos e processos para entregar o melhor valor com investimento responsável e retorno garantido."
+      title: "SOLUÇÕES TÉCNICAS COM VIABILIDADE",
+      description: "Propostas de intervenção que unem eficiência, economia e segurança, sempre buscando a melhor relação entre custo, desempenho e durabilidade."
     },
     {
       number: "03",
-      title: "QUALIDADE EM CADA ETAPA",
-      description: "Excelência técnica em todos os processos, desde o planejamento até a entrega final, sem exceções."
+      title: "QUALIDADE EM TODO O PROCESSO",
+      description: "Excelência na execução de inspeções, ensaios, laudos e perícias, mantendo padrão elevado desde a primeira avaliação até a entrega final."
     },
     {
       number: "04",
-      title: "SUSTENTABILIDADE COM RESPONSABILIDADE",
-      description: "Desenvolvimento de soluções ambientalmente responsáveis e socialmente conscientes para o futuro."
+      title: "SEGURANÇA E RESPONSABILIDADE",
+      description: "Atuação comprometida com a integridade das edificações, com recomendações baseadas em normas, boas práticas e responsabilidade profissional."
     },
     {
       number: "05",
-      title: "ESTRUTURA E CAPACIDADE TÉCNICA",
-      description: "Equipe especializada, frota moderna e infraestrutura robusta para enfrentar qualquer desafio."
+      title: "EQUIPE ESPECIALIZADA E EQUIPAMENTOS MODERNOS",
+      description: "Profissionais qualificados e tecnologia atualizada para avaliações precisas, incluindo ensaios não destrutivos, medições e levantamentos completos."
     },
     {
       number: "06",
-      title: "RELACIONAMENTO E TRANSPARÊNCIA",
-      description: "Comunicação clara, transparente e relacionamento de confiança com clientes e parceiros."
+      title: "TRANSPARÊNCIA E RELACIONAMENTO",
+      description: "Comunicação clara, documentação completa e relacionamento baseado em confiança, garantindo que o cliente entenda cada etapa do diagnóstico e da solução."
     }
   ];
 
@@ -38,7 +38,7 @@ const DirectivesSection = () => {
         <div className="text-center mb-16">
           <h2 className="section-title mb-6 text-white font-heading font-normal" style={{letterSpacing: '0.05em'}}>DIRETRIZES</h2>
           <p className="text-xl text-white/90 max-w-3xl mx-auto font-heading font-normal" style={{letterSpacing: '0.05em'}}>
-            Parâmetros que garantem clareza, técnica e desempenho em todas as frentes.
+            Parâmetros que garantem clareza, precisão técnica e segurança em cada diagnóstico e solução.
           </p>
         </div>
         
