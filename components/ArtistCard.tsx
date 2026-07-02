@@ -37,7 +37,7 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ artist, onClick }) => {
           }}
           transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }}
         />
-        <div className="absolute inset-0 bg-black/30 group-hover:bg-[#637ab9]/20 transition-colors duration-500" />
+        <div className="absolute inset-0 bg-black/30 group-hover:bg-[#8b5cf6]/20 transition-colors duration-500" />
       </div>
 
       {/* Overlay Info */}
@@ -71,7 +71,7 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ artist, onClick }) => {
             </motion.h3>
           </div>
           <motion.p 
-            className="text-sm font-medium uppercase tracking-widest text-[#4fb7b3] mt-2 will-change-transform"
+            className="text-sm font-medium uppercase tracking-widest text-[#c8a2ff] mt-2 will-change-transform"
             variants={{
               rest: { opacity: 0, y: 10 },
               hover: { opacity: 1, y: 0 }
