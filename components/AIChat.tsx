@@ -3,30 +3,29 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-
-import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { MessageCircle, Send, Sparkles, X } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { sendMessageToGemini } from '../services/geminiService';
 import { ChatMessage } from '../types';
 
 const AIChat: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: 'model', text: 'Ready to transcend? Ask LUMI anything about the festival. ⚡️' }
+    { role: 'model', text: 'Como posso ajudar com engenharia diagnóstica, laudos ou serviços da NSS Engenharia?' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    if (chatContainerRef.current) {
-      const { scrollHeight, clientHeight } = chatContainerRef.current;
-      chatContainerRef.current.scrollTo({
-        top: scrollHeight - clientHeight,
-        behavior: 'smooth',
-      });
-    }
+    if (!chatContainerRef.current) return;
+
+    const { scrollHeight, clientHeight } = chatContainerRef.current;
+    chatContainerRef.current.scrollTo({
+      top: scrollHeight - clientHeight,
+      behavior: 'smooth',
+    });
   };
 
   useEffect(() => {
@@ -41,11 +40,10 @@ const AIChat: React.FC = () => {
     setInput('');
     setIsLoading(true);
 
-    // Slight delay to allow state update to render before scrolling
     setTimeout(scrollToBottom, 100);
 
     const responseText = await sendMessageToGemini(input);
-    
+
     setMessages(prev => [...prev, { role: 'model', text: responseText }]);
     setIsLoading(false);
   };
@@ -60,19 +58,17 @@ const AIChat: React.FC = () => {
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             className="mb-4 w-[90vw] md:w-96 bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl shadow-fuchsia-500/20"
           >
-            {/* Header */}
             <div className="bg-gradient-to-r from-fuchsia-900/50 to-purple-900/50 p-4 flex justify-between items-center border-b border-white/10">
               <div className="flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-fuchsia-400 animate-pulse" />
-                <h3 className="font-heading font-bold text-white tracking-wider">LUMI AI</h3>
+                <h3 className="font-heading font-bold text-white tracking-wider">NSS AI</h3>
               </div>
               <button onClick={() => setIsOpen(false)} className="text-white/50 hover:text-white" data-hover="true">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Messages */}
-            <div 
+            <div
               ref={chatContainerRef}
               className="h-64 md:h-80 overflow-y-auto p-4 space-y-3 scroll-smooth"
             >
@@ -103,7 +99,6 @@ const AIChat: React.FC = () => {
               )}
             </div>
 
-            {/* Input */}
             <div className="p-3 border-t border-white/10 bg-black/40">
               <div className="flex gap-2">
                 <input
@@ -116,7 +111,7 @@ const AIChat: React.FC = () => {
                       handleSend();
                     }
                   }}
-                  placeholder="Ask about lineup, tickets..."
+                  placeholder="Pergunte sobre serviços, laudos..."
                   className="flex-1 bg-transparent text-white placeholder-white/30 text-sm focus:outline-none"
                 />
                 <button
@@ -133,7 +128,6 @@ const AIChat: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Toggle Button */}
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
