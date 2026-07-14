@@ -3,6 +3,7 @@ import { useServices } from "@/hooks/useServices";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import Seo from "@/components/Seo";
 
 const ServiceDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -11,6 +12,7 @@ const ServiceDetail = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background">
+        <Seo title="Carregando serviço" description="Detalhes dos serviços da NSS Engenharia." noIndex />
         <Header />
         <main>
           <div className="container mx-auto px-4 py-8">
@@ -32,6 +34,7 @@ const ServiceDetail = () => {
   if (error || !services) {
     return (
       <div className="min-h-screen bg-background">
+        <Seo title="Serviço não encontrado" description="O serviço solicitado não foi encontrado." noIndex />
         <Header />
         <main>
           <div className="container mx-auto px-4 py-8 text-center">
@@ -61,6 +64,10 @@ const ServiceDetail = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title={service.title}
+        description={service.short_description || service.description.slice(0, 155)}
+      />
       <Header />
       <main>
         {/* Hero Section with Service Image */}

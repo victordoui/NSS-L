@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import Seo from "@/components/Seo";
 import crackWallHero from "@/assets/crack-wall-hero.jpg";
 import engineeringHero from "@/assets/engineering-hero.jpg";
 import laudosImage from "@/assets/services/laudos-tecnicos.jpg";
@@ -55,6 +56,10 @@ const principles = [
 const Index = () => {
   return (
     <div className="home-canvas">
+      <Seo
+        title="NSS Engenharia - Engenharia Diagnóstica"
+        description="Inspeções, laudos, perícias e soluções para patologia das construções com diagnóstico preciso e segurança técnica."
+      />
       <div className="home-shell">
         <Header />
 
@@ -64,6 +69,9 @@ const Index = () => {
               src={crackWallHero}
               alt="Fissura em parede analisada pela NSS Engenharia"
               className="editorial-hero__image"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
             />
             <div className="editorial-hero__veil" />
             <div className="editorial-hero__content">
@@ -117,7 +125,7 @@ const Index = () => {
 
           <section className="editorial-about">
             <div className="editorial-about__visual">
-              <img src={engineeringHero} alt="Equipe técnica em obra de engenharia" />
+              <img src={engineeringHero} alt="Equipe técnica em obra de engenharia" loading="lazy" decoding="async" />
               <div className="editorial-about__stamp">
                 <span>NSS</span>
                 <small>Engenharia &amp; diagnóstico</small>
@@ -158,7 +166,7 @@ const Index = () => {
               {services.map((service, index) => (
                 <article className="editorial-service-card" key={service.title}>
                   <Link to={service.href} className="editorial-service-card__image">
-                    <img src={service.image} alt={service.title} />
+                    <img src={service.image} alt={service.title} loading="lazy" decoding="async" />
                     <span>0{index + 1}</span>
                   </Link>
                   <div className="editorial-service-card__body">
@@ -210,15 +218,15 @@ const Index = () => {
             </div>
             <div className="editorial-portfolio__grid">
               <Link to="/obras-executadas" className="editorial-portfolio__item editorial-portfolio__item--tall">
-                <img src={contencaoImage} alt="Obra de contenção" />
+                <img src={contencaoImage} alt="Obra de contenção" loading="lazy" decoding="async" />
                 <span>Contenção e estabilidade</span>
               </Link>
               <Link to="/obras-executadas" className="editorial-portfolio__item">
-                <img src={sondagemImage} alt="Equipamento de sondagem" />
+                <img src={sondagemImage} alt="Equipamento de sondagem" loading="lazy" decoding="async" />
                 <span>Ensaios e investigação</span>
               </Link>
               <Link to="/obras-executadas" className="editorial-portfolio__item">
-                <img src={construcaoImage} alt="Estrutura em construção" />
+                <img src={construcaoImage} alt="Estrutura em construção" loading="lazy" decoding="async" />
                 <span>Estruturas e obras</span>
               </Link>
             </div>

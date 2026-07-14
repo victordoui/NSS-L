@@ -9,6 +9,7 @@ import { MapPin, Calendar, Ruler, Droplets } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import heroBackground from "@/assets/obras-executadas-hero-new.jpg";
 import { useProjects } from "@/hooks/useProjects";
+import Seo from "@/components/Seo";
 
 const ObrasExecutadas = () => {
   const [selectedCategory, setSelectedCategory] = useState("Todas");
@@ -23,6 +24,10 @@ const ObrasExecutadas = () => {
 
   return (
     <div className="min-h-screen">
+      <Seo
+        title="Obras Executadas"
+        description="Veja projetos e obras executadas pela NSS Engenharia em diagnóstico, contenção, saneamento, estruturas e recuperação."
+      />
       <Header />
       <main>
         {/* Hero Section */}
@@ -99,6 +104,8 @@ const ObrasExecutadas = () => {
                           src={obra.featured_image} 
                           alt={obra.title}
                           className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                          loading="lazy"
+                          decoding="async"
                         />
                       )}
                       {obra.category && (

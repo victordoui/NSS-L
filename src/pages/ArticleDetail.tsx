@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Clock, Calendar } from "lucide-react";
 import { useArticles } from "@/hooks/useArticles";
 import { Skeleton } from "@/components/ui/skeleton";
+import Seo from "@/components/Seo";
 
 const ArticleDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -28,6 +29,7 @@ const ArticleDetail = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen">
+        <Seo title="Carregando artigo" description="Conteúdo técnico da NSS Engenharia." noIndex />
         <Header />
         <main>
           <article className="py-20">
@@ -48,6 +50,7 @@ const ArticleDetail = () => {
   if (!article) {
     return (
       <div className="min-h-screen">
+        <Seo title="Artigo não encontrado" description="O artigo solicitado não foi encontrado." noIndex />
         <Header />
         <main>
           <div className="container max-w-4xl py-20 text-center">
@@ -71,6 +74,11 @@ const ArticleDetail = () => {
 
   return (
     <div className="min-h-screen">
+      <Seo
+        title={article.title}
+        description={article.excerpt || `Leia ${article.title} no informativo da NSS Engenharia.`}
+        type="article"
+      />
       <Header />
       <main>
         <article className="py-20">
@@ -125,6 +133,7 @@ const ArticleDetail = () => {
                   src={article.featured_image}
                   alt={article.title}
                   className="w-full h-auto rounded-lg shadow-lg"
+                  decoding="async"
                 />
               </div>
             )}
@@ -165,6 +174,8 @@ const ArticleDetail = () => {
                           src={related.featured_image || "/assets/images/article-placeholder.png"}
                           alt={related.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          loading="lazy"
+                          decoding="async"
                         />
                       </div>
                       <div className="p-4">

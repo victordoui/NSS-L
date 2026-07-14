@@ -12,6 +12,7 @@ import AdminContactInfo from '@/components/admin/AdminContactInfo';
 import AdminHelp from '@/components/admin/AdminHelp';
 import { AdminMessages } from '@/components/admin/AdminMessages';
 import AdminBackup from '@/components/admin/AdminBackup';
+import Seo from '@/components/Seo';
 
 const Admin = () => {
   const { user, loading, isAdmin } = useAuth();
@@ -19,6 +20,7 @@ const Admin = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
+        <Seo title="Painel administrativo" description="Área restrita da NSS Engenharia." noIndex />
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
           <p className="mt-4 text-muted-foreground">Carregando...</p>
@@ -36,6 +38,7 @@ const Admin = () => {
   if (!isAdmin) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
+        <Seo title="Acesso negado" description="Área restrita da NSS Engenharia." noIndex />
         <div className="text-center">
           <h1 className="text-2xl font-bold text-destructive mb-4">Acesso Negado</h1>
           <p className="text-muted-foreground mb-8">
@@ -53,20 +56,23 @@ const Admin = () => {
   }
 
   return (
-    <AdminLayout>
-      <Routes>
-        <Route index element={<AdminDashboard />} />
-        <Route path="help" element={<AdminHelp />} />
-        <Route path="messages" element={<AdminMessages />} />
-        <Route path="settings" element={<AdminSettings />} />
-        <Route path="social-links" element={<AdminSocialLinks />} />
-        <Route path="services" element={<AdminServices />} />
-        <Route path="articles" element={<AdminArticles />} />
-        <Route path="projects" element={<AdminProjects />} />
-        <Route path="contact-info" element={<AdminContactInfo />} />
-        <Route path="backup" element={<AdminBackup />} />
-      </Routes>
-    </AdminLayout>
+    <>
+      <Seo title="Painel administrativo" description="Área restrita da NSS Engenharia." noIndex />
+      <AdminLayout>
+        <Routes>
+          <Route index element={<AdminDashboard />} />
+          <Route path="help" element={<AdminHelp />} />
+          <Route path="messages" element={<AdminMessages />} />
+          <Route path="settings" element={<AdminSettings />} />
+          <Route path="social-links" element={<AdminSocialLinks />} />
+          <Route path="services" element={<AdminServices />} />
+          <Route path="articles" element={<AdminArticles />} />
+          <Route path="projects" element={<AdminProjects />} />
+          <Route path="contact-info" element={<AdminContactInfo />} />
+          <Route path="backup" element={<AdminBackup />} />
+        </Routes>
+      </AdminLayout>
+    </>
   );
 };
 

@@ -9,6 +9,7 @@ import { Search, MoreHorizontal } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import informativoHero from "@/assets/informativo-hero.jpg";
 import { useArticles } from "@/hooks/useArticles";
+import Seo from "@/components/Seo";
 
 const Informativo = () => {
   const { data: allArticles, isLoading } = useArticles();
@@ -35,6 +36,10 @@ const Informativo = () => {
 
   return (
     <div className="min-h-screen">
+      <Seo
+        title="Informativo Técnico"
+        description="Artigos, dicas e publicações da NSS Engenharia sobre engenharia diagnóstica, patologia das construções e segurança estrutural."
+      />
       <Header />
       <main>
         {/* Hero Section */}
@@ -137,6 +142,8 @@ const Informativo = () => {
                         src={article.featured_image || "/assets/images/article-placeholder.png"} 
                         alt={article.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                        decoding="async"
                       />
                       <Badge className="absolute top-4 left-4" variant="secondary">
                         {getCategoryLabel(article.category || '')}

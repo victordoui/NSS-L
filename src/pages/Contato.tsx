@@ -16,6 +16,7 @@ import * as z from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import contatoHero from "@/assets/contato-hero.jpg";
 import { useRef, useState } from "react";
+import Seo from "@/components/Seo";
 
 const contactFormSchema = z.object({
   name: z.string().trim().min(2, "Informe seu nome").max(100, "Nome muito longo"),
@@ -120,6 +121,10 @@ const Contato = () => {
 
   return (
     <div className="min-h-screen">
+      <Seo
+        title="Contato"
+        description="Fale com a NSS Engenharia para solicitar uma avaliação técnica, tirar dúvidas ou apresentar as necessidades do seu projeto."
+      />
       <Header />
       <main>
         {/* Hero Section */}
@@ -330,7 +335,7 @@ const Contato = () => {
                   height="100%"
                   style={{ border: 0 }}
                   allowFullScreen
-                  loading="eager"
+                  loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   title="Localização da empresa"
                 ></iframe>

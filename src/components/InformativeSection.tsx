@@ -46,6 +46,8 @@ const InformativeSection = () => {
                     src={article.featured_image || "/assets/images/article-placeholder.png"} 
                     alt={article.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <div className="flex-1">
