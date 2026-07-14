@@ -108,47 +108,6 @@ export const useAuth = () => {
     }
   };
 
-  const signUp = async (email: string, password: string, fullName: string) => {
-    try {
-      const redirectUrl = `${window.location.origin}/`;
-      
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: redirectUrl,
-          data: {
-            full_name: fullName,
-          }
-        }
-      });
-
-      if (error) {
-        toast({
-          title: "Erro no cadastro",
-          description: error.message,
-          variant: "destructive",
-        });
-        return { error };
-      }
-
-      toast({
-        title: "Cadastro realizado!",
-        description: "Verifique seu email para confirmar a conta.",
-      });
-
-      return { error: null };
-    } catch (error) {
-      console.error('Sign up error:', error);
-      toast({
-        title: "Erro inesperado",
-        description: "Ocorreu um erro durante o cadastro.",
-        variant: "destructive",
-      });
-      return { error };
-    }
-  };
-
   const signOut = async () => {
     try {
       const { error } = await supabase.auth.signOut();
@@ -196,7 +155,6 @@ export const useAuth = () => {
     loading,
     isAdmin,
     signIn,
-    signUp,
     signOut,
   };
 };
