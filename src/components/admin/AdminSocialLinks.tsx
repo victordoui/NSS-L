@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
-import { useSocialLinks, useCreateSocialLink, useUpdateSocialLink, useDeleteSocialLink } from '@/hooks/useSocialLinks';
+import { useSocialLinks, useCreateSocialLink, useUpdateSocialLink, useDeleteSocialLink, type SocialLink } from '@/hooks/useSocialLinks';
 import { Loader2, Plus, Edit, Trash2, Facebook, Instagram, Twitter, Linkedin, Youtube } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
@@ -19,7 +19,7 @@ const AdminSocialLinks = () => {
   const deleteSocialLink = useDeleteSocialLink();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingLink, setEditingLink] = useState<any>(null);
+  const [editingLink, setEditingLink] = useState<SocialLink | null>(null);
   const [formData, setFormData] = useState({
     platform: '',
     url: '',
@@ -53,7 +53,7 @@ const AdminSocialLinks = () => {
     setEditingLink(null);
   };
 
-  const openModal = (link?: any) => {
+  const openModal = (link?: SocialLink) => {
     if (link) {
       setEditingLink(link);
       setFormData({

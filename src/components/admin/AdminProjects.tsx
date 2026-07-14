@@ -6,13 +6,14 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
-import { useProjects, useUpdateProject, useDeleteProject, useCreateProject } from '@/hooks/useProjects';
+import { useProjects, useUpdateProject, useDeleteProject, useCreateProject, type Project } from '@/hooks/useProjects';
 import { Loader2, Plus, Edit, Trash2, Image as ImageIcon, MapPin, Calendar, Ruler, Eye } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { supabase } from '@/integrations/supabase/client';
 import ImagePositionEditor from './ImagePositionEditor';
 import { Badge } from '@/components/ui/badge';
+import { getErrorMessage } from '@/lib/errors';
 
 const AdminProjects = () => {
   const { toast } = useToast();
@@ -23,8 +24,8 @@ const AdminProjects = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
-  const [previewProject, setPreviewProject] = useState<any>(null);
-  const [editingProject, setEditingProject] = useState<any>(null);
+  const [previewProject, setPreviewProject] = useState<Project | null>(null);
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
@@ -67,7 +68,7 @@ const AdminProjects = () => {
     setEditingProject(null);
   };
 
-  const openModal = (project?: any) => {
+  const openModal = (project?: Project) => {
     if (project) {
       setEditingProject(project);
       setFormData({
@@ -186,11 +187,11 @@ const AdminProjects = () => {
         title: "Sucesso",
         description: "Imagem enviada com sucesso!",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error uploading image:', error);
       toast({
         title: "Erro no Upload",
-        description: `Erro inesperado: ${error.message || 'Falha no upload da imagem'}`,
+        description: `Erro inesperado: ${getErrorMessage(error, 'Falha no upload da imagem')}`,
         variant: "destructive",
       });
     } finally {
@@ -236,11 +237,11 @@ const AdminProjects = () => {
         });
       }
       closeModal();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error saving project:', error);
       toast({
         title: "Erro ao Salvar",
-        description: error.message || "Erro ao salvar projeto. Tente novamente.",
+        description: getErrorMessage(error, "Erro ao salvar projeto. Tente novamente."),
         variant: "destructive",
       });
     }
@@ -254,11 +255,11 @@ const AdminProjects = () => {
         title: "Sucesso",
         description: "Projeto excluído com sucesso!",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error deleting project:', error);
       toast({
         title: "Erro ao Excluir",
-        description: error.message || "Erro ao excluir projeto. Tente novamente.",
+        description: getErrorMessage(error, "Erro ao excluir projeto. Tente novamente."),
         variant: "destructive",
       });
     }

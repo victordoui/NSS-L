@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { useArticles, useCreateArticle, useUpdateArticle, useDeleteArticle } from '@/hooks/useArticles';
+import { useArticles, useCreateArticle, useUpdateArticle, useDeleteArticle, type Article } from '@/hooks/useArticles';
 import { Loader2, Plus, FileText, Newspaper, TrendingUp, Upload, Edit, Trash2, Eye, BookOpen, FilePlus, Image as ImageIcon, CheckCircle2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
@@ -15,6 +15,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { supabase } from '@/integrations/supabase/client';
 import imageCompression from 'browser-image-compression';
 import ImagePositionEditor from './ImagePositionEditor';
+import { getErrorMessage } from '@/lib/errors';
 
 const AdminArticles = () => {
   const { toast } = useToast();
@@ -25,8 +26,8 @@ const AdminArticles = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
-  const [previewArticle, setPreviewArticle] = useState<any>(null);
-  const [editingArticle, setEditingArticle] = useState<any>(null);
+  const [previewArticle, setPreviewArticle] = useState<Article | null>(null);
+  const [editingArticle, setEditingArticle] = useState<Article | null>(null);
   const [formData, setFormData] = useState({
     title: '',
     content: '',
@@ -57,7 +58,7 @@ const AdminArticles = () => {
     setEditingArticle(null);
   };
 
-  const openModal = (article?: any) => {
+  const openModal = (article?: Article) => {
     if (article) {
       setEditingArticle(article);
       setFormData({
@@ -140,11 +141,11 @@ const AdminArticles = () => {
         title: "Sucesso",
         description: "Imagem enviada com sucesso!",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error uploading image:', error);
       toast({
         title: "Erro",
-        description: "Erro ao enviar imagem: " + error.message,
+        description: "Erro ao enviar imagem: " + getErrorMessage(error, "Falha no envio da imagem"),
         variant: "destructive",
       });
     } finally {
@@ -223,7 +224,7 @@ const AdminArticles = () => {
     }
   };
 
-  const openPreview = (article: any) => {
+  const openPreview = (article: Article) => {
     setPreviewArticle(article);
     setIsPreviewModalOpen(true);
   };

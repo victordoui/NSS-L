@@ -2,19 +2,35 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { format } from "date-fns";
+import type { Tables } from "@/integrations/supabase/types";
+import { getErrorMessage } from "@/lib/errors";
+
+const BACKUP_TABLES = [
+  "articles",
+  "contact_info",
+  "contact_messages",
+  "projects",
+  "services",
+  "site_settings",
+  "social_links",
+] as const;
+
+type BackupTable = (typeof BACKUP_TABLES)[number];
+
+interface BackupDataSet {
+  articles: Tables<"articles">[];
+  contact_info: Tables<"contact_info">[];
+  contact_messages: Tables<"contact_messages">[];
+  projects: Tables<"projects">[];
+  services: Tables<"services">[];
+  site_settings: Tables<"site_settings">[];
+  social_links: Tables<"social_links">[];
+}
 
 interface BackupData {
   version: string;
   timestamp: string;
-  data: {
-    articles: any[];
-    contact_info: any[];
-    contact_messages: any[];
-    projects: any[];
-    services: any[];
-    site_settings: any[];
-    social_links: any[];
-  };
+  data: BackupDataSet;
 }
 
 interface BackupHistoryItem {
@@ -23,6 +39,57 @@ interface BackupHistoryItem {
   size: string;
   date: Date;
 }
+
+type SerializedBackupHistoryItem = Omit<BackupHistoryItem, "date"> & { date?: string };
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === "object" && value !== null;
+
+const isBackupData = (value: unknown): value is BackupData => {
+  if (!isRecord(value) || typeof value.version !== "string" || typeof value.timestamp !== "string") {
+    return false;
+  }
+
+  if (!isRecord(value.data)) return false;
+
+  return BACKUP_TABLES.every((table) => Array.isArray(value.data[table]));
+};
+
+const isBackupHistoryItem = (value: unknown): value is SerializedBackupHistoryItem => {
+  if (!isRecord(value)) return false;
+  return (
+    typeof value.filename === "string" &&
+    typeof value.timestamp === "string" &&
+    typeof value.size === "string"
+  );
+};
+
+const upsertBackupBatch = async (
+  table: BackupTable,
+  data: BackupDataSet,
+  start: number,
+  end: number,
+  mode: "replace" | "merge",
+) => {
+  const options = { onConflict: mode === "merge" ? "id" : undefined };
+
+  switch (table) {
+    case "articles":
+      return supabase.from("articles").upsert(data.articles.slice(start, end), options);
+    case "contact_info":
+      return supabase.from("contact_info").upsert(data.contact_info.slice(start, end), options);
+    case "contact_messages":
+      return supabase.from("contact_messages").upsert(data.contact_messages.slice(start, end), options);
+    case "projects":
+      return supabase.from("projects").upsert(data.projects.slice(start, end), options);
+    case "services":
+      return supabase.from("services").upsert(data.services.slice(start, end), options);
+    case "site_settings":
+      return supabase.from("site_settings").upsert(data.site_settings.slice(start, end), options);
+    case "social_links":
+      return supabase.from("social_links").upsert(data.social_links.slice(start, end), options);
+  }
+};
 
 export const useBackup = () => {
   const [isExporting, setIsExporting] = useState(false);
@@ -108,9 +175,9 @@ export const useBackup = () => {
 
       toast.success("Backup exportado com sucesso!");
       return filename;
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Erro ao exportar backup:", error);
-      toast.error(`Erro ao exportar: ${error.message}`);
+      toast.error(`Erro ao exportar: ${getErrorMessage(error, "Falha inesperada")}`);
       throw error;
     } finally {
       setIsExporting(false);
@@ -127,17 +194,18 @@ export const useBackup = () => {
       
       // Ler arquivo
       const text = await file.text();
-      const backupData: BackupData = JSON.parse(text);
+      const parsedBackup: unknown = JSON.parse(text);
 
       // Validar estrutura
-      if (!backupData.version || !backupData.timestamp || !backupData.data) {
+      if (!isBackupData(parsedBackup)) {
         throw new Error("Formato de backup inválido");
       }
+      const backupData = parsedBackup;
 
       toast.info("Validando dados do backup...");
       setImportProgress(10);
 
-      const tables = Object.keys(backupData.data) as Array<keyof BackupData["data"]>;
+      const tables: readonly BackupTable[] = BACKUP_TABLES;
       const totalTables = tables.length;
       let processedTables = 0;
 
@@ -165,11 +233,13 @@ export const useBackup = () => {
           // Inserir em lotes de 100
           const batchSize = 100;
           for (let i = 0; i < tableData.length; i += batchSize) {
-            const batch = tableData.slice(i, i + batchSize);
-            
-            const { error } = await supabase.from(table).upsert(batch, {
-              onConflict: mode === "merge" ? "id" : undefined,
-            });
+            const { error } = await upsertBackupBatch(
+              table,
+              backupData.data,
+              i,
+              i + batchSize,
+              mode,
+            );
 
             if (error) {
               console.error(`Erro ao importar ${table}:`, error);
@@ -190,9 +260,9 @@ export const useBackup = () => {
         window.location.reload();
       }, 2000);
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Erro ao importar backup:", error);
-      toast.error(`Erro ao importar: ${error.message}`);
+      toast.error(`Erro ao importar: ${getErrorMessage(error, "Falha inesperada")}`);
       throw error;
     } finally {
       setIsImporting(false);
@@ -227,8 +297,10 @@ export const useBackup = () => {
       const stored = localStorage.getItem("backup-history");
       if (!stored) return [];
       
-      const history = JSON.parse(stored);
-      return history.map((item: any) => ({
+      const history: unknown = JSON.parse(stored);
+      if (!Array.isArray(history)) return [];
+
+      return history.filter(isBackupHistoryItem).map((item) => ({
         ...item,
         date: new Date(item.timestamp),
       }));

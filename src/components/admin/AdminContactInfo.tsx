@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
-import { useContactInfo, useCreateContactInfo, useUpdateContactInfo, useDeleteContactInfo } from '@/hooks/useContactInfo';
+import { useContactInfo, useCreateContactInfo, useUpdateContactInfo, useDeleteContactInfo, type ContactInfo } from '@/hooks/useContactInfo';
 import { Loader2, Plus, Edit, Trash2, Phone, Mail, MapPin, MessageCircle, Smartphone, Building2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
@@ -19,7 +19,7 @@ const AdminContactInfo = () => {
   const deleteContactInfo = useDeleteContactInfo();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingContact, setEditingContact] = useState<any>(null);
+  const [editingContact, setEditingContact] = useState<ContactInfo | null>(null);
   const [formData, setFormData] = useState({
     type: '',
     label: '',
@@ -57,7 +57,7 @@ const AdminContactInfo = () => {
     setEditingContact(null);
   };
 
-  const openModal = (contact?: any) => {
+  const openModal = (contact?: ContactInfo) => {
     if (contact) {
       setEditingContact(contact);
       setFormData({

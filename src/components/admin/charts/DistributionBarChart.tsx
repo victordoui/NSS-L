@@ -3,8 +3,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface DistributionBarChartProps {
-  data: any[];
+  data: DistributionDataPoint[];
   loading?: boolean;
+}
+
+export interface DistributionDataPoint {
+  name: string;
+  value: number;
 }
 
 const COLORS = ['#3B82F6', '#10B981', '#A855F7', '#F97316'];

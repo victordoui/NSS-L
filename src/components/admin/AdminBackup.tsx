@@ -191,7 +191,14 @@ const AdminBackup = () => {
 
           <div className="space-y-3">
             <Label>Modo de Importação</Label>
-            <RadioGroup value={importMode} onValueChange={(value: any) => setImportMode(value)}>
+            <RadioGroup
+              value={importMode}
+              onValueChange={(value) => {
+                if (value === "replace" || value === "merge") {
+                  setImportMode(value);
+                }
+              }}
+            >
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="replace" id="replace" disabled={isImporting} />
                 <Label htmlFor="replace" className="font-normal cursor-pointer">

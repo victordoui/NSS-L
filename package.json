@@ -7,8 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",
-    "check": "npm run lint && npm run build",
+    "check": "npm run lint && npm run typecheck && npm run build",
     "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
     "preview": "vite preview"
   },
   "dependencies": {

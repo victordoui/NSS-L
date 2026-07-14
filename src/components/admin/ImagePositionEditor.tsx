@@ -41,13 +41,13 @@ const ImagePositionEditor = ({ imageUrl, position, onPositionChange }: ImagePosi
   const handleTouchStart = (e: React.TouchEvent) => {
     setIsDragging(true);
     const touch = e.touches[0];
-    updatePosition({ clientX: touch.clientX, clientY: touch.clientY } as any);
+    updatePosition({ clientX: touch.clientX, clientY: touch.clientY });
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDragging) return;
     const touch = e.touches[0];
-    updatePosition({ clientX: touch.clientX, clientY: touch.clientY } as any);
+    updatePosition({ clientX: touch.clientX, clientY: touch.clientY });
   };
 
   const handleTouchEnd = () => {

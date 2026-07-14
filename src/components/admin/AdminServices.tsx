@@ -6,13 +6,14 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
-import { useServices, useUpdateService, useDeleteService, useCreateService } from '@/hooks/useServices';
+import { useServices, useUpdateService, useDeleteService, useCreateService, type Service } from '@/hooks/useServices';
 import { Loader2, Plus, Edit, Trash2, Image as ImageIcon, Eye } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { supabase } from '@/integrations/supabase/client';
 import ImagePositionEditor from './ImagePositionEditor';
 import ServiceCard from '@/components/ServiceCard';
+import { getErrorMessage } from '@/lib/errors';
 
 const AdminServices = () => {
   const { toast } = useToast();
@@ -23,8 +24,8 @@ const AdminServices = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
-  const [previewService, setPreviewService] = useState<any>(null);
-  const [editingService, setEditingService] = useState<any>(null);
+  const [previewService, setPreviewService] = useState<Service | null>(null);
+  const [editingService, setEditingService] = useState<Service | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
@@ -56,7 +57,7 @@ const AdminServices = () => {
     setEditingService(null);
   };
 
-  const openModal = (service?: any) => {
+  const openModal = (service?: Service) => {
     if (service) {
       setEditingService(service);
       setFormData({
@@ -172,11 +173,11 @@ const AdminServices = () => {
         title: "Sucesso",
         description: "Imagem enviada com sucesso!",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error uploading image:', error);
       toast({
         title: "Erro no Upload",
-        description: `Erro inesperado: ${error.message || 'Falha no upload da imagem'}`,
+        description: `Erro inesperado: ${getErrorMessage(error, 'Falha no upload da imagem')}`,
         variant: "destructive",
       });
     } finally {
@@ -230,11 +231,11 @@ const AdminServices = () => {
         });
       }
       closeModal();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error saving service:', error);
       toast({
         title: "Erro ao Salvar",
-        description: error.message || "Erro ao salvar serviço. Tente novamente.",
+        description: getErrorMessage(error, "Erro ao salvar serviço. Tente novamente."),
         variant: "destructive",
       });
     }
@@ -264,11 +265,11 @@ const AdminServices = () => {
         title: "Sucesso",
         description: "Serviço excluído com sucesso!",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error deleting service:', error);
       toast({
         title: "Erro ao Excluir",
-        description: error.message || "Erro ao excluir serviço. Tente novamente.",
+        description: getErrorMessage(error, "Erro ao excluir serviço. Tente novamente."),
         variant: "destructive",
       });
     }

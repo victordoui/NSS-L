@@ -3,8 +3,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface ActivityLineChartProps {
-  data: any[];
+  data: ActivityDataPoint[];
   loading?: boolean;
+}
+
+export interface ActivityDataPoint {
+  day: string;
+  services: number;
+  articles: number;
+  projects: number;
 }
 
 export const ActivityLineChart = ({ data, loading }: ActivityLineChartProps) => {

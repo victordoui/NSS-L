@@ -8,7 +8,7 @@
 - Comando de validação e build: `npm run check`
 - Pasta publicada: `dist`
 
-Toda atualização autorizada deve ser enviada para a `main`. O Netlify executa lint e build antes de disponibilizar uma nova versão; se qualquer etapa falhar, o deploy não deve substituir a versão estável.
+Toda atualização autorizada deve ser enviada para a `main`. O Netlify executa lint, verificação de tipos e build antes de disponibilizar uma nova versão; se qualquer etapa falhar, o deploy não deve substituir a versão estável.
 
 ## Variáveis necessárias no Netlify
 

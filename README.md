@@ -47,12 +47,15 @@ Definidos em `package.json`:
 - `dev`: inicia o Vite em modo desenvolvimento
 - `build`: build de produção
 - `build:dev`: build em modo desenvolvimento
+- `check`: executa lint, verificação de tipos e build de produção
 - `lint`: executa ESLint
+- `typecheck`: valida os tipos TypeScript sem gerar arquivos
 - `preview`: levanta um servidor para pré-visualizar o build
 
 Exemplos:
 ```
 npm run build
+npm run check
 npm run preview
 npm run lint
 ```
@@ -121,7 +124,7 @@ Hospedagem estática (Vercel, Netlify, etc.):
 
 ## Contribuição
 - Neste projeto, as atualizações operacionais autorizadas são publicadas diretamente na branch `main`.
-- Rode `npm run lint` antes de abrir PR.
+- Rode `npm run check` antes de publicar na `main`.
 - Descreva claramente mudanças e impacto.
 
 Em caso de dúvidas ou melhorias, sinta-se à vontade para abrir uma issue ou solicitar suporte.

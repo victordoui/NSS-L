@@ -24,8 +24,14 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
       "@typescript-eslint/no-unused-vars": "off",
-      // Keep legacy admin typing debt visible without blocking safe releases.
-      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-explicit-any": "error",
     },
-  }
+  },
+  {
+    files: ["src/components/ui/**/*.{ts,tsx}"],
+    rules: {
+      // shadcn modules intentionally export variants and helpers with components.
+      "react-refresh/only-export-components": "off",
+    },
+  },
 );

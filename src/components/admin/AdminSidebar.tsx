@@ -13,6 +13,7 @@ import {
   ChevronLeft,
   ChevronDown,
   Database,
+  type LucideIcon,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -113,7 +114,7 @@ const AdminSidebar = () => {
   const hasContentActive = contentItems.some(item => isActive(item.url));
   const hasConfigActive = configItems.some(item => isActive(item.url));
 
-  const renderMenuItem = (item: { title: string; url: string; icon: any; badge?: number }) => {
+  const renderMenuItem = (item: { title: string; url: string; icon: LucideIcon; badge?: number }) => {
     const active = isActive(item.url);
     const menuButton = (
       <SidebarMenuButton asChild className={cn(

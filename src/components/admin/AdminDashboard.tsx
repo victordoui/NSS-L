@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   FileText, 
@@ -15,9 +15,10 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
-import { ActivityLineChart } from './charts/ActivityLineChart';
-import { DistributionBarChart } from './charts/DistributionBarChart';
+import { ActivityLineChart, type ActivityDataPoint } from './charts/ActivityLineChart';
+import { DistributionBarChart, type DistributionDataPoint } from './charts/DistributionBarChart';
 import { RecentMessagesTable } from './tables/RecentMessagesTable';
+import type { Tables } from '@/integrations/supabase/types';
 import {
   Select,
   SelectContent,
@@ -35,6 +36,43 @@ interface DashboardStats {
   unreadMessages: number;
 }
 
+type DashboardPeriod = '24h' | '7d' | '30d' | 'all';
+type TimestampedRow = { updated_at: string };
+type ContactMessage = Tables<'contact_messages'>;
+
+const isDashboardPeriod = (value: string): value is DashboardPeriod =>
+  value === '24h' || value === '7d' || value === '30d' || value === 'all';
+
+const processDataByDay = (
+  services: TimestampedRow[],
+  articles: TimestampedRow[],
+  projects: TimestampedRow[],
+  days: number,
+): ActivityDataPoint[] => {
+  const dayMap: Record<string, Omit<ActivityDataPoint, 'day'>> = {};
+
+  for (let i = days - 1; i >= 0; i--) {
+    const date = new Date();
+    date.setDate(date.getDate() - i);
+    const dayKey = date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+    dayMap[dayKey] = { services: 0, articles: 0, projects: 0 };
+  }
+
+  const countRows = (rows: TimestampedRow[], key: keyof Omit<ActivityDataPoint, 'day'>) => {
+    rows.forEach((item) => {
+      const date = new Date(item.updated_at);
+      const dayKey = date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+      if (dayMap[dayKey]) dayMap[dayKey][key] += 1;
+    });
+  };
+
+  countRows(services, 'services');
+  countRows(articles, 'articles');
+  countRows(projects, 'projects');
+
+  return Object.entries(dayMap).map(([day, counts]) => ({ day, ...counts }));
+};
+
 const AdminDashboard = () => {
   const [stats, setStats] = useState<DashboardStats>({
     services: 0,
@@ -45,11 +83,11 @@ const AdminDashboard = () => {
     unreadMessages: 0,
   });
   const [loading, setLoading] = useState(true);
-  const [period, setPeriod] = useState<'24h' | '7d' | '30d' | 'all'>('7d');
-  const [activityData, setActivityData] = useState<any[]>([]);
-  const [recentMessages, setRecentMessages] = useState<any[]>([]);
+  const [period, setPeriod] = useState<DashboardPeriod>('7d');
+  const [activityData, setActivityData] = useState<ActivityDataPoint[]>([]);
+  const [recentMessages, setRecentMessages] = useState<ContactMessage[]>([]);
 
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     try {
       setLoading(true);
       
@@ -82,9 +120,9 @@ const AdminDashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const fetchActivityData = async (selectedPeriod: string) => {
+  const fetchActivityData = useCallback(async (selectedPeriod: DashboardPeriod) => {
     try {
       const daysMap = { '24h': 1, '7d': 7, '30d': 30, 'all': 365 };
       const days = daysMap[selectedPeriod as keyof typeof daysMap];
@@ -118,47 +156,9 @@ const AdminDashboard = () => {
     } catch (error) {
       console.error('Error fetching activity data:', error);
     }
-  };
+  }, []);
 
-  const processDataByDay = (services: any[], articles: any[], projects: any[], days: number) => {
-    const dayMap: { [key: string]: { services: number; articles: number; projects: number } } = {};
-    
-    // Initialize last N days
-    for (let i = days - 1; i >= 0; i--) {
-      const date = new Date();
-      date.setDate(date.getDate() - i);
-      const dayKey = date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
-      dayMap[dayKey] = { services: 0, articles: 0, projects: 0 };
-    }
-
-    // Count services
-    services.forEach(item => {
-      const date = new Date(item.updated_at);
-      const dayKey = date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
-      if (dayMap[dayKey]) dayMap[dayKey].services++;
-    });
-
-    // Count articles
-    articles.forEach(item => {
-      const date = new Date(item.updated_at);
-      const dayKey = date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
-      if (dayMap[dayKey]) dayMap[dayKey].articles++;
-    });
-
-    // Count projects
-    projects.forEach(item => {
-      const date = new Date(item.updated_at);
-      const dayKey = date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
-      if (dayMap[dayKey]) dayMap[dayKey].projects++;
-    });
-
-    return Object.entries(dayMap).map(([day, counts]) => ({
-      day,
-      ...counts
-    }));
-  };
-
-  const fetchRecentMessages = async () => {
+  const fetchRecentMessages = useCallback(async () => {
     try {
       const { data } = await supabase
         .from('contact_messages')
@@ -170,9 +170,9 @@ const AdminDashboard = () => {
     } catch (error) {
       console.error('Error fetching recent messages:', error);
     }
-  };
+  }, []);
 
-  const getDistributionData = () => [
+  const getDistributionData = (): DistributionDataPoint[] => [
     { name: 'Serviços', value: stats.services },
     { name: 'Artigos', value: stats.articles },
     { name: 'Projetos', value: stats.projects },
@@ -185,7 +185,7 @@ const AdminDashboard = () => {
       fetchActivityData(period),
       fetchRecentMessages()
     ]);
-  }, [period]);
+  }, [fetchActivityData, fetchRecentMessages, fetchStats, period]);
 
   const heroCards = [
     {
@@ -270,7 +270,12 @@ const AdminDashboard = () => {
           <h1 className="text-3xl font-bold text-foreground tracking-tight">Dashboard</h1>
           
           <div className="flex items-center gap-3">
-            <Select value={period} onValueChange={(value: any) => setPeriod(value)}>
+            <Select
+              value={period}
+              onValueChange={(value) => {
+                if (isDashboardPeriod(value)) setPeriod(value);
+              }}
+            >
               <SelectTrigger className="w-[160px] h-9 rounded-xl">
                 <SelectValue placeholder="Período" />
               </SelectTrigger>
