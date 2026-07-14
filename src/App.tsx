@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import ScrollToTop from "./components/ScrollToTop";
+import SkipLink from "./components/SkipLink";
 
 // Lazy load pages for better performance
 const Index = lazy(() => import("./pages/Index"));
@@ -21,14 +22,16 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Loading fallback component
 const PageLoader = () => (
-  <div
+  <main
+    id="main-content"
+    tabIndex={-1}
     className="min-h-screen flex items-center justify-center bg-background"
     role="status"
     aria-live="polite"
   >
     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary" aria-hidden="true"></div>
     <span className="sr-only">Carregando página...</span>
-  </div>
+  </main>
 );
 
 const queryClient = new QueryClient();
@@ -40,6 +43,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
+        <SkipLink />
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<Index />} />

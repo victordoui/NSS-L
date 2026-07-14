@@ -18,7 +18,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
           <div className="flex-1 flex flex-col min-w-0">
             <AdminHeader />
             
-            <main className="flex-1 p-6 overflow-x-hidden bg-gray-50 dark:bg-gray-950">
+            <main id="main-content" tabIndex={-1} className="flex-1 p-6 overflow-x-hidden bg-gray-50 dark:bg-gray-950">
               <div className="max-w-7xl mx-auto">
                 {children}
               </div>

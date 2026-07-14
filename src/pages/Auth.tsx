@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -32,7 +32,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-background flex items-center justify-center p-4">
       <Seo title="Acesso administrativo" description="Área restrita da NSS Engenharia." noIndex />
       <div className="w-full max-w-md space-y-8">
         {/* Logo NSS Engenharia */}
@@ -46,9 +46,9 @@ const Auth = () => {
         
         <Card className="w-full">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">
+          <h1 className="text-2xl font-bold text-center">
             Acesso administrativo
-          </CardTitle>
+          </h1>
           <p className="text-muted-foreground text-center">
             Entre com uma conta autorizada para gerenciar o site
           </p>
@@ -98,7 +98,7 @@ const Auth = () => {
         </CardContent>
         </Card>
       </div>
-    </div>
+    </main>
   );
 };
 

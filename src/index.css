@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+.skip-link {
+  position: fixed;
+  z-index: 1000;
+  top: 12px;
+  left: 12px;
+  padding: 12px 18px;
+  border-radius: 6px;
+  background: #281c2b;
+  color: #fff;
+  font-family: var(--font-admin);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: normal;
+  transform: translateY(calc(-100% - 20px));
+  transition: transform 150ms ease;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  outline: 3px solid #d6afd2;
+  outline-offset: 3px;
+  transform: translateY(0);
+}
+
 /* NSS Engenharia Design System */
 
 @layer base {

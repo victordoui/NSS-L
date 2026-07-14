@@ -13,7 +13,7 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <main id="main-content" tabIndex={-1} className="min-h-screen flex items-center justify-center bg-gray-100">
       <Seo title="Página não encontrada" description="A página solicitada não foi encontrada." noIndex />
       <div className="text-center">
         <h1 className="text-4xl font-bold mb-4">404</h1>
@@ -22,7 +22,7 @@ const NotFound = () => {
           Return to Home
         </a>
       </div>
-    </div>
+    </main>
   );
 };
 

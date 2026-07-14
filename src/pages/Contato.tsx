@@ -126,7 +126,7 @@ const Contato = () => {
         description="Fale com a NSS Engenharia para solicitar uma avaliação técnica, tirar dúvidas ou apresentar as necessidades do seu projeto."
       />
       <Header />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* Hero Section */}
         <section 
           className="relative min-h-[600px] flex items-center bg-cover bg-center bg-no-repeat"

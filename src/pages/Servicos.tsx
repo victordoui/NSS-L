@@ -21,7 +21,7 @@ const Servicos = () => {
         description="Conheça os serviços da NSS Engenharia em inspeções, laudos, projetos, recuperação estrutural e acompanhamento técnico de obras."
       />
       <Header />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* Hero Section */}
         <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
@@ -31,7 +31,6 @@ const Servicos = () => {
               className="w-full h-full object-cover object-center"
               loading="eager"
               decoding="async"
-              fetchPriority="high"
             />
             <div className="absolute inset-0 bg-black/40"></div>
           </div>

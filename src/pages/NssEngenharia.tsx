@@ -14,7 +14,7 @@ const NssEngenharia = () => {
         description="Conheça a história, as especialidades técnicas e o compromisso da NSS Engenharia com diagnósticos claros e soluções seguras."
       />
       <Header />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* Hero Section */}
         <section 
           className="min-h-[60vh] bg-cover bg-center bg-no-repeat flex items-center justify-center relative"

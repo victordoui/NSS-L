@@ -14,7 +14,7 @@ const ServiceDetail = () => {
       <div className="min-h-screen bg-background">
         <Seo title="Carregando serviço" description="Detalhes dos serviços da NSS Engenharia." noIndex />
         <Header />
-        <main>
+        <main id="main-content" tabIndex={-1}>
           <div className="container mx-auto px-4 py-8">
             <div className="animate-pulse">
               <div className="h-96 bg-gray-200 rounded-lg mb-8"></div>
@@ -36,7 +36,7 @@ const ServiceDetail = () => {
       <div className="min-h-screen bg-background">
         <Seo title="Serviço não encontrado" description="O serviço solicitado não foi encontrado." noIndex />
         <Header />
-        <main>
+        <main id="main-content" tabIndex={-1}>
           <div className="container mx-auto px-4 py-8 text-center">
             <h1 className="text-2xl font-heading mb-4">Serviço não encontrado</h1>
             <p className="text-muted-foreground mb-8">
@@ -69,7 +69,7 @@ const ServiceDetail = () => {
         description={service.short_description || service.description.slice(0, 155)}
       />
       <Header />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* Hero Section with Service Image */}
         <section className="relative h-96 overflow-hidden">
           <div 

@@ -41,7 +41,7 @@ const Informativo = () => {
         description="Artigos, dicas e publicações da NSS Engenharia sobre engenharia diagnóstica, patologia das construções e segurança estrutural."
       />
       <Header />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* Hero Section */}
         <section 
           className="relative min-h-[600px] flex items-center bg-cover bg-center bg-no-repeat"
@@ -70,11 +70,12 @@ const Informativo = () => {
         <section className="py-20">
           <div className="container max-w-6xl">
             {/* Search and Filter Bar */}
-            <div className="flex justify-between items-center mb-8 gap-4">
-              <div className="flex gap-2">
+            <div className="flex flex-col items-stretch gap-4 mb-8 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-wrap gap-2">
                 <Button
                   variant={selectedCategory === null ? "default" : "outline"}
                   size="sm"
+                  aria-pressed={selectedCategory === null}
                   onClick={() => setSelectedCategory(null)}
                 >
                   Todos
@@ -82,6 +83,7 @@ const Informativo = () => {
                 <Button
                   variant={selectedCategory === "dicas" ? "default" : "outline"}
                   size="sm"
+                  aria-pressed={selectedCategory === "dicas"}
                   onClick={() => setSelectedCategory("dicas")}
                 >
                   Dicas
@@ -89,16 +91,21 @@ const Informativo = () => {
                 <Button
                   variant={selectedCategory === "publicacoes" ? "default" : "outline"}
                   size="sm"
+                  aria-pressed={selectedCategory === "publicacoes"}
                   onClick={() => setSelectedCategory("publicacoes")}
                 >
                   Publicações
                 </Button>
               </div>
 
-              <div className="relative w-72">
+              <div className="relative w-full sm:w-72">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={16} />
+                <label htmlFor="article-search" className="sr-only">
+                  Buscar artigos
+                </label>
                 <input 
-                  type="text" 
+                  id="article-search"
+                  type="search"
                   placeholder="Buscar artigos..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}

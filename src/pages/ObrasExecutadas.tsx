@@ -29,7 +29,7 @@ const ObrasExecutadas = () => {
         description="Veja projetos e obras executadas pela NSS Engenharia em diagnóstico, contenção, saneamento, estruturas e recuperação."
       />
       <Header />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* Hero Section */}
         <section 
           className="relative min-h-[600px] flex items-center bg-cover bg-center bg-no-repeat"

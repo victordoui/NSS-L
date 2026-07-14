@@ -118,7 +118,7 @@ const Index = () => {
       <div className="home-shell">
         <Header />
 
-        <main className="home-editorial">
+        <main id="main-content" tabIndex={-1} className="home-editorial">
           <section className="editorial-hero" id="inicio">
             <img
               src={crackWallHero}
@@ -126,7 +126,6 @@ const Index = () => {
               className="editorial-hero__image"
               loading="eager"
               decoding="async"
-              fetchPriority="high"
             />
             <div className="editorial-hero__veil" />
             <div className="editorial-hero__content">

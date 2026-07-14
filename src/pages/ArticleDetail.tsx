@@ -31,7 +31,7 @@ const ArticleDetail = () => {
       <div className="min-h-screen">
         <Seo title="Carregando artigo" description="Conteúdo técnico da NSS Engenharia." noIndex />
         <Header />
-        <main>
+        <main id="main-content" tabIndex={-1}>
           <article className="py-20">
             <div className="container max-w-4xl">
               <Skeleton className="h-12 w-3/4 mb-4" />
@@ -52,7 +52,7 @@ const ArticleDetail = () => {
       <div className="min-h-screen">
         <Seo title="Artigo não encontrado" description="O artigo solicitado não foi encontrado." noIndex />
         <Header />
-        <main>
+        <main id="main-content" tabIndex={-1}>
           <div className="container max-w-4xl py-20 text-center">
             <h1 className="text-4xl font-bold mb-4">Artigo não encontrado</h1>
             <p className="text-muted-foreground mb-8">
@@ -80,7 +80,7 @@ const ArticleDetail = () => {
         type="article"
       />
       <Header />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <article className="py-20">
           <div className="container max-w-4xl">
             {/* Breadcrumb */}

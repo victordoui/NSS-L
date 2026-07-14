@@ -19,13 +19,13 @@ const Admin = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-background flex items-center justify-center">
         <Seo title="Painel administrativo" description="Área restrita da NSS Engenharia." noIndex />
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
           <p className="mt-4 text-muted-foreground">Carregando...</p>
         </div>
-      </div>
+      </main>
     );
   }
 
@@ -37,7 +37,7 @@ const Admin = () => {
   // Show access denied if not admin
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-background flex items-center justify-center">
         <Seo title="Acesso negado" description="Área restrita da NSS Engenharia." noIndex />
         <div className="text-center">
           <h1 className="text-2xl font-bold text-destructive mb-4">Acesso Negado</h1>
@@ -51,7 +51,7 @@ const Admin = () => {
             Voltar para o site
           </a>
         </div>
-      </div>
+      </main>
     );
   }
 
