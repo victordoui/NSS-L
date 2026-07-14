@@ -9,7 +9,7 @@ const NssEngenharia = () => {
   return (
     <div className="min-h-screen bg-white">
       <Header />
-      <main className="pt-20">
+      <main>
         {/* Hero Section */}
         <section 
           className="min-h-[60vh] bg-cover bg-center bg-no-repeat flex items-center justify-center relative"
@@ -21,9 +21,8 @@ const NssEngenharia = () => {
           <div className="absolute inset-0 bg-black/50"></div>
           <div className="container relative z-10">
             <h1 
-              className="font-heading text-white leading-[1em]"
+              className="font-heading text-[clamp(2.25rem,11vw,3.5625rem)] text-white leading-[1em]"
               style={{ 
-                fontSize: '57px',
                 fontWeight: 'normal',
                 letterSpacing: '0.05em'
               }}
@@ -37,9 +36,8 @@ const NssEngenharia = () => {
         <section className="py-20 bg-white">
           <div className="container max-w-6xl">
             <h2 
-              className="font-heading text-black text-center mb-16"
+              className="font-heading text-[clamp(2rem,9vw,2.6875rem)] text-black text-center mb-16"
               style={{ 
-                fontSize: '43px',
                 lineHeight: '0.9em',
                 letterSpacing: '0.05em'
               }}

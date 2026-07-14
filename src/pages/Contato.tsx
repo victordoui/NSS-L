@@ -1,36 +1,46 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import SocialLinks from "@/components/SocialLinks";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Phone, Mail, MapPin, Clock, Building2 } from "lucide-react";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
-import { useContactInfo } from "@/hooks/useContactInfo";
-import { useServices } from "@/hooks/useServices";
+import TurnstileWidget from "@/components/TurnstileWidget";
+import { ContactInfo, useContactInfo } from "@/hooks/useContactInfo";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
-import { useContactMessages, ContactMessageInsert } from "@/hooks/useContactMessages";
+import { useContactSubmission } from "@/hooks/useContactSubmission";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import contatoHero from "@/assets/contato-hero.jpg";
+import { useRef, useState } from "react";
 
 const contactFormSchema = z.object({
-  name: z.string().trim().min(1, "Nome é obrigatório").max(100, "Nome muito longo"),
-  phone: z.string().trim().min(1, "Telefone é obrigatório").max(20, "Telefone inválido"),
+  name: z.string().trim().min(2, "Informe seu nome").max(100, "Nome muito longo"),
+  phone: z.string().trim().refine(
+    (phone) => phone.replace(/\D/g, "").length >= 8,
+    "Telefone inválido",
+  ).refine(
+    (phone) => phone.replace(/\D/g, "").length <= 15,
+    "Telefone inválido",
+  ),
   email: z.string().trim().email("Email inválido").max(255, "Email muito longo"),
-  message: z.string().trim().min(1, "Mensagem é obrigatória").max(1000, "Mensagem muito longa"),
+  message: z.string().trim().min(10, "Descreva um pouco mais sua necessidade").max(2000, "Mensagem muito longa"),
 });
+
+const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY ||
+  (import.meta.env.DEV ? "1x00000000000000000000AA" : "");
+const turnstileEnabled = Boolean(turnstileSiteKey);
 
 const Contato = () => {
   const { data: contactInfoData, isLoading: contactLoading } = useContactInfo();
-  const { data: servicesData, isLoading: servicesLoading } = useServices();
   const { data: siteSettings } = useSiteSettings();
-  const { createMessage } = useContactMessages();
+  const { submitMessage } = useContactSubmission();
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<z.infer<typeof contactFormSchema>>({
     resolver: zodResolver(contactFormSchema),
@@ -42,17 +52,26 @@ const Contato = () => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof contactFormSchema>) => {
-    createMessage.mutate(values as ContactMessageInsert, {
+  const onSubmit = (values: z.infer<typeof contactFormSchema>) => {
+    if (turnstileEnabled && !turnstileToken) return;
+
+    submitMessage.mutate({
+      ...values,
+      turnstileToken: turnstileToken || "",
+      website: honeypotRef.current?.value || "",
+    }, {
       onSuccess: () => {
         form.reset();
+        if (honeypotRef.current) honeypotRef.current.value = "";
+      },
+      onSettled: () => {
+        setTurnstileToken(null);
+        setTurnstileResetKey((value) => value + 1);
       },
     });
   };
 
   const googleMapsUrl = siteSettings?.find(s => s.key === 'google_maps_embed_url')?.value || '';
-  const locationAddress = siteSettings?.find(s => s.key === 'location_address')?.value || 'São Paulo - SP';
-
   const getIcon = (type: string) => {
     switch (type.toLowerCase()) {
       case 'phone': case 'telefone': return <Phone className="w-8 h-8" />;
@@ -65,34 +84,6 @@ const Contato = () => {
     }
   };
 
-  // Fallback contact info if no data from database
-  const fallbackContactInfo = [
-    {
-      icon: <Phone className="w-8 h-8" />,
-      title: "TELEFONE",
-      info: "(11) 4002-8922",
-      description: ""
-    },
-    {
-      icon: <WhatsAppIcon className="w-8 h-8" />,
-      title: "WHATSAPP",
-      info: "(21) 99568-4915",
-      description: ""
-    },
-    {
-      icon: <Mail className="w-8 h-8" />,
-      title: "E-MAIL",
-      info: "contato@reservaengenharia.com",
-      description: ""
-    },
-    {
-      icon: <MapPin className="w-8 h-8" />,
-      title: "ENDEREÇO",
-      info: "São Paulo - SP",
-      description: ""
-    }
-  ];
-
   const orderPriority: Record<string, number> = {
     'telefone': 1,
     'phone': 1,
@@ -104,10 +95,10 @@ const Contato = () => {
     'address': 4
   };
 
-  const sortContactInfo = (items: any[]) => {
+  const sortContactInfo = (items: ContactInfo[]) => {
     return [...items].sort((a, b) => {
-      const aType = a.type?.toLowerCase() || a.title?.toLowerCase() || '';
-      const bType = b.type?.toLowerCase() || b.title?.toLowerCase() || '';
+      const aType = a.type.toLowerCase();
+      const bType = b.type.toLowerCase();
       const aPriority = orderPriority[aType] || 999;
       const bPriority = orderPriority[bType] || 999;
       return aPriority - bPriority;
@@ -115,7 +106,7 @@ const Contato = () => {
   };
 
   const contactInfo = contactLoading 
-    ? fallbackContactInfo 
+    ? []
     : (contactInfoData && contactInfoData.length > 0
         ? sortContactInfo(
             contactInfoData.filter(item => item.type !== 'whatsapp_button')
@@ -125,23 +116,12 @@ const Contato = () => {
             info: item.value,
             description: ""
           }))
-        : fallbackContactInfo);
-
-  const services = servicesData?.map(service => service.title) || [
-    "Dragagem e Desassoreamento",
-    "Terraplenagem", 
-    "Locação de Equipamentos",
-    "Infraestrutura",
-    "Projeto e Gerenciamento de Obra",
-    "Construção Civil",
-    "Estrutura Metálica",
-    "Planejamento e Viabilidade de Obra"
-  ];
+        : []);
 
   return (
     <div className="min-h-screen">
       <Header />
-      <main className="pt-20">
+      <main>
         {/* Hero Section */}
         <section 
           className="relative min-h-[600px] flex items-center bg-cover bg-center bg-no-repeat"
@@ -157,9 +137,8 @@ const Contato = () => {
           <div className="relative z-10 container max-w-6xl">
             <div className="max-w-4xl">
               <h1 
-                className="font-heading text-white leading-[1em]"
+                className="font-heading text-[clamp(2.5rem,12vw,3.5625rem)] text-white leading-[1em]"
                 style={{ 
-                  fontSize: '57px', 
                   fontWeight: 'normal',
                   letterSpacing: '0.05em' 
                 }}
@@ -173,29 +152,58 @@ const Contato = () => {
         {/* Contact Info & Form Section */}
         <section className="py-20 bg-muted/30">
           <div className="container max-w-6xl">
-            <div className="grid lg:grid-cols-2 gap-16">
+            <div className="grid min-w-0 lg:grid-cols-2 gap-16">
               {/* Left: Contact Information */}
-              <div className="space-y-8">
-                {contactInfo.map((item, index) => (
+              <div className="min-w-0 space-y-8">
+                {contactLoading ? (
+                  Array.from({ length: 4 }).map((_, index) => (
+                    <div key={index} className="flex items-start gap-4 animate-pulse" aria-hidden="true">
+                      <div className="h-8 w-8 rounded-full bg-muted" />
+                      <div className="flex-1 space-y-2">
+                        <div className="h-4 w-28 bg-muted" />
+                        <div className="h-4 w-48 bg-muted" />
+                      </div>
+                    </div>
+                  ))
+                ) : contactInfo.length > 0 ? contactInfo.map((item, index) => (
                   <div key={index} className="flex items-start gap-4">
                     <div className="flex items-center justify-center flex-shrink-0 text-primary">
                       {item.icon}
                     </div>
-                    <div>
+                    <div className="min-w-0 flex-1">
                       <h4 className="text-foreground mb-2 text-lg tracking-wide">{item.title.toUpperCase()}</h4>
-                      <p className="font-medium text-muted-foreground text-base">{item.info}</p>
+                      <p className="break-words font-medium text-muted-foreground text-base">{item.info}</p>
                       {item.description && (
                         <p className="text-muted-foreground text-sm">{item.description}</p>
                       )}
                     </div>
                   </div>
-                ))}
+                )) : (
+                  <p className="max-w-md text-muted-foreground">
+                    Preencha o formulário ao lado para falar com a equipe da NSS Engenharia.
+                  </p>
+                )}
               </div>
 
               {/* Right: Contact Form */}
-              <div>
+              <div className="min-w-0">
                 <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-6"
+                    aria-busy={submitMessage.isPending}
+                  >
+                    <div className="sr-only" aria-hidden="true">
+                      <label htmlFor="contact-website">Website</label>
+                      <input
+                        ref={honeypotRef}
+                        id="contact-website"
+                        name="website"
+                        type="text"
+                        tabIndex={-1}
+                        autoComplete="off"
+                      />
+                    </div>
                     <FormField
                       control={form.control}
                       name="name"
@@ -278,13 +286,26 @@ const Contato = () => {
                       )}
                     />
 
-                    <Button 
+                    {turnstileEnabled && (
+                      <div className="space-y-2">
+                        <TurnstileWidget
+                          siteKey={turnstileSiteKey}
+                          resetKey={turnstileResetKey}
+                          onVerify={setTurnstileToken}
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Esta verificação protege o formulário contra mensagens automáticas.
+                        </p>
+                      </div>
+                    )}
+
+                    <Button
                       type="submit" 
                       size="lg" 
                       className="w-full bg-primary hover:bg-primary/90 text-base font-bold"
-                      disabled={createMessage.isPending}
+                      disabled={submitMessage.isPending || (turnstileEnabled && !turnstileToken)}
                     >
-                      {createMessage.isPending ? "ENVIANDO..." : "ENVIAR"}
+                      {submitMessage.isPending ? "ENVIANDO..." : "ENVIAR"}
                     </Button>
                   </form>
                 </Form>

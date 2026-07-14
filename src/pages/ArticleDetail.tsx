@@ -29,7 +29,7 @@ const ArticleDetail = () => {
     return (
       <div className="min-h-screen">
         <Header />
-        <main className="pt-20">
+        <main>
           <article className="py-20">
             <div className="container max-w-4xl">
               <Skeleton className="h-12 w-3/4 mb-4" />
@@ -49,7 +49,7 @@ const ArticleDetail = () => {
     return (
       <div className="min-h-screen">
         <Header />
-        <main className="pt-20">
+        <main>
           <div className="container max-w-4xl py-20 text-center">
             <h1 className="text-4xl font-bold mb-4">Artigo não encontrado</h1>
             <p className="text-muted-foreground mb-8">
@@ -72,7 +72,7 @@ const ArticleDetail = () => {
   return (
     <div className="min-h-screen">
       <Header />
-      <main className="pt-20">
+      <main>
         <article className="py-20">
           <div className="container max-w-4xl">
             {/* Breadcrumb */}
@@ -94,13 +94,13 @@ const ArticleDetail = () => {
               </div>
 
               <h1 
-                className="font-heading font-bold leading-tight mb-6"
-                style={{ fontSize: '42px', letterSpacing: '0.05em' }}
+                className="break-words font-heading text-[clamp(2rem,8vw,2.625rem)] font-bold leading-tight mb-6"
+                style={{ letterSpacing: '0.05em' }}
               >
                 {article.title}
               </h1>
 
-              <div className="flex items-center gap-6 text-muted-foreground text-sm">
+              <div className="flex flex-wrap items-center gap-6 text-muted-foreground text-sm">
                 {article.published_at && (
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
