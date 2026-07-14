@@ -28,6 +28,15 @@ const ServiceCard = memo(({ service, className = "", showMoreButton = true, onMo
     <div 
       className={`relative overflow-hidden group cursor-pointer h-[400px] animate-fade-in ${className}`}
       onClick={handleCardClick}
+      onKeyDown={(event) => {
+        if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) {
+          event.preventDefault();
+          handleCardClick();
+        }
+      }}
+      role="link"
+      tabIndex={0}
+      aria-label={`Ver detalhes de ${service.title}`}
       style={{ animationDelay: `${index * 0.1}s` }}
     >
       {/* Image with Lazy Loading */}
@@ -37,6 +46,7 @@ const ServiceCard = memo(({ service, className = "", showMoreButton = true, onMo
             src={service.image_url || service.image_path || '/api/placeholder/400/300'}
             alt={service.title}
             loading="lazy"
+            decoding="async"
             className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${
               imageLoaded ? 'opacity-100 blur-0' : 'opacity-0 blur-sm'
             }`}

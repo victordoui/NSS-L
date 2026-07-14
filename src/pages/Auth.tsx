@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
+import Seo from '@/components/Seo';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -68,6 +69,7 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
+      <Seo title="Acesso administrativo" description="Área restrita da NSS Engenharia." noIndex />
       <div className="w-full max-w-md space-y-8">
         {/* Logo NSS Engenharia */}
         <div className="flex justify-center">

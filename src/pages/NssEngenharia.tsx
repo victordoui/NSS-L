@@ -2,12 +2,17 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import PartnersSection from "@/components/PartnersSection";
+import Seo from "@/components/Seo";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import heroBackgroundImage from "@/assets/fg-laport-hero-background.png";
+import heroBackgroundImage from "@/assets/gabion-wall-hero-new.webp";
 
 const NssEngenharia = () => {
   return (
     <div className="min-h-screen bg-white">
+      <Seo
+        title="Sobre a NSS Engenharia"
+        description="Conheça a história, as especialidades técnicas e o compromisso da NSS Engenharia com diagnósticos claros e soluções seguras."
+      />
       <Header />
       <main>
         {/* Hero Section */}

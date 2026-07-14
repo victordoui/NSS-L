@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import servicesHeroPipes from "@/assets/services-hero-pipes.jpg";
 import { useServices } from "@/hooks/useServices";
 import ServiceCard from "@/components/ServiceCard";
+import Seo from "@/components/Seo";
 
 const Servicos = () => {
   const { data: services, isLoading, error } = useServices();
@@ -15,6 +16,10 @@ const Servicos = () => {
 
   return (
     <div className="min-h-screen">
+      <Seo
+        title="Serviços de Engenharia Diagnóstica"
+        description="Conheça os serviços da NSS Engenharia em inspeções, laudos, projetos, recuperação estrutural e acompanhamento técnico de obras."
+      />
       <Header />
       <main>
         {/* Hero Section */}
@@ -24,6 +29,9 @@ const Servicos = () => {
               src={servicesHeroPipes} 
               alt="Tubos para canteiro de obras" 
               className="w-full h-full object-cover object-center"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
             />
             <div className="absolute inset-0 bg-black/40"></div>
           </div>
