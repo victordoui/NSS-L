@@ -1,0 +1,15 @@
+-- Clear existing services
+DELETE FROM public.services;
+
+-- Insert new geotechnical and civil engineering services
+INSERT INTO public.services (title, description, short_description, slug, order_position, is_active) VALUES
+('Projetos de Geotecnia', 'Desenvolvimento de projetos geotécnicos completos, incluindo análise de solo, fundações e estabilidade de taludes para garantir a segurança e viabilidade das construções.', 'Projetos geotécnicos completos com análise de solo e fundações', 'projetos-geotecnia', 1, true),
+('Projeto de Estrutura', 'Elaboração de projetos estruturais em concreto armado, aço e madeira, dimensionamento de elementos estruturais e análise de cargas para edificações e obras de infraestrutura.', 'Projetos estruturais completos em concreto, aço e madeira', 'projeto-estrutura', 2, true),
+('Projeto de Drenagem', 'Projetos de sistemas de drenagem urbana e rural, incluindo dimensionamento de redes pluviais, galerias e dispositivos de controle de erosão e enchentes.', 'Sistemas de drenagem urbana e controle de águas pluviais', 'projeto-drenagem', 3, true),
+('Projetos de Terraplanagem', 'Planejamento e projeto de movimentação de terra, incluindo cortes, aterros, compactação e estabilização de terrenos para obras civis e industriais.', 'Movimentação de terra, cortes e aterros especializados', 'projetos-terraplanagem', 4, true),
+('Projetos de Acessibilidade', 'Desenvolvimento de projetos que garantem acessibilidade universal em edificações e espaços urbanos, seguindo normas técnicas e legislação vigente.', 'Projetos de acessibilidade universal para edificações', 'projetos-acessibilidade', 5, true),
+('Obras de Contenção', 'Execução de obras de contenção de encostas e taludes, incluindo muros de arrimo, cortinas, solo grampeado e outras soluções geotécnicas.', 'Muros de arrimo, cortinas e estabilização de encostas', 'obras-contencao', 6, true),
+('Obras de Reformas', 'Reformas e adequações de edificações existentes, incluindo reforço estrutural, modernização de instalações e adequações normativas.', 'Reformas e adequações de edificações existentes', 'obras-reformas', 7, true),
+('Sondagem SPT', 'Execução de sondagens de simples reconhecimento (SPT) para investigação geotécnica do subsolo e caracterização de propriedades do solo.', 'Investigação geotécnica através de sondagem SPT', 'sondagem-spt', 8, true),
+('Sondagem Rotativa', 'Realização de sondagens rotativas para investigação de solos e rochas, obtendo amostras contínuas para análises geotécnicas detalhadas.', 'Sondagem rotativa para análise detalhada de solos e rochas', 'sondagem-rotativa', 9, true),
+('Laudos Técnicos', 'Elaboração de laudos técnicos especializados, incluindo avaliações estruturais, geotécnicas e de conformidade com normas técnicas e legislação.', 'Laudos técnicos especializados e avaliações estruturais', 'laudos-tecnicos', 10, true);
