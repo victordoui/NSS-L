@@ -1,4 +1,15 @@
-import { ArrowRight, Check, ChevronDown } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  ChevronDown,
+  ClipboardCheck,
+  Droplets,
+  FileCheck2,
+  Hammer,
+  House,
+  Route,
+  TriangleAlert,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -50,6 +61,50 @@ const principles = [
     number: "03",
     title: "Solucionar",
     description: "Recomendações viáveis que equilibram segurança, durabilidade e investimento.",
+  },
+];
+
+const diagnosticSignals = [
+  {
+    icon: TriangleAlert,
+    title: "Fissuras, trincas ou deformações",
+    description: "Sinais que surgiram recentemente, aumentaram ou aparecem em diferentes pontos da edificação.",
+  },
+  {
+    icon: Droplets,
+    title: "Infiltrações e umidade recorrente",
+    description: "Manchas, bolor, eflorescências ou revestimentos que voltam a se deteriorar após reparos.",
+  },
+  {
+    icon: Hammer,
+    title: "Reforma, ampliação ou mudança de uso",
+    description: "Intervenções que alteram cargas, ambientes ou elementos e precisam de orientação técnica prévia.",
+  },
+  {
+    icon: House,
+    title: "Compra, entrega ou conservação do imóvel",
+    description: "Momentos em que uma leitura técnica ajuda a registrar condições e definir prioridades de cuidado.",
+  },
+];
+
+const deliverables = [
+  {
+    icon: ClipboardCheck,
+    number: "01",
+    title: "Leitura técnica do cenário",
+    description: "Inspeção e levantamento das evidências relevantes para compreender o caso.",
+  },
+  {
+    icon: FileCheck2,
+    number: "02",
+    title: "Diagnóstico documentado",
+    description: "Conclusões e registros compatíveis com o serviço e o escopo definidos na contratação.",
+  },
+  {
+    icon: Route,
+    number: "03",
+    title: "Orientação para os próximos passos",
+    description: "Prioridades e recomendações técnicas para apoiar uma decisão mais consciente.",
   },
 ];
 
@@ -120,6 +175,36 @@ const Index = () => {
                 <span>Perícias</span>
                 <span>Projetos</span>
               </div>
+            </div>
+          </section>
+
+          <section className="editorial-diagnostics" aria-labelledby="diagnostics-title">
+            <div className="editorial-diagnostics__heading">
+              <span className="editorial-kicker">Quando procurar uma avaliação</span>
+              <h2 id="diagnostics-title">
+                Alguns sinais pedem uma <em>leitura técnica.</em>
+              </h2>
+              <p>
+                Nem todo sinal indica o mesmo problema. Avaliar o contexto antes de executar um
+                reparo ajuda a escolher uma intervenção coerente com a causa observada.
+              </p>
+            </div>
+            <div className="editorial-diagnostics__grid">
+              {diagnosticSignals.map(({ icon: Icon, title, description }) => (
+                <article key={title}>
+                  <span className="editorial-diagnostics__icon" aria-hidden="true">
+                    <Icon size={22} strokeWidth={1.5} />
+                  </span>
+                  <h3>{title}</h3>
+                  <p>{description}</p>
+                </article>
+              ))}
+            </div>
+            <div className="editorial-diagnostics__action">
+              <p>Você não precisa identificar o problema sozinho. Comece contando o que observou.</p>
+              <Link to="/contato" className="editorial-button editorial-button--dark">
+                Descrever meu caso <ArrowRight size={16} />
+              </Link>
             </div>
           </section>
 
@@ -209,6 +294,34 @@ const Index = () => {
             </div>
           </section>
 
+          <section className="editorial-deliverables" aria-labelledby="deliverables-title">
+            <div className="editorial-section-heading editorial-section-heading--compact">
+              <span className="editorial-kicker">O que você recebe</span>
+              <h2 id="deliverables-title">
+                Informação técnica para <em>decidir com clareza.</em>
+              </h2>
+              <p>
+                Cada atendimento é dimensionado conforme a necessidade identificada e o escopo
+                contratado, com uma condução clara do início às recomendações finais.
+              </p>
+            </div>
+            <div className="editorial-deliverables__grid">
+              {deliverables.map(({ icon: Icon, number, title, description }) => (
+                <article key={number}>
+                  <div className="editorial-deliverables__meta">
+                    <Icon size={24} strokeWidth={1.4} aria-hidden="true" />
+                    <span>{number}</span>
+                  </div>
+                  <h3>{title}</h3>
+                  <p>{description}</p>
+                </article>
+              ))}
+            </div>
+            <Link to="/servicos" className="editorial-text-link editorial-deliverables__link">
+              Conheça os serviços da NSS <ArrowRight size={14} />
+            </Link>
+          </section>
+
           <section className="editorial-portfolio">
             <div className="editorial-section-heading editorial-section-heading--compact">
               <span className="editorial-kicker">Atuação em campo</span>
@@ -254,6 +367,9 @@ const Index = () => {
               <Link to="/contato" className="editorial-button editorial-button--dark">
                 Falar com um especialista <ArrowRight size={16} />
               </Link>
+              <small className="editorial-cta__note">
+                Não sabe qual serviço solicitar? Descreva os sinais observados e o contexto do imóvel.
+              </small>
             </div>
           </section>
         </main>
