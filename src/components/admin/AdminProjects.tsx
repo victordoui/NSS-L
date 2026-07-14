@@ -342,7 +342,7 @@ const AdminProjects = () => {
                           id="category"
                           value={formData.category}
                           onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-                          placeholder="Ex: Dragagem, Terraplenagem"
+                          placeholder="Ex: Laudos, estruturas, recuperação"
                         />
                       </div>
                     </div>

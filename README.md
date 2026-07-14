@@ -1,4 +1,4 @@
-# FG Laport — Projeto React + Vite (TypeScript)
+# NSS Engenharia — Projeto React + Vite (TypeScript)
 
 Este repositório contém o código-fonte do site institucional desenvolvido com Vite, React, TypeScript, Tailwind CSS e componentes shadcn-ui. O projeto também integra Supabase para dados e autenticação.
 

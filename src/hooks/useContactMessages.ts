@@ -13,13 +13,6 @@ export interface ContactMessage {
   updated_at: string;
 }
 
-export interface ContactMessageInsert {
-  name: string;
-  phone: string;
-  email: string;
-  message: string;
-}
-
 export const useContactMessages = () => {
   const queryClient = useQueryClient();
 
@@ -33,34 +26,6 @@ export const useContactMessages = () => {
 
       if (error) throw error;
       return data as ContactMessage[];
-    },
-  });
-
-  const createMessage = useMutation({
-    mutationFn: async (newMessage: ContactMessageInsert) => {
-      const { data, error } = await supabase
-        .from("contact_messages")
-        .insert([newMessage])
-        .select()
-        .single();
-
-      if (error) throw error;
-      return data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["contact-messages"] });
-      toast({
-        title: "Mensagem enviada!",
-        description: "Sua mensagem foi enviada com sucesso. Entraremos em contato em breve.",
-      });
-    },
-    onError: (error) => {
-      toast({
-        title: "Erro ao enviar mensagem",
-        description: "Ocorreu um erro ao enviar sua mensagem. Tente novamente.",
-        variant: "destructive",
-      });
-      console.error("Error creating message:", error);
     },
   });
 
@@ -121,7 +86,6 @@ export const useContactMessages = () => {
     messages,
     isLoading,
     unreadCount,
-    createMessage,
     updateMessage,
     deleteMessage,
   };

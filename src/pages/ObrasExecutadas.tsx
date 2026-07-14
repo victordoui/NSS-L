@@ -24,7 +24,7 @@ const ObrasExecutadas = () => {
   return (
     <div className="min-h-screen">
       <Header />
-      <main className="pt-20">
+      <main>
         {/* Hero Section */}
         <section 
           className="relative min-h-[600px] flex items-center bg-cover bg-center bg-no-repeat"
@@ -36,9 +36,8 @@ const ObrasExecutadas = () => {
           <div className="absolute inset-0 bg-black/60"></div>
           <div className="relative z-10 container">
             <h1 
-              className="font-heading text-white leading-[1em]"
+              className="font-heading text-[clamp(2.25rem,11vw,3.5625rem)] text-white leading-[1em]"
               style={{ 
-                fontSize: '57px',
                 fontWeight: 'normal',
                 letterSpacing: '0.05em'
               }}

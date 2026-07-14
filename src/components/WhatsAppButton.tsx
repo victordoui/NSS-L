@@ -41,10 +41,10 @@ const WhatsAppButton = () => {
   return (
     <button
       onClick={handleWhatsAppClick}
-      className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] hover:bg-[#20b358] text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+      className="fixed bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] right-3 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg ring-2 ring-white/90 transition-all duration-300 hover:scale-105 hover:bg-[#20b358] hover:shadow-xl sm:bottom-6 sm:right-6 sm:h-14 sm:w-14"
       aria-label="Entrar em contato via WhatsApp"
     >
-      <MessageCircle size={28} />
+      <MessageCircle className="h-6 w-6 sm:h-7 sm:w-7" />
     </button>
   );
 };
