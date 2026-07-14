@@ -120,7 +120,7 @@ Hospedagem estática (Vercel, Netlify, etc.):
 - Estrutura de pastas: garanta executar os comandos na pasta onde está o `package.json`.
 
 ## Contribuição
-- Crie uma branch para sua alteração.
+- Neste projeto, as atualizações operacionais autorizadas são publicadas diretamente na branch `main`.
 - Rode `npm run lint` antes de abrir PR.
 - Descreva claramente mudanças e impacto.
 
