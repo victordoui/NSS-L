@@ -1,21 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/useAuth';
-import { useToast } from '@/hooks/use-toast';
 import Seo from '@/components/Seo';
 
 const Auth = () => {
-  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
-  const { user, signIn, signUp } = useAuth();
-  const { toast } = useToast();
+  const { user, signIn } = useAuth();
 
   // Redirect if already authenticated
   if (user) {
@@ -27,41 +23,9 @@ const Auth = () => {
     setLoading(true);
 
     try {
-      if (isLogin) {
-        await signIn(email, password);
-      } else {
-        if (!fullName.trim()) {
-          toast({
-            title: "Nome obrigatório",
-            description: "Por favor, informe seu nome completo.",
-            variant: "destructive",
-          });
-          setLoading(false);
-          return;
-        }
-        await signUp(email, password, fullName);
-      }
+      await signIn(email, password);
     } catch (error) {
       console.error('Auth error:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDevMode = async () => {
-    setIsLogin(true);
-    setEmail('dev@test.com');
-    setPassword('123456');
-    setLoading(true);
-    
-    try {
-      await signIn('dev@test.com', '123456');
-      toast({
-        title: "Modo Desenvolvedor",
-        description: "Logado como desenvolvedor com sucesso!",
-      });
-    } catch (error) {
-      console.error('Dev login error:', error);
     } finally {
       setLoading(false);
     }
@@ -83,32 +47,15 @@ const Auth = () => {
         <Card className="w-full">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            {isLogin ? 'Login' : 'Cadastrar'}
+            Acesso administrativo
           </CardTitle>
           <p className="text-muted-foreground text-center">
-            {isLogin 
-              ? 'Acesse o painel administrativo' 
-              : 'Crie sua conta de administrador'
-            }
+            Entre com uma conta autorizada para gerenciar o site
           </p>
         </CardHeader>
         
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {!isLogin && (
-              <div className="space-y-2">
-                <Label htmlFor="fullName">Nome Completo</Label>
-                <Input
-                  id="fullName"
-                  type="text"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Seu nome completo"
-                  required={!isLogin}
-                />
-              </div>
-            )}
-            
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -117,6 +64,7 @@ const Auth = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="seu@email.com"
+                autoComplete="email"
                 required
               />
             </div>
@@ -129,6 +77,7 @@ const Auth = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Sua senha"
+                autoComplete="current-password"
                 required
                 minLength={6}
               />
@@ -139,39 +88,13 @@ const Auth = () => {
               className="w-full"
               disabled={loading}
             >
-              {loading 
-                ? (isLogin ? 'Entrando...' : 'Cadastrando...') 
-                : (isLogin ? 'Entrar' : 'Cadastrar')
-              }
+              {loading ? 'Entrando...' : 'Entrar'}
             </Button>
           </form>
-          
-          <div className="mt-4 text-center space-y-3">
-            <button
-              type="button"
-              onClick={() => setIsLogin(!isLogin)}
-              className="text-primary hover:underline text-sm"
-            >
-              {isLogin 
-                ? 'Não tem conta? Cadastre-se' 
-                : 'Já tem conta? Faça login'
-              }
-            </button>
-            
-            {/* Botão Modo Desenvolvedor */}
-            <div>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={handleDevMode}
-                disabled={loading}
-                className="text-xs text-muted-foreground hover:text-primary transition-colors"
-              >
-                🚀 Modo Desenvolvedor
-              </Button>
-            </div>
-          </div>
+
+          <p className="mt-5 text-center text-xs text-muted-foreground">
+            O cadastro de novas contas é restrito ao responsável pelo sistema.
+          </p>
         </CardContent>
         </Card>
       </div>
